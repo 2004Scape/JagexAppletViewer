@@ -20,36 +20,36 @@ final class JarLoader {
 	private PKCS7 d;
 	private byte[] e;
 
-	final byte[] a(int var1, String var2) {
+	final byte[] read(int flowObfuscator, String name) {
 		boolean var25 = Preferences.c;
 
 		try {
-			byte[] var3 = (byte[]) ((byte[]) this.a.remove(var2));
-			return var3;
+			byte[] src = (byte[]) ((byte[]) this.a.remove(name));
+			return src;
 
-//			if (null == var3) {
+//			if (null == src) {
 //				return null;
 //			} else {
-//				h var4 = (h) this.b.get(var2);
+//				h var4 = (h) this.b.get(name);
 //				if (null == var4) {
 //					return null;
 //				} else {
-//					h var5 = (h) this.c.get(var2);
+//					h var5 = (h) this.c.get(name);
 //					if (null == var5) {
 //						return null;
 //					} else {
 //						MessageDigest var6 = MessageDigest.getInstance("MD5");
 //						var6.reset();
-//						var6.update(var3);
+//						var6.update(src);
 //						byte[] var7 = var6.digest();
-//						int var9 = -39 % ((-25 - var1) / 42);
+//						int var9 = -39 % ((-25 - flowObfuscator) / 42);
 //						String var8 = r.a(var7, (byte) -49);
 //						if (!var8.equals(var4.b)) {
 //							return null;
 //						} else {
 //							MessageDigest var28 = MessageDigest.getInstance("SHA");
 //							var28.reset();
-//							var28.update(var3);
+//							var28.update(src);
 //							byte[] var10 = var28.digest();
 //							String var11 = r.a(var10, (byte) -49);
 //							if (!var11.equals(var4.d)) {
@@ -134,7 +134,7 @@ final class JarLoader {
 //													}
 //												}
 //
-//												return var3;
+//												return src;
 //											}
 //										} else {
 //											return null;
@@ -148,7 +148,7 @@ final class JarLoader {
 //			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			app.DialogMessage.a(500, appletviewer.c(1555, "err_get_file") + ":" + var2 + " [" + ex.toString() + "]");
+			app.DialogMessage.a(500, appletviewer.c(1555, "err_get_file") + ":" + name + " [" + ex.toString() + "]");
 			return null;
 		}
 	}
@@ -159,37 +159,37 @@ final class JarLoader {
 		this.a = new Hashtable();
 		this.b = new Hashtable();
 		this.c = new Hashtable();
-		ZipInputStream var2 = new ZipInputStream(new ByteArrayInputStream(var1));
+		ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(var1));
 		byte[] var3 = new byte[1000];
 
 		do {
-			ZipEntry var4 = var2.getNextEntry();
-			if (var4 == null && !var17) {
+			ZipEntry next = zip.getNextEntry();
+			if (next == null && !var17) {
 				break;
 			}
 
-			String var5 = var4.getName();
-			ByteArrayOutputStream var6 = new ByteArrayOutputStream();
+			String name = next.getName();
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
 			do {
-				int var7 = var2.read(var3, 0, 1000);
+				int var7 = zip.read(var3, 0, 1000);
 				if (~var7 == 0 && !var17) {
 					break;
 				}
 
-				var6.write(var3, 0, var7);
+				stream.write(var3, 0, var7);
 			} while (!var17);
 
-			byte[] var18 = var6.toByteArray();
-			if (!var5.equals("META-INF/manifest.mf") && !var5.equals("META-INF/zigbert.sf")) {
-				if (var5.equals("META-INF/zigbert.rsa")) {
+			byte[] var18 = stream.toByteArray();
+			if (!name.equals("META-INF/manifest.mf") && !name.equals("META-INF/zigbert.sf")) {
+				if (name.equals("META-INF/zigbert.rsa")) {
 					this.d = new PKCS7(var18);
 					if (!var17) {
 						continue;
 					}
 				}
 
-				this.a.put(var5, var18);
+				this.a.put(name, var18);
 				if (!var17) {
 					continue;
 				}
@@ -259,11 +259,11 @@ final class JarLoader {
 					}
 				}
 
-				if (var5.equalsIgnoreCase("META-INF/manifest.mf")) {
+				if (name.equalsIgnoreCase("META-INF/manifest.mf")) {
 					this.b.put(var11.a, var11);
 				}
 
-				if (var5.equalsIgnoreCase("META-INF/zigbert.sf")) {
+				if (name.equalsIgnoreCase("META-INF/zigbert.sf")) {
 					this.c.put(var11.a, var11);
 				}
 
@@ -273,7 +273,7 @@ final class JarLoader {
 				}
 			}
 
-			if (var5.equalsIgnoreCase("META-INF/zigbert.sf")) {
+			if (name.equalsIgnoreCase("META-INF/zigbert.sf")) {
 				this.e = var18;
 			}
 		} while (!var17);

@@ -19,7 +19,7 @@ final class DialogUrl extends WindowAdapter implements ActionListener {
 	DialogUrl(String var1) {
 		super();
 		boolean var5 = Preferences.c;
-		this.a = new Dialog(appletviewer.e, appletviewer.c(1555, "information"), true);
+		this.a = new Dialog(appletviewer.frame, appletviewer.c(1555, "information"), true);
 		TextArea var2 = new TextArea();
 		var2.setText(appletviewer.c(1555, "copy_paste_url") + ":\n" + var1);
 		var2.setEditable(false);
@@ -33,7 +33,7 @@ final class DialogUrl extends WindowAdapter implements ActionListener {
 		this.a.add(var4, "South");
 		this.a.setResizable(false);
 		this.a.setSize(400, 150);
-		this.a.setLocationRelativeTo(appletviewer.e);
+		this.a.setLocationRelativeTo(appletviewer.frame);
 		this.a.setVisible(true);
 		if (appletviewer.A) {
 			Preferences.c = !var5;

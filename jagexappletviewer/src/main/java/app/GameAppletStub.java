@@ -31,7 +31,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 	}
 
 	public final void showDocument(URL var1) {
-		if (appletviewer.i) {
+		if (appletviewer.debug) {
 			System.out.println("showdocument url:" + var1);
 		}
 
@@ -54,7 +54,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 	}
 
 	public final void showDocument(URL var1, String var2) {
-		if (appletviewer.i) {
+		if (appletviewer.debug) {
 			System.out.println("showdocument url:" + var1 + " target:" + var2);
 		}
 
@@ -70,7 +70,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 
 	public final String getParameter(String var1) {
 		String var2 = appletviewer.a((String) var1, 123);
-		if (appletviewer.i && null == var2) {
+		if (appletviewer.debug && null == var2) {
 			if ("force64mb".equals(var1)) {
 				System.out.println("Returning false for force64mb");
 				return "false";

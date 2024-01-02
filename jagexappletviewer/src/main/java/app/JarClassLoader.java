@@ -12,40 +12,40 @@ import java.security.cert.Certificate;
 import java.util.Hashtable;
 
 final class JarClassLoader extends ClassLoader {
-	private Hashtable a = new Hashtable();
-	private JarLoader b;
-	private ProtectionDomain c;
+	private Hashtable cache = new Hashtable();
+	private JarLoader loader;
+	private ProtectionDomain domain;
 
-	protected final synchronized Class loadClass(String var1, boolean var2) throws ClassNotFoundException {
-		Class var3 = (Class) this.a.get(var1);
-		if (null != var3) {
-			return var3;
-		} else {
-			byte[] var4 = this.b.a(90, var1 + ".class");
-			if (null != var4) {
-				var3 = this.defineClass(var1, var4, 0, var4.length, this.c);
-				if (var2) {
-					this.resolveClass(var3);
-				}
-
-				this.a.put(var1, var3);
-				return var3;
-			} else {
-				return super.findSystemClass(var1);
-			}
+	protected final synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
+		Class instance = (Class) this.cache.get(name);
+		if (instance != null) {
+			return instance;
 		}
+
+		byte[] src = this.loader.read(90, name.replace('.', '/') + ".class");
+		if (src == null) {
+			return super.findSystemClass(name);
+		}
+
+		instance = this.defineClass(name, src, 0, src.length, this.domain);
+		if (resolve) {
+			this.resolveClass(instance);
+		}
+
+		this.cache.put(name, instance);
+		return instance;
 	}
 
-	public final InputStream getResourceAsStream(String var1) {
-		byte[] var2 = this.b.a(118, var1);
-		return (InputStream) (var2 != null ? new ByteArrayInputStream(var2) : ClassLoader.getSystemResourceAsStream(var1));
+	public final InputStream getResourceAsStream(String name) {
+		byte[] src = this.loader.read(118, name);
+		return (InputStream) (src != null ? new ByteArrayInputStream(src) : ClassLoader.getSystemResourceAsStream(name));
 	}
 
-	JarClassLoader(byte[] var1) throws IOException {
-		this.b = new JarLoader(var1);
-		CodeSource var2 = new CodeSource((URL) null, (Certificate[]) null);
-		Permissions var3 = new Permissions();
-		var3.add(new AllPermission());
-		this.c = new ProtectionDomain(var2, var3);
+	JarClassLoader(byte[] src) throws IOException {
+		this.loader = new JarLoader(src);
+		CodeSource source = new CodeSource((URL) null, (Certificate[]) null);
+		Permissions perms = new Permissions();
+		perms.add(new AllPermission());
+		this.domain = new ProtectionDomain(source, perms);
 	}
 }

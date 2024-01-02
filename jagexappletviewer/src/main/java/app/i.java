@@ -73,16 +73,16 @@ final class i implements Runnable {
 				}
 
 				Runtime.getRuntime().exec("cmd /c start \"j\" \"" + var2 + "\"");
-			} catch (Exception var10) {
-				if (appletviewer.i) {
-					var10.printStackTrace();
+			} catch (Exception ex) {
+				if (appletviewer.debug) {
+					ex.printStackTrace();
 				}
 
 				try {
 					new DialogUrl(var2);
-				} catch (Exception var9) {
-					if (appletviewer.i) {
-						var9.printStackTrace();
+				} catch (Exception ex2) {
+					if (appletviewer.debug) {
+						ex2.printStackTrace();
 					}
 				}
 			}

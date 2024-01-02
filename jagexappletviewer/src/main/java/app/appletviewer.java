@@ -37,12 +37,12 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	private static g a;
 	private static Component b;
 	private static f c;
-	private static Applet d;
-	static Frame e;
+	private static Applet mainapp;
+	static Frame frame;
 	private static n f;
 	static boolean g;
 	private static Hashtable h = new Hashtable();
-	static boolean i = false;
+	static boolean debug = false;
 	private static Panel j;
 	private static f k;
 	private static boolean l;
@@ -98,17 +98,17 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		}
 	}
 
-	private static final void b(byte var0) {
+	private static final void b(byte flowObfuscator) {
 		if (y) {
 			int var1 = !a.isVisible() ? 0 : 20;
-			int var2 = null != m ? Integer.parseInt(a("advert_height", true)) : 0;
+			int var2 = 0; // null != m ? Integer.parseInt(a("advert_height", true)) : 0;
 			int var3 = !b.isVisible() ? 0 : 40;
 			int var4 = Integer.parseInt(a("applet_minwidth", true));
 			int var5 = Integer.parseInt(a("applet_minheight", true));
 			int var6 = Integer.parseInt(a("applet_maxwidth", true));
 			int var7 = Integer.parseInt(a("applet_maxheight", true));
 			Dimension var8 = j.getSize();
-			if (var0 > -95) {
+			if (flowObfuscator > -95) {
 				a(1, 10);
 			}
 
@@ -134,17 +134,17 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 						break label89;
 					}
 
-					e.remove(f);
-					e.validate();
+					frame.remove(f);
+					frame.validate();
 					if (!Preferences.c) {
 						break label89;
 					}
 				}
 
 				if (null == f.getParent()) {
-					e.add(f, "East");
+					frame.add(f, "East");
 					f.setValue(0);
-					e.validate();
+					frame.validate();
 				}
 			}
 
@@ -189,13 +189,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				m.setBounds((var15 + -var12) / 2, var1 + -var17, var12, var2);
 			}
 
-			d.setBounds((-var12 + var15) / 2, -var17 + var2 + var1, var12, var13);
+			mainapp.setBounds((-var12 + var15) / 2, -var17 + var2 + var1, var12, var13);
 			b.setBounds((-var12 + var15) / 2, -var17 + var1 - -var2 + var13, var12, var3);
 			if (null != m && browsercontrol.iscreated()) {
 				browsercontrol.resize(m.getSize().width, m.getSize().height);
 			}
 
-			e.repaint();
+			frame.repaint();
 		}
 	}
 
@@ -270,31 +270,30 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	}
 
 	public static void readdadvert() {
-		if (g && null == m) {
-			m = new Canvas();
-			j.add(m);
-			b((byte) -116);
-
-			while (!m.isDisplayable() || !m.isShowing()) {
-				try {
-					Thread.sleep(100L);
-				} catch (Exception var1) {
-				}
-			}
-
-			try {
-				browsercontrol.create(m, a("adverturl", true));
-				browsercontrol.resize(m.getSize().width, m.getSize().height);
-			} catch (Throwable var2) {
-				if (i) {
-					var2.printStackTrace();
-				}
-
-				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
-				return;
-			}
-		}
-
+//		if (g && null == m) {
+//			m = new Canvas();
+//			j.add(m);
+//			b((byte) -116);
+//
+//			while (!m.isDisplayable() || !m.isShowing()) {
+//				try {
+//					Thread.sleep(100L);
+//				} catch (Exception var1) {
+//				}
+//			}
+//
+//			try {
+//				browsercontrol.create(m, a("adverturl", true));
+//				browsercontrol.resize(m.getSize().width, m.getSize().height);
+//			} catch (Throwable var2) {
+//				if (debug) {
+//					var2.printStackTrace();
+//				}
+//
+//				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
+//				return;
+//			}
+//		}
 	}
 
 	private static final byte[] a(String var0, String var1, byte var2) {
@@ -322,7 +321,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 			var5.close();
 		} catch (Exception var8) {
-			if (i) {
+			if (debug) {
 				var8.printStackTrace();
 			}
 
@@ -335,10 +334,10 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		return var9;
 	}
 
-	public final void componentShown(ComponentEvent var1) {
+	public final void componentShown(ComponentEvent event) {
 	}
 
-	public final void componentResized(ComponentEvent var1) {
+	public final void componentResized(ComponentEvent event) {
 		b((byte) -127);
 	}
 
@@ -363,18 +362,18 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			app.ComponentProgress.a(0, 140);
 			app.ComponentProgress.c(var1 ^ 48);
 			app.ComponentProgress.a((byte) -98);
-			if (d != null) {
+			if (mainapp != null) {
 				if (b.isVisible()) {
 					b.setVisible(false);
 					b((byte) -96);
 				}
 
-				d.stop();
+				mainapp.stop();
 				app.ComponentProgress.a(25, 140);
 				app.ComponentProgress.a((byte) -98);
-				d.destroy();
-				j.remove(d);
-				d = null;
+				mainapp.destroy();
+				j.remove(mainapp);
+				mainapp = null;
 				j.remove(b);
 			}
 
@@ -391,14 +390,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				app.ComponentProgress.a(75, 140);
 				app.ComponentProgress.a((byte) -98);
 				JarClassLoader var4 = new JarClassLoader(jar);
-				d = (Applet) var4.loadClass("loader").newInstance();
-				if (i) {
+				mainapp = (Applet) var4.loadClass("loader").newInstance();
+				if (debug) {
 					System.out.println("loader_jar : " + jar.length);
 				}
 
 				app.ComponentProgress.a(var1 ^ -1109);
 			} catch (Exception var5) {
-				if (i) {
+				if (debug) {
 					var5.printStackTrace();
 				}
 
@@ -406,14 +405,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				app.DialogMessage.a(500, c(var1 + 1505, "err_target_applet"));
 			}
 
-			j.add(d);
+			j.add(mainapp);
 			b = new CopyrightBar(c(1555, "tandc"));
 			j.add(b);
 			r = true;
 			b((byte) -119);
-			d.setStub(new GameAppletStub());
-			d.init();
-			d.start();
+			mainapp.setStub(new GameAppletStub());
+			mainapp.init();
+			mainapp.start();
 		}
 	}
 
@@ -585,7 +584,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 							}
 
 							var8.put(var27, var28.toString());
-							if (i) {
+							if (debug) {
 								System.out.println("Message - name=" + var27 + " text=" + var28.toString());
 							}
 						}
@@ -600,7 +599,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 						var27 = var9.substring(0, var25).trim().toLowerCase();
 						var29 = var9.substring(1 + var25).trim();
 						var7.put(var27, var29);
-						if (i) {
+						if (debug) {
 							System.out.println("Ourconfig - variable=" + var27 + " value=" + var29);
 						}
 					}
@@ -616,7 +615,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 					var27 = var9.substring(0, var25).trim().toLowerCase();
 					var29 = var9.substring(var25 + 1).trim();
 					var6.put(var27, var29);
-					if (i) {
+					if (debug) {
 						System.out.println("Innerconfig - variable=" + var27 + " value=" + var29);
 					}
 				}
@@ -624,13 +623,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 			var5.close();
 		} catch (IOException var19) {
-			if (i) {
+			if (debug) {
 				var19.printStackTrace();
 			}
 
 			app.DialogMessage.a(500, c(1555, "err_load_config"));
 		} catch (Exception var20) {
-			if (i) {
+			if (debug) {
 				var20.printStackTrace();
 			}
 
@@ -731,8 +730,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	public static final void b(int var0, String var1) {
 		boolean var32 = Preferences.c;
 		y = false;
-		i = Boolean.getBoolean("com.jagex.debug");
-		if (i) {
+		debug = Boolean.getBoolean("com.jagex.debug");
+		if (debug) {
 			System.setErr(app.DialogDebug.a(29, "Jagex host console"));
 			System.setOut(app.DialogDebug.a(27, "Jagex host console"));
 			System.out.println("release #7");
@@ -815,16 +814,16 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		}
 
 		app.Language.a(var3, -11712);
-		e = new Frame();
-		e.getToolkit().setDynamicLayout(true);
-		e.setBackground(Color.BLACK);
+		frame = new Frame();
+		frame.getToolkit().setDynamicLayout(true);
+		frame.setBackground(Color.BLACK);
 		File var40 = new File((new File(System.getProperty("user.dir"))).getParentFile(), var1);
 		File var41 = new File(var40, "jagexappletviewer.png");
 		System.out.println("Trying to load icon file: " + var41.getAbsolutePath());
 		if (var41.exists()) {
 			Image var42 = Toolkit.getDefaultToolkit().getImage(var41.getAbsolutePath());
 			if (var42 != null) {
-				e.setIconImage(var42);
+				frame.setIconImage(var42);
 			}
 		}
 
@@ -884,10 +883,10 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 		try {
 			userHome = System.getProperty("user.home");
-			if (null != userHome) {
+			if (userHome != null) {
 				userHome = userHome + "/";
 			}
-		} catch (Exception var33) {
+		} catch (Exception ignored) {
 		}
 
 		if (userHome == null) {
@@ -898,39 +897,39 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		File file = null;
 
 		byte[] data;
-		try {
-			byte[] var17;
-			if (l) {
-				data = a(a("browsercontrol_win_amd64_jar", true), codebase, (byte) -73);
-				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol64.dll");
-				var17 = (new JarLoader(data)).a(49, "browsercontrol64.dll");
-				if (null == var17) {
-					app.DialogMessage.a(500, c(1555, "err_verify_bc64"));
-					file = null;
-				}
-
-				a(file, -109, var17);
-			} else if (g) {
-				data = a(a("browsercontrol_win_x86_jar", true), codebase, (byte) 102);
-				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol.dll");
-				var17 = (new JarLoader(data)).a(104, "browsercontrol.dll");
-				if (var17 == null) {
-					app.DialogMessage.a(500, c(1555, "err_verify_bc"));
-					file = null;
-				}
-
-				a(file, -111, var17);
-				if (i) {
-					System.out.println("dlldata : " + data.length);
-				}
-			}
-		} catch (Exception var39) {
-			if (i) {
-				var39.printStackTrace();
-			}
-
-			app.DialogMessage.a(500, c(1555, "err_load_bc"));
-		}
+//		try {
+//			byte[] var17;
+//			if (l) {
+//				data = a(a("browsercontrol_win_amd64_jar", true), codebase, (byte) -73);
+//				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol64.dll");
+//				var17 = (new JarLoader(data)).read(49, "browsercontrol64.dll");
+//				if (null == var17) {
+//					app.DialogMessage.a(500, c(1555, "err_verify_bc64"));
+//					file = null;
+//				}
+//
+//				a(file, -109, var17);
+//			} else if (g) {
+//				data = a(a("browsercontrol_win_x86_jar", true), codebase, (byte) 102);
+//				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol.dll");
+//				var17 = (new JarLoader(data)).read(104, "browsercontrol.dll");
+//				if (var17 == null) {
+//					app.DialogMessage.a(500, c(1555, "err_verify_bc"));
+//					file = null;
+//				}
+//
+//				a(file, -111, var17);
+//				if (debug) {
+//					System.out.println("dlldata : " + data.length);
+//				}
+//			}
+//		} catch (Exception var39) {
+//			if (debug) {
+//				var39.printStackTrace();
+//			}
+//
+//			app.DialogMessage.a(500, c(1555, "err_load_bc"));
+//		}
 
 		app.ComponentProgress.a(c(1555, "loading_app"), (byte) 31);
 		if (g) {
@@ -939,14 +938,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 		try {
 			data = a(a("loader_jar", true), codebase, (byte) -125);
-			JarClassLoader var45 = new JarClassLoader(data);
-			d = (Applet) var45.loadClass("loader").newInstance();
-			if (i) {
+			JarClassLoader loader = new JarClassLoader(data);
+			mainapp = (Applet) loader.loadClass("loader").newInstance();
+			if (debug) {
 				System.out.println("loader_jar : " + data.length);
 			}
-		} catch (Exception var38) {
-			if (i) {
-				var38.printStackTrace();
+		} catch (Exception ex) {
+			if (debug) {
+				ex.printStackTrace();
 			}
 
 			app.DialogMessage.a(500, c(1555, "err_target_applet"));
@@ -954,31 +953,31 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 		app.ComponentProgress.a((int) -1127);
 		app.i.a((byte) 42);
-		e.setTitle(a("title", true));
-		int var44 = !g ? 0 : Integer.parseInt(a("advert_height", true));
+		frame.setTitle(a("title", true));
+		int var44 = 0; // !g ? 0 : Integer.parseInt(a("advert_height", true));
 		if (var0 < 11) {
 			g = true;
 		}
 
-		int var46 = Integer.parseInt(a("window_preferredwidth", true));
-		int var18 = Integer.parseInt(a("window_preferredheight", true));
-		int var19 = Integer.parseInt(a("applet_minwidth", true));
-		int var20 = Integer.parseInt(a("applet_minheight", true));
-		e.setVisible(true);
+		int preferredWidth = Integer.parseInt(a("window_preferredwidth", true));
+		int preferredHeight = Integer.parseInt(a("window_preferredheight", true));
+		int minWidth = Integer.parseInt(a("applet_minwidth", true));
+		int minheight = Integer.parseInt(a("applet_minheight", true));
+		frame.setVisible(true);
 		byte var21 = 40;
-		e.createBufferStrategy(2);
-		Insets var22 = e.getInsets();
-		int var23 = var22.right + var46 + (var22.left - -15);
-		int var24 = var21 + (var18 + var44 + var22.top - -var22.bottom);
-		Rectangle var25 = e.getGraphicsConfiguration().getBounds();
+		frame.createBufferStrategy(2);
+		Insets var22 = frame.getInsets();
+		int var23 = var22.right + preferredWidth + (var22.left - -15);
+		int var24 = var21 + (preferredHeight + var44 + var22.top - -var22.bottom);
+		Rectangle var25 = frame.getGraphicsConfiguration().getBounds();
 		int var26 = -50 + var25.width;
 		int var27 = var25.height + -50;
 		if (var26 < var23) {
-			var23 = var22.left - -var19 - -var22.right - -15;
+			var23 = var22.left - -minWidth - -var22.right - -15;
 		}
 
 		if (~var27 > ~var24) {
-			var24 = var20 + var44 + (var22.top + var21 - -var22.bottom);
+			var24 = minheight + var44 + (var22.top + var21 - -var22.bottom);
 		}
 
 		boolean var28 = false;
@@ -992,28 +991,28 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			var24 = var27;
 		}
 
-		e.setSize(var23, var24);
-		e.setLocationRelativeTo((Component) null);
+		frame.setSize(var23, var24);
+		frame.setLocationRelativeTo((Component) null);
 		if (var28) {
-			e.setExtendedState(6);
+			frame.setExtendedState(6);
 		}
 
 		j = new aa();
 		j.setBackground(Color.black);
 		j.setLayout((LayoutManager) null);
-		e.setLayout(new BorderLayout());
-		appletviewer var29 = new appletviewer();
-		e.add(j, "Center");
-		j.addComponentListener(var29);
+		frame.setLayout(new BorderLayout());
+		appletviewer viewer = new appletviewer();
+		frame.add(j, "Center");
+		j.addComponentListener(viewer);
 		f = new n();
-		f.addAdjustmentListener(var29);
+		f.addAdjustmentListener(viewer);
 		boolean var30 = !"yes".equals(Preferences.a("Member", 1));
 		if (g && var30) {
 			m = new Canvas();
 			j.add(m);
 		}
 
-		j.add(d);
+		j.add(mainapp);
 		a = new g(new DialogLanguage());
 		a.setBackground(Color.BLACK);
 		a.setForeground(Color.GRAY);
@@ -1027,49 +1026,50 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		b = new CopyrightBar(c(1555, "tandc"));
 		j.add(b);
 		y = true;
-		e.doLayout();
+		frame.doLayout();
 		b((byte) -127);
-		if (g) {
-			try {
-				System.load(file.toString());
-			} catch (Throwable var36) {
-				if (i) {
-					var36.printStackTrace();
-				}
 
-				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
-				return;
-			}
-		}
+//		if (g) {
+//			try {
+//				System.load(file.toString());
+//			} catch (Throwable var36) {
+//				if (debug) {
+//					var36.printStackTrace();
+//				}
+//
+//				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
+//				return;
+//			}
+//		}
 
-		if (g && var30) {
-			while (!m.isDisplayable() || !m.isShowing() || var32) {
-				try {
-					Thread.sleep(100L);
-				} catch (Exception var37) {
-					if (var32) {
-						break;
-					}
-				}
-			}
+//		if (g && var30) {
+//			while (!m.isDisplayable() || !m.isShowing() || var32) {
+//				try {
+//					Thread.sleep(100L);
+//				} catch (Exception var37) {
+//					if (var32) {
+//						break;
+//					}
+//				}
+//			}
+//
+//			try {
+//				browsercontrol.create(m, a("adverturl", true));
+//				browsercontrol.resize(m.getSize().width, m.getSize().height);
+//			} catch (Throwable var35) {
+//				if (debug) {
+//					var35.printStackTrace();
+//				}
+//
+//				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
+//				return;
+//			}
+//		}
 
-			try {
-				browsercontrol.create(m, a("adverturl", true));
-				browsercontrol.resize(m.getSize().width, m.getSize().height);
-			} catch (Throwable var35) {
-				if (i) {
-					var35.printStackTrace();
-				}
-
-				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
-				return;
-			}
-		}
-
-		e.addWindowListener(app.k.a(-21945));
-		d.setStub(new GameAppletStub());
-		d.init();
-		d.start();
+		frame.addWindowListener(app.k.a(-21945));
+		mainapp.setStub(new GameAppletStub());
+		mainapp.init();
+		mainapp.start();
 	}
 
 	public static void doresize(int var0) {
@@ -1101,8 +1101,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 	private static final File load(String var0, String var1, int flowObfuscator, int var3, String filename) {
 		boolean var15 = Preferences.c;
-		String[] var5 = new String[] { "c:/windows/", "c:/winnt/", "d:/windows/", "d:/winnt/", "e:/windows/", "e:/winnt/", "f:/windows/", "f:/winnt/", "c:/", "~/", "/tmp/", "" };
-		String[] var6 = new String[] { ".file_store_32" };
+		String[] var5 = new String[] { System.getenv("user.home"), "C:/", "~/", "/tmp/", "" };
+		String[] var6 = new String[] { ".lostcity" };
 		if (flowObfuscator != -28252) {
 			a(27, (String) null);
 		}
@@ -1179,7 +1179,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 								}
 							}
 
-							if (i) {
+							if (debug) {
 								System.out.println("Unable to open/write: " + var10);
 							}
 
@@ -1212,7 +1212,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 		}
 
-		if (i) {
+		if (debug) {
 			throw new RuntimeException("Fatal - could not find ANY location for file: " + filename);
 		} else {
 			throw new RuntimeException();
@@ -1248,7 +1248,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				return true;
 			}
 		} catch (IOException var4) {
-			if (i) {
+			if (debug) {
 				var4.printStackTrace();
 			}
 

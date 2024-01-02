@@ -35,7 +35,7 @@ final class DialogMessage {
 
 	private static final void a(String var0, String var1, String var2, byte var3) {
 		boolean var10 = Preferences.c;
-		a = new Dialog(appletviewer.e, var1, true);
+		a = new Dialog(appletviewer.frame, var1, true);
 		int var4 = 0;
 		int var5 = -1;
 
@@ -86,6 +86,6 @@ final class DialogMessage {
 		a.add(var11, "South");
 		a.setResizable(false);
 		a.setSize(500, 100);
-		a.setLocationRelativeTo(appletviewer.e);
+		a.setLocationRelativeTo(appletviewer.frame);
 	}
 }

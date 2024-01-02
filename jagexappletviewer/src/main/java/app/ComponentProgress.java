@@ -61,7 +61,7 @@ final class ComponentProgress extends Component {
 		e = new ComponentProgress(appletviewer.c(var0 + 1554, "loaderbox_initial"));
 		e.c = new Font("Helvetica", var0, 13);
 		e.g = e.getFontMetrics(e.c);
-		b = new Dialog(appletviewer.e, "Jagex Ltd.", false);
+		b = new Dialog(appletviewer.frame, "Jagex Ltd.", false);
 		b.add(e);
 		b.addWindowListener(k.a(-21945));
 		b.setResizable(false);
@@ -73,7 +73,7 @@ final class ComponentProgress extends Component {
 			b(-122);
 		}
 
-		b.setLocationRelativeTo(appletviewer.e);
+		b.setLocationRelativeTo(appletviewer.frame);
 		b.setVisible(true);
 	}
 

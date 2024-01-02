@@ -60,7 +60,7 @@ final class f implements ActionListener, WindowListener {
 	}
 
 	final int a(int var1) {
-		this.c.setLocationRelativeTo(appletviewer.e);
+		this.c.setLocationRelativeTo(appletviewer.frame);
 		if (var1 != -1) {
 			this.a(117);
 		}
@@ -87,7 +87,7 @@ final class f implements ActionListener, WindowListener {
 		var5.addActionListener(this);
 		var3.add(var4);
 		var3.add(var5);
-		this.c = new Dialog(appletviewer.e, var1, true);
+		this.c = new Dialog(appletviewer.frame, var1, true);
 		this.c.addWindowListener(this);
 		this.c.setSize(200, 150);
 		this.c.add(var2);
