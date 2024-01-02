@@ -805,20 +805,17 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 		}
 
-		String var8 = getProperty("viewerversion", true);
-		int modewhat;
-		if (null != var8) {
+		String viewerversion = getProperty("viewerversion", true);
+		if (viewerversion != null) {
 			try {
-				modewhat = Integer.parseInt(var8);
-				if (-111 > ~modewhat) {
+				int version = Integer.parseInt(viewerversion);
+				if (version > 100) {
 					DialogMessage.showMessage(0, getLocalization(1555, "new_version"));
 				}
 			} catch (NumberFormatException ignored) {
 			}
 		}
 
-		modewhat = Integer.parseInt(getParam((String) "modewhat", 61)) + 32;
-		String cachesubdir = getProperty("cachesubdir", true);
 		String codebase = getProperty("codebase", true);
 		String osName = System.getProperty("os.name").toLowerCase();
 		String osArch = System.getProperty("os.arch").toLowerCase();
