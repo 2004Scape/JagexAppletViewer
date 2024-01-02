@@ -11,9 +11,9 @@ import java.security.ProtectionDomain;
 import java.security.cert.Certificate;
 import java.util.Hashtable;
 
-final class l extends ClassLoader {
+final class JarClassLoader extends ClassLoader {
 	private Hashtable a = new Hashtable();
-	private u b;
+	private JarLoader b;
 	private ProtectionDomain c;
 
 	protected final synchronized Class loadClass(String var1, boolean var2) throws ClassNotFoundException {
@@ -41,8 +41,8 @@ final class l extends ClassLoader {
 		return (InputStream) (var2 != null ? new ByteArrayInputStream(var2) : ClassLoader.getSystemResourceAsStream(var1));
 	}
 
-	l(byte[] var1) throws IOException {
-		this.b = new u(var1);
+	JarClassLoader(byte[] var1) throws IOException {
+		this.b = new JarLoader(var1);
 		CodeSource var2 = new CodeSource((URL) null, (Certificate[]) null);
 		Permissions var3 = new Permissions();
 		var3.add(new AllPermission());

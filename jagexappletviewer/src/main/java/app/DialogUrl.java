@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-final class w extends WindowAdapter implements ActionListener {
+final class DialogUrl extends WindowAdapter implements ActionListener {
 	private Dialog a;
 
 	public final void actionPerformed(ActionEvent var1) {
 		this.a.setVisible(false);
 	}
 
-	w(String var1) {
+	DialogUrl(String var1) {
 		super();
-		boolean var5 = ca.c;
+		boolean var5 = Preferences.c;
 		this.a = new Dialog(appletviewer.e, appletviewer.c(1555, "information"), true);
 		TextArea var2 = new TextArea();
 		var2.setText(appletviewer.c(1555, "copy_paste_url") + ":\n" + var1);
@@ -36,7 +36,7 @@ final class w extends WindowAdapter implements ActionListener {
 		this.a.setLocationRelativeTo(appletviewer.e);
 		this.a.setVisible(true);
 		if (appletviewer.A) {
-			ca.c = !var5;
+			Preferences.c = !var5;
 		}
 
 	}

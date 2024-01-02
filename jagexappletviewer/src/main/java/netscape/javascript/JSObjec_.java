@@ -1,7 +1,7 @@
 package netscape.javascript;
 
 import app.appletviewer;
-import app.ca;
+import app.Preferences;
 
 import java.applet.Applet;
 
@@ -14,15 +14,15 @@ public class JSObjec_ {
 	public Object call(String var1, Object[] var2) {
 		System.out.println("Received command: " + var1);
 		if ("zap".equals(var1)) {
-			ca.a("yes", -124, "Member");
-			ca.a((byte) 104);
+			Preferences.a("yes", -124, "Member");
+			Preferences.a((byte) 104);
 			appletviewer.removeadvert();
 			appletviewer.d((byte) 66);
 		}
 
 		if ("unzap".equals(var1)) {
-			ca.a("no", -124, "Member");
-			ca.a((byte) 110);
+			Preferences.a("no", -124, "Member");
+			Preferences.a((byte) 110);
 			appletviewer.readdadvert();
 			appletviewer.d((byte) 86);
 		}

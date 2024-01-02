@@ -26,7 +26,7 @@ final class i implements Runnable {
 	}
 
 	public final void run() {
-		boolean var6 = ca.c;
+		boolean var6 = Preferences.c;
 
 		while (true) {
 			String var1 = null;
@@ -79,7 +79,7 @@ final class i implements Runnable {
 				}
 
 				try {
-					new w(var2);
+					new DialogUrl(var2);
 				} catch (Exception var9) {
 					if (appletviewer.i) {
 						var9.printStackTrace();

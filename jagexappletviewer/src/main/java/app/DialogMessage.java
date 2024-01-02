@@ -7,12 +7,12 @@ import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
 
-final class e {
+final class DialogMessage {
 	static Dialog a;
 	private static Button b;
 
 	static final void a(int var0, String var1) {
-		app.b.a((int) -1127);
+		app.ComponentProgress.a((int) -1127);
 		a(appletviewer.c(1555, "quit"), appletviewer.c(1555, "error"), var1, (byte) 20);
 		a.addWindowListener(k.a(-21945));
 		if (var0 != 500) {
@@ -34,7 +34,7 @@ final class e {
 	}
 
 	private static final void a(String var0, String var1, String var2, byte var3) {
-		boolean var10 = ca.c;
+		boolean var10 = Preferences.c;
 		a = new Dialog(appletviewer.e, var1, true);
 		int var4 = 0;
 		int var5 = -1;

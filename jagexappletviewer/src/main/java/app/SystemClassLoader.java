@@ -11,22 +11,22 @@ import java.security.Permissions;
 import java.security.ProtectionDomain;
 import java.security.cert.Certificate;
 
-final class v extends ClassLoader {
+final class SystemClassLoader extends ClassLoader {
 	private static ClassLoader a;
-	private static v b;
+	private static SystemClassLoader b;
 
 	static final void a(byte var0) {
 		if (var0 >= 126) {
-			b = new v();
+			b = new SystemClassLoader();
 			b.b((byte) -122);
 		}
 	}
 
-	public v() {
+	public SystemClassLoader() {
 	}
 
 	public final Class loadClass(String var1) throws ClassNotFoundException {
-		boolean var13 = ca.c;
+		boolean var13 = Preferences.c;
 		if ("netscape.javascript.JSObject".equals(var1)) {
 			CodeSource var2 = new CodeSource((URL) null, (Certificate[]) null);
 			Permissions var3 = new Permissions();

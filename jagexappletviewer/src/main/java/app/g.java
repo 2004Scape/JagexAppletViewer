@@ -19,7 +19,7 @@ final class g extends Canvas implements MouseListener, MouseMotionListener {
 	private String[] f = new String[10];
 
 	public final void mouseReleased(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		this.d = var1.getX();
 		var1.getY();
 		int var2 = this.e;
@@ -49,7 +49,7 @@ final class g extends Canvas implements MouseListener, MouseMotionListener {
 	}
 
 	public final void mousePressed(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		this.d = var1.getX();
 		var1.getY();
 		int var2 = this.e;
@@ -82,7 +82,7 @@ final class g extends Canvas implements MouseListener, MouseMotionListener {
 	}
 
 	public final void paint(Graphics var1) {
-		boolean var9 = ca.c;
+		boolean var9 = Preferences.c;
 		int var2 = this.getWidth();
 		int var3 = this.getHeight();
 		var1.setColor(Color.BLACK);
@@ -132,7 +132,7 @@ final class g extends Canvas implements MouseListener, MouseMotionListener {
 	}
 
 	public final void mouseMoved(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		this.d = var1.getX();
 		var1.getY();
 		int var2 = this.e;
@@ -186,7 +186,7 @@ final class g extends Canvas implements MouseListener, MouseMotionListener {
 	}
 
 	public final void mouseDragged(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		this.d = var1.getX();
 		var1.getY();
 		int var2 = this.e;

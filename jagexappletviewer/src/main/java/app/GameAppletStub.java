@@ -13,7 +13,7 @@ import java.security.InvalidParameterException;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-final class ba implements AppletStub, AppletContext {
+final class GameAppletStub implements AppletStub, AppletContext {
 	public final Image getImage(URL var1) {
 		throw new UnsupportedOperationException();
 	}
@@ -46,7 +46,7 @@ final class ba implements AppletStub, AppletContext {
 		throw new UnsupportedOperationException();
 	}
 
-	public ba() {
+	public GameAppletStub() {
 	}
 
 	public final AppletContext getAppletContext() {

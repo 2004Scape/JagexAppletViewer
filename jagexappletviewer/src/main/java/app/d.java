@@ -12,6 +12,6 @@ final class d implements ActionListener {
 	}
 
 	d() {
-		this.a = e.a;
+		this.a = DialogMessage.a;
 	}
 }

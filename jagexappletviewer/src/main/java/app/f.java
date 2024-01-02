@@ -51,7 +51,7 @@ final class f implements ActionListener, WindowListener {
 		if (var1.getActionCommand().equals("ok")) {
 			this.b = this.a.getSelectedIndex();
 			this.c.setVisible(false);
-			if (!ca.c) {
+			if (!Preferences.c) {
 				return;
 			}
 		}
@@ -71,7 +71,7 @@ final class f implements ActionListener, WindowListener {
 
 	f(String var1) {
 		super();
-		boolean var6 = ca.c;
+		boolean var6 = Preferences.c;
 		Panel var2 = new Panel();
 		this.a = new List();
 		var2.setLayout(new BorderLayout());
@@ -98,7 +98,7 @@ final class f implements ActionListener, WindowListener {
 	}
 
 	final void a(String[] var1, int var2) {
-		boolean var5 = ca.c;
+		boolean var5 = Preferences.c;
 		this.a.removeAll();
 		if (var2 == 2) {
 			int var3 = 0;

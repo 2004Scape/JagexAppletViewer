@@ -1,11 +1,11 @@
 import app.appletviewer;
 
 public class jagexappletviewer {
-	public static void main(String[] var0) {
-		if (var0.length < 1) {
+	public static void main(String[] args) {
+		if (args.length < 1) {
 			System.exit(0);
 		}
 
-		appletviewer.b(65, var0[0]);
+		appletviewer.b(65, args[0]);
 	}
 }

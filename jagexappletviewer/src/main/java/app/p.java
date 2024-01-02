@@ -12,7 +12,7 @@ final class p implements Runnable, MouseListener, MouseMotionListener {
 	private n e;
 
 	public final void run() {
-		boolean var3 = ca.c;
+		boolean var3 = Preferences.c;
 
 		while (true) {
 			while (true) {

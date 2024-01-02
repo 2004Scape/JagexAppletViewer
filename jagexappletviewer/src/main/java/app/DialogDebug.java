@@ -7,12 +7,12 @@ import java.awt.event.WindowListener;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-final class c extends OutputStream implements WindowListener {
+final class DialogDebug extends OutputStream implements WindowListener {
 	private boolean a = false;
 	private TextArea b;
 	private Frame c;
 	private PrintStream d;
-	private static c e;
+	private static DialogDebug e;
 	private String f;
 	private StringBuffer g = new StringBuffer(1024);
 
@@ -30,11 +30,11 @@ final class c extends OutputStream implements WindowListener {
 
 	static final PrintStream a(int var0, String var1) {
 		if (null == e) {
-			e = new c(var1);
+			e = new DialogDebug(var1);
 		}
 
 		if (var0 <= 0) {
-			e = (c) null;
+			e = null;
 		}
 
 		return e.d;
@@ -47,7 +47,7 @@ final class c extends OutputStream implements WindowListener {
 		synchronized (this) {
 			if (10 != var1) {
 				this.g.append(String.valueOf((char) var1));
-				if (!ca.c) {
+				if (!Preferences.c) {
 					return;
 				}
 			}
@@ -77,7 +77,7 @@ final class c extends OutputStream implements WindowListener {
 	public final void windowDeiconified(WindowEvent var1) {
 	}
 
-	private c(String var1) {
+	private DialogDebug(String var1) {
 		this.f = var1;
 		this.b = new TextArea();
 		this.b.setEditable(false);

@@ -12,12 +12,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.StringTokenizer;
 
-final class j extends Component implements MouseListener, MouseMotionListener {
-	private o[][] a;
-	private t[] b;
-	private static Color c = new Color(12410);
-	private static Color d = new Color(16777215);
-	private static Color e = new Color(16765440);
+final class CopyrightBar extends Component implements MouseListener, MouseMotionListener {
+	private CopyrightText[][] lines;
+	private CopyrightLink[] links;
+	private static Color c = new Color(0x00307a);
+	private static Color d = new Color(0xffffff);
+	private static Color e = new Color(0xffd200);
 
 	public final void mouseReleased(MouseEvent var1) {
 	}
@@ -26,16 +26,16 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 	}
 
 	public final void paint(Graphics var1) {
-		boolean var15 = ca.c;
+		boolean var15 = Preferences.c;
 		int var2 = this.getWidth();
 		FontMetrics var3 = var1.getFontMetrics();
 		int var4 = var3.getHeight();
 		int var5 = var4;
-		if (this.a != null) {
+		if (this.lines != null) {
 			int var6 = 0;
 
-			while (this.a.length > var6) {
-				o[] var7 = this.a[var6];
+			while (this.lines.length > var6) {
+				CopyrightText[] var7 = this.lines[var6];
 				int var8 = 0;
 				int var9 = 0;
 
@@ -51,13 +51,13 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 				int var10 = 0;
 
 				while (~var7.length < ~var10) {
-					o var11;
+					CopyrightText var11;
 					int var12;
 					label32:
 					{
 						var11 = var7[var10];
 						var12 = var3.stringWidth(var11.b);
-						t var13 = var11.a;
+						CopyrightLink var13 = var11.a;
 						if (null != var13) {
 							var1.setColor(e);
 							Rectangle var14 = var13.b;
@@ -98,13 +98,13 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 	}
 
 	public final void mousePressed(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		Point var2 = var1.getPoint();
 		int var3 = 0;
 
-		while (~var3 > ~this.b.length) {
-			if (this.b[var3].b.contains(var2)) {
-				i.showurl(this.b[var3].a, (String) null);
+		while (~var3 > ~this.links.length) {
+			if (this.links[var3].b.contains(var2)) {
+				i.showurl(this.links[var3].a, (String) null);
 			}
 
 			++var3;
@@ -119,12 +119,12 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 	}
 
 	public final void mouseMoved(MouseEvent var1) {
-		boolean var4 = ca.c;
+		boolean var4 = Preferences.c;
 		Point var2 = var1.getPoint();
 		int var3 = 0;
 
-		while (this.b.length > var3) {
-			if (this.b[var3].b.contains(var2)) {
+		while (this.links.length > var3) {
+			if (this.links[var3].b.contains(var2)) {
 				this.setCursor(Cursor.getPredefinedCursor(12));
 				return;
 			}
@@ -139,15 +139,15 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 	}
 
 	private final void a(byte var1, String var2) {
-		boolean var14 = ca.c;
+		boolean var14 = Preferences.c;
 		if (null != var2) {
 			if (var1 < 113) {
 				this.mouseClicked((MouseEvent) null);
 			}
 
 			StringTokenizer var3 = new StringTokenizer(var2, "\\");
-			this.a = new o[var3.countTokens()][];
-			o[] var4 = new o[100];
+			this.lines = new CopyrightText[var3.countTokens()][];
+			CopyrightText[] var4 = new CopyrightText[100];
 			int var5 = 0;
 
 			while (var3.hasMoreTokens()) {
@@ -157,14 +157,14 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 				do {
 					int var8 = var7.indexOf(91);
 					if (var8 < 0) {
-						var4[var6++] = new o(var7);
+						var4[var6++] = new CopyrightText(var7);
 						if (!var14) {
 							break;
 						}
 					}
 
 					if (var8 > 0) {
-						var4[var6++] = new o(var7.substring(0, var8));
+						var4[var6++] = new CopyrightText(var7.substring(0, var8));
 						var7 = var7.substring(var8);
 					}
 
@@ -185,7 +185,7 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 
 					String var12 = var7.substring(1 + var9, var10);
 					String var13 = var7.substring(var10 - -1, var11).trim();
-					var4[var6++] = new o(var13, var12);
+					var4[var6++] = new CopyrightText(var13, var12);
 					if (var7.length() <= 1 + var11) {
 						break;
 					}
@@ -193,8 +193,8 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 					var7 = var7.substring(var11 + 1);
 				} while (!var14);
 
-				this.a[var5] = new o[var6];
-				System.arraycopy(var4, 0, this.a[var5], 0, var6);
+				this.lines[var5] = new CopyrightText[var6];
+				System.arraycopy(var4, 0, this.lines[var5], 0, var6);
 				++var5;
 				if (var14) {
 					break;
@@ -204,20 +204,20 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 		}
 	}
 
-	j(String var1) {
+	CopyrightBar(String var1) {
 		super();
-		boolean var7 = ca.c;
-		this.a = (o[][]) null;
+		boolean var7 = Preferences.c;
+		this.lines = (CopyrightText[][]) null;
 		this.setBackground(c);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.a((byte) 123, var1);
-		if (this.a != null) {
+		if (this.lines != null) {
 			int var2 = 0;
 			int var3 = 0;
 
-			while (var3 < this.a.length) {
-				o[] var4 = this.a[var3];
+			while (var3 < this.lines.length) {
+				CopyrightText[] var4 = this.lines[var3];
 				int var5 = 0;
 
 				while (var5 < var4.length) {
@@ -237,17 +237,17 @@ final class j extends Component implements MouseListener, MouseMotionListener {
 				}
 			}
 
-			this.b = new t[var2];
+			this.links = new CopyrightLink[var2];
 			var3 = 0;
 			int var8 = 0;
 
-			while (this.a.length > var8) {
-				o[] var9 = this.a[var8];
+			while (this.lines.length > var8) {
+				CopyrightText[] var9 = this.lines[var8];
 				int var6 = 0;
 
 				while (var9.length > var6) {
 					if (var9[var6].a != null) {
-						this.b[var3++] = var9[var6].a;
+						this.links[var3++] = var9[var6].a;
 					}
 
 					++var6;

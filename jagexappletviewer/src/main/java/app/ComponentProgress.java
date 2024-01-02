@@ -7,12 +7,12 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-final class b extends Component {
+final class ComponentProgress extends Component {
 	private String a = "Loading...";
 	private static Dialog b;
 	private Font c;
 	private int d = 0;
-	private static b e;
+	private static ComponentProgress e;
 	private Color f = new Color(140, 11, 1);
 	private FontMetrics g;
 
@@ -35,7 +35,7 @@ final class b extends Component {
 
 			e.d = var0;
 			if (var1 != 140) {
-				e = (b) null;
+				e = null;
 			}
 
 			e.repaint();
@@ -58,7 +58,7 @@ final class b extends Component {
 	}
 
 	static final void b(int var0) {
-		e = new b(appletviewer.c(var0 + 1554, "loaderbox_initial"));
+		e = new ComponentProgress(appletviewer.c(var0 + 1554, "loaderbox_initial"));
 		e.c = new Font("Helvetica", var0, 13);
 		e.g = e.getFontMetrics(e.c);
 		b = new Dialog(appletviewer.e, "Jagex Ltd.", false);
@@ -77,7 +77,7 @@ final class b extends Component {
 		b.setVisible(true);
 	}
 
-	private b(String var1) {
+	private ComponentProgress(String var1) {
 		this.a = var1;
 	}
 
@@ -95,7 +95,7 @@ final class b extends Component {
 				var1.setFont(this.c);
 				var1.setColor(Color.white);
 				var1.drawString(var4, (var2 + -this.g.stringWidth(var4)) / 2, var3 / 2 - -4);
-				if (!ca.c) {
+				if (!Preferences.c) {
 					return;
 				}
 			}

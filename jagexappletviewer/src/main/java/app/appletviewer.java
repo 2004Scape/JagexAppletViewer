@@ -92,8 +92,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		if (~var2 > -1) {
 			return -1;
 		} else {
-			ca.a(Integer.toString(v[var2]), -128, "Language");
-			ca.a((byte) 124);
+			Preferences.a(Integer.toString(v[var2]), -128, "Language");
+			Preferences.a((byte) 124);
 			return var2;
 		}
 	}
@@ -136,7 +136,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 					e.remove(f);
 					e.validate();
-					if (!ca.c) {
+					if (!Preferences.c) {
 						break label89;
 					}
 				}
@@ -200,7 +200,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	}
 
 	private static final String a(int var0, String var1) {
-		boolean var9 = ca.c;
+		boolean var9 = Preferences.c;
 		if (var0 <= 100) {
 			a((File) null, 53, (byte[]) null);
 		}
@@ -221,7 +221,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 			String var6 = var2.substring(2 + var3, var4);
 			String var7 = var2.substring(var4 + 1, var5);
-			String var8 = ca.a(var6, 1);
+			String var8 = Preferences.a(var6, 1);
 			if (var8 != null) {
 				var7 = var8;
 			}
@@ -290,7 +290,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 					var2.printStackTrace();
 				}
 
-				app.e.a(500, c(1555, "err_create_advertising"));
+				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
 				return;
 			}
 		}
@@ -298,7 +298,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	}
 
 	private static final byte[] a(String var0, String var1, byte var2) {
-		boolean var7 = ca.c;
+		boolean var7 = Preferences.c;
 		byte[] var3 = new byte[300000];
 		int var4 = 0;
 
@@ -314,7 +314,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 				p += (float) var6;
 				var4 += var6;
-				app.b.a((int) (100.0F * (p / t)), 140);
+				app.ComponentProgress.a((int) (100.0F * (p / t)), 140);
 				if (var7) {
 					break;
 				}
@@ -326,7 +326,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				var8.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_downloading") + ": " + var0);
+			app.DialogMessage.a(500, c(1555, "err_downloading") + ": " + var0);
 		}
 
 		byte[] var9 = new byte[var4];
@@ -359,10 +359,10 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 	private static final void a(m var0, int var1) {
 		if (var0 != null) {
-			app.b.a(c(1555, "loading_app"), (byte) 31);
-			app.b.a(0, 140);
-			app.b.c(var1 ^ 48);
-			app.b.a((byte) -98);
+			app.ComponentProgress.a(c(1555, "loading_app"), (byte) 31);
+			app.ComponentProgress.a(0, 140);
+			app.ComponentProgress.c(var1 ^ 48);
+			app.ComponentProgress.a((byte) -98);
 			if (d != null) {
 				if (b.isVisible()) {
 					b.setVisible(false);
@@ -370,8 +370,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				}
 
 				d.stop();
-				app.b.a(25, 140);
-				app.b.a((byte) -98);
+				app.ComponentProgress.a(25, 140);
+				app.ComponentProgress.a((byte) -98);
 				d.destroy();
 				j.remove(d);
 				d = null;
@@ -379,46 +379,46 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 
 			q = var0;
-			app.b.a(var1, 140);
-			app.b.a((byte) -98);
+			app.ComponentProgress.a(var1, 140);
+			app.ComponentProgress.a((byte) -98);
 			if (g) {
-				app.v.a((byte) 127);
+				app.SystemClassLoader.a((byte) 127);
 			}
 
 			try {
-				String var2 = a("codebase", true);
-				byte[] var3 = a(a("loader_jar", true), var2, (byte) 114);
-				app.b.a(75, 140);
-				app.b.a((byte) -98);
-				l var4 = new l(var3);
+				String codebase = a("codebase", true);
+				byte[] jar = a(a("loader_jar", true), codebase, (byte) 114);
+				app.ComponentProgress.a(75, 140);
+				app.ComponentProgress.a((byte) -98);
+				JarClassLoader var4 = new JarClassLoader(jar);
 				d = (Applet) var4.loadClass("loader").newInstance();
 				if (i) {
-					System.out.println("loader_jar : " + var3.length);
+					System.out.println("loader_jar : " + jar.length);
 				}
 
-				app.b.a(var1 ^ -1109);
+				app.ComponentProgress.a(var1 ^ -1109);
 			} catch (Exception var5) {
 				if (i) {
 					var5.printStackTrace();
 				}
 
-				app.b.a((int) -1127);
-				app.e.a(500, c(var1 + 1505, "err_target_applet"));
+				app.ComponentProgress.a((int) -1127);
+				app.DialogMessage.a(500, c(var1 + 1505, "err_target_applet"));
 			}
 
 			j.add(d);
-			b = new j(c(1555, "tandc"));
+			b = new CopyrightBar(c(1555, "tandc"));
 			j.add(b);
 			r = true;
 			b((byte) -119);
-			d.setStub(new ba());
+			d.setStub(new GameAppletStub());
 			d.init();
 			d.start();
 		}
 	}
 
 	static final void c(byte var0) {
-		boolean var9 = ca.c;
+		boolean var9 = Preferences.c;
 		String var1 = a("serverlist", true);
 		m[] var2 = u;
 		int var3 = u.length;
@@ -492,10 +492,10 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	}
 
 	private static final boolean a(int var0, int var1) {
-		boolean var16 = ca.c;
+		boolean var16 = Preferences.c;
 		int var2 = 0;
 		n.clear();
-		app.q.a(var1, -11712);
+		app.Language.a(var1, -11712);
 		if (var0 < 12) {
 			h = (Hashtable) null;
 		}
@@ -628,13 +628,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				var19.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_load_config"));
+			app.DialogMessage.a(500, c(1555, "err_load_config"));
 		} catch (Exception var20) {
 			if (i) {
 				var20.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_decode_config"));
+			app.DialogMessage.a(500, c(1555, "err_decode_config"));
 		}
 
 		if (~var2 < -1) {
@@ -706,7 +706,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				k = new f(c(1555, "switchserver"));
 			}
 
-			if (ca.a("Language", 1) == null) {
+			if (Preferences.a("Language", 1) == null) {
 				return -1 < ~a((int) 84);
 			}
 		}
@@ -729,12 +729,12 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	}
 
 	public static final void b(int var0, String var1) {
-		boolean var32 = ca.c;
+		boolean var32 = Preferences.c;
 		y = false;
 		i = Boolean.getBoolean("com.jagex.debug");
 		if (i) {
-			System.setErr(app.c.a(29, "Jagex host console"));
-			System.setOut(app.c.a(27, "Jagex host console"));
+			System.setErr(app.DialogDebug.a(29, "Jagex host console"));
+			System.setOut(app.DialogDebug.a(27, "Jagex host console"));
 			System.out.println("release #7");
 			System.out.println("java.version = " + System.getProperty("java.version"));
 			System.out.println("os.name = " + System.getProperty("os.name"));
@@ -746,8 +746,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		String var6;
 		label297:
 		{
-			ca.b((byte) 109);
-			var2 = ca.a("Language", 1);
+			Preferences.b((byte) 109);
+			var2 = Preferences.a("Language", 1);
 			var3 = 0;
 			if (null == var2) {
 				byte var7;
@@ -802,8 +802,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				}
 
 				if (~var7 <= -1) {
-					ca.a(Integer.toString(var7), -127, "Language");
-					ca.a((byte) 111);
+					Preferences.a(Integer.toString(var7), -127, "Language");
+					Preferences.a((byte) 111);
 				}
 
 				if (!var32) {
@@ -814,7 +814,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			var3 = Integer.parseInt(var2);
 		}
 
-		app.q.a(var3, -11712);
+		app.Language.a(var3, -11712);
 		e = new Frame();
 		e.getToolkit().setDynamicLayout(true);
 		e.setBackground(Color.BLACK);
@@ -828,14 +828,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 		}
 
-		app.b.b(1);
-		app.b.c(2);
-		app.b.a(c(1555, "loading_config"), (byte) 31);
+		app.ComponentProgress.b(1);
+		app.ComponentProgress.c(2);
+		app.ComponentProgress.a(c(1555, "loading_config"), (byte) 31);
 		var6 = System.getProperty("com.jagex.config");
 		String var43 = System.getProperty("com.jagex.configfile");
 		if (null == var6) {
 			if (null == var43) {
-				app.e.a(500, c(1555, "err_missing_config"));
+				app.DialogMessage.a(500, c(1555, "err_missing_config"));
 			}
 
 			x = new File(var40, var43);
@@ -851,7 +851,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				break;
 			}
 
-			var2 = ca.a("Language", 1);
+			var2 = Preferences.a("Language", 1);
 			var3 = 0;
 			if (null != var2) {
 				var3 = Integer.parseInt(var2);
@@ -862,66 +862,66 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		}
 
 		String var8 = a("viewerversion", true);
-		int var9;
+		int modewhat;
 		if (null != var8) {
 			try {
-				var9 = Integer.parseInt(var8);
-				if (-111 > ~var9) {
-					app.e.b(0, c(1555, "new_version"));
+				modewhat = Integer.parseInt(var8);
+				if (-111 > ~modewhat) {
+					app.DialogMessage.b(0, c(1555, "new_version"));
 				}
 			} catch (NumberFormatException var34) {
 			}
 		}
 
-		var9 = Integer.parseInt(a((String) "modewhat", 61)) + 32;
-		String var10 = a("cachesubdir", true);
-		String var11 = a("codebase", true);
-		String var12 = System.getProperty("os.name").toLowerCase();
-		String var13 = System.getProperty("os.arch").toLowerCase();
-		g = var12.startsWith("win");
-		l = g && var13.startsWith("amd64") || var13.startsWith("x86_64");
-		String var14 = null;
+		modewhat = Integer.parseInt(a((String) "modewhat", 61)) + 32;
+		String cachesubdir = a("cachesubdir", true);
+		String codebase = a("codebase", true);
+		String osName = System.getProperty("os.name").toLowerCase();
+		String osArch = System.getProperty("os.arch").toLowerCase();
+		g = osName.startsWith("win");
+		l = g && osArch.startsWith("amd64") || osArch.startsWith("x86_64");
+		String userHome = null;
 
 		try {
-			var14 = System.getProperty("user.home");
-			if (null != var14) {
-				var14 = var14 + "/";
+			userHome = System.getProperty("user.home");
+			if (null != userHome) {
+				userHome = userHome + "/";
 			}
 		} catch (Exception var33) {
 		}
 
-		if (var14 == null) {
-			var14 = "~/";
+		if (userHome == null) {
+			userHome = "~/";
 		}
 
-		app.b.a(c(1555, "loading_app_resources"), (byte) 31);
-		File var15 = null;
+		app.ComponentProgress.a(c(1555, "loading_app_resources"), (byte) 31);
+		File file = null;
 
-		byte[] var16;
+		byte[] data;
 		try {
 			byte[] var17;
 			if (l) {
-				var16 = a(a("browsercontrol_win_amd64_jar", true), var11, (byte) -73);
-				var15 = a(var14, var10, -28252, var9, "browsercontrol64.dll");
-				var17 = (new u(var16)).a(49, "browsercontrol64.dll");
+				data = a(a("browsercontrol_win_amd64_jar", true), codebase, (byte) -73);
+				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol64.dll");
+				var17 = (new JarLoader(data)).a(49, "browsercontrol64.dll");
 				if (null == var17) {
-					app.e.a(500, c(1555, "err_verify_bc64"));
-					var15 = null;
+					app.DialogMessage.a(500, c(1555, "err_verify_bc64"));
+					file = null;
 				}
 
-				a(var15, -109, var17);
+				a(file, -109, var17);
 			} else if (g) {
-				var16 = a(a("browsercontrol_win_x86_jar", true), var11, (byte) 102);
-				var15 = a(var14, var10, -28252, var9, "browsercontrol.dll");
-				var17 = (new u(var16)).a(104, "browsercontrol.dll");
+				data = a(a("browsercontrol_win_x86_jar", true), codebase, (byte) 102);
+				file = load(userHome, cachesubdir, -28252, modewhat, "browsercontrol.dll");
+				var17 = (new JarLoader(data)).a(104, "browsercontrol.dll");
 				if (var17 == null) {
-					app.e.a(500, c(1555, "err_verify_bc"));
-					var15 = null;
+					app.DialogMessage.a(500, c(1555, "err_verify_bc"));
+					file = null;
 				}
 
-				a(var15, -111, var17);
+				a(file, -111, var17);
 				if (i) {
-					System.out.println("dlldata : " + var16.length);
+					System.out.println("dlldata : " + data.length);
 				}
 			}
 		} catch (Exception var39) {
@@ -929,30 +929,30 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				var39.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_load_bc"));
+			app.DialogMessage.a(500, c(1555, "err_load_bc"));
 		}
 
-		app.b.a(c(1555, "loading_app"), (byte) 31);
+		app.ComponentProgress.a(c(1555, "loading_app"), (byte) 31);
 		if (g) {
-			app.v.a((byte) 127);
+			app.SystemClassLoader.a((byte) 127);
 		}
 
 		try {
-			var16 = a(a("loader_jar", true), var11, (byte) -125);
-			l var45 = new l(var16);
+			data = a(a("loader_jar", true), codebase, (byte) -125);
+			JarClassLoader var45 = new JarClassLoader(data);
 			d = (Applet) var45.loadClass("loader").newInstance();
 			if (i) {
-				System.out.println("loader_jar : " + var16.length);
+				System.out.println("loader_jar : " + data.length);
 			}
 		} catch (Exception var38) {
 			if (i) {
 				var38.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_target_applet"));
+			app.DialogMessage.a(500, c(1555, "err_target_applet"));
 		}
 
-		app.b.a((int) -1127);
+		app.ComponentProgress.a((int) -1127);
 		app.i.a((byte) 42);
 		e.setTitle(a("title", true));
 		int var44 = !g ? 0 : Integer.parseInt(a("advert_height", true));
@@ -1007,14 +1007,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		j.addComponentListener(var29);
 		f = new n();
 		f.addAdjustmentListener(var29);
-		boolean var30 = !"yes".equals(ca.a("Member", 1));
+		boolean var30 = !"yes".equals(Preferences.a("Member", 1));
 		if (g && var30) {
 			m = new Canvas();
 			j.add(m);
 		}
 
 		j.add(d);
-		a = new g(new s());
+		a = new g(new DialogLanguage());
 		a.setBackground(Color.BLACK);
 		a.setForeground(Color.GRAY);
 		a.a((byte) -121, c(1555, "language"));
@@ -1024,20 +1024,20 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 		a.setFont(new Font("SansSerif", 0, 10));
 		j.add(a);
-		b = new j(c(1555, "tandc"));
+		b = new CopyrightBar(c(1555, "tandc"));
 		j.add(b);
 		y = true;
 		e.doLayout();
 		b((byte) -127);
 		if (g) {
 			try {
-				System.load(var15.toString());
+				System.load(file.toString());
 			} catch (Throwable var36) {
 				if (i) {
 					var36.printStackTrace();
 				}
 
-				app.e.a(500, c(1555, "err_create_advertising"));
+				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
 				return;
 			}
 		}
@@ -1061,13 +1061,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 					var35.printStackTrace();
 				}
 
-				app.e.a(500, c(1555, "err_create_advertising"));
+				app.DialogMessage.a(500, c(1555, "err_create_advertising"));
 				return;
 			}
 		}
 
 		e.addWindowListener(app.k.a(-21945));
-		d.setStub(new ba());
+		d.setStub(new GameAppletStub());
 		d.init();
 		d.start();
 	}
@@ -1088,22 +1088,22 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	public final void componentMoved(ComponentEvent var1) {
 	}
 
-	static final String a(String var0, boolean var1) {
+	static final String a(String name, boolean var1) {
 		if (null != q) {
-			String var2 = (String) q.a.get(var0);
+			String var2 = (String) q.a.get(name);
 			if (null != var2) {
 				return var2;
 			}
 		}
 
-		return !var1 ? (String) null : (String) h.get(var0);
+		return !var1 ? (String) null : (String) h.get(name);
 	}
 
-	private static final File a(String var0, String var1, int var2, int var3, String var4) {
-		boolean var15 = ca.c;
-		String[] var5 = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", var0, "/tmp/", "" };
-		String[] var6 = new String[] { ".jagex_cache_" + var3, ".file_store_" + var3 };
-		if (var2 != -28252) {
+	private static final File load(String var0, String var1, int flowObfuscator, int var3, String filename) {
+		boolean var15 = Preferences.c;
+		String[] var5 = new String[] { "c:/windows/", "c:/winnt/", "d:/windows/", "d:/winnt/", "e:/windows/", "e:/winnt/", "f:/windows/", "f:/winnt/", "c:/", "~/", "/tmp/", "" };
+		String[] var6 = new String[] { ".file_store_32" };
+		if (flowObfuscator != -28252) {
 			a(27, (String) null);
 		}
 
@@ -1118,7 +1118,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 				while (true) {
 					if (var9 < var5.length) {
-						String var10 = var5[var9] + var6[var8] + "/" + (null == var1 ? "" : var1 + "/") + var4;
+						String var10 = var5[var9] + var6[var8] + "/" + (null == var1 ? "" : var1 + "/") + filename;
 						RandomAccessFile var11 = null;
 
 						label115:
@@ -1213,7 +1213,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		}
 
 		if (i) {
-			throw new RuntimeException("Fatal - could not find ANY location for file: " + var4);
+			throw new RuntimeException("Fatal - could not find ANY location for file: " + filename);
 		} else {
 			throw new RuntimeException();
 		}
@@ -1252,7 +1252,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				var4.printStackTrace();
 			}
 
-			app.e.a(500, c(1555, "err_save_file"));
+			app.DialogMessage.a(500, c(1555, "err_save_file"));
 			return false;
 		}
 	}

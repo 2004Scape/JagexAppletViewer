@@ -67,7 +67,7 @@ final class n extends Canvas implements Adjustable {
 	}
 
 	private final boolean a(int var1) {
-		boolean var6 = ca.c;
+		boolean var6 = Preferences.c;
 		boolean var2 = this.isEnabled();
 		int var3 = this.getHeight();
 		if (var3 == 0) {
@@ -159,7 +159,7 @@ final class n extends Canvas implements Adjustable {
 	}
 
 	private final void a(int var1, AdjustmentEvent var2) {
-		boolean var6 = ca.c;
+		boolean var6 = Preferences.c;
 		Iterator var3 = this.e.iterator();
 		int var4 = 1 / ((12 - var1) / 48);
 

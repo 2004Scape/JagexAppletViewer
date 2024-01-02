@@ -9,7 +9,7 @@ import java.io.PrintStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-public final class ca {
+public final class Preferences {
 	private static Hashtable a = new Hashtable();
 	private static File b = new File(new File(System.getProperty("user.home")), "jagexappletviewer.preferences");
 	public static boolean c;

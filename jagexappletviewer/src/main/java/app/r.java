@@ -6,7 +6,7 @@ final class r {
 	private static int[] c;
 
 	private static final String a(int var0, int var1, int var2, byte[] var3) {
-		boolean var9 = ca.c;
+		boolean var9 = Preferences.c;
 		StringBuffer var4 = new StringBuffer();
 		int var5 = var0;
 		if (var1 != -53) {
