@@ -23,7 +23,7 @@ final class DialogLanguage implements ActionListener {
 				return;
 			}
 
-			DialogMessage.showMessage(0, appletviewer.c(1555, "changes_on_restart"));
+			DialogMessage.showMessage(0, appletviewer.getLocalization(1555, "changes_on_restart"));
 			if (!var4) {
 				return;
 			}

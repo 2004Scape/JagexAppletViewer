@@ -24,7 +24,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 
 	public final URL getCodeBase() {
 		try {
-			return new URL(appletviewer.a("codebase", true));
+			return new URL(appletviewer.getProperty("codebase", true));
 		} catch (MalformedURLException var2) {
 			throw new InvalidParameterException();
 		}
@@ -69,7 +69,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 	}
 
 	public final String getParameter(String name) {
-		String value = appletviewer.a((String) name, 123);
+		String value = appletviewer.getParam((String) name, 123);
 
 		if (appletviewer.debug && value == null) {
 			System.out.println("Unavailable param:" + name);
@@ -84,13 +84,13 @@ final class GameAppletStub implements AppletStub, AppletContext {
 
 	public final URL getDocumentBase() {
 		try {
-			return new URL(appletviewer.a("codebase", true));
-		} catch (MalformedURLException var2) {
+			return new URL(appletviewer.getProperty("codebase", true));
+		} catch (MalformedURLException ignored) {
 			throw new InvalidParameterException();
 		}
 	}
 
-	public final AudioClip getAudioClip(URL var1) {
+	public final AudioClip getAudioClip(URL url) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -98,7 +98,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 		return true;
 	}
 
-	public final InputStream getStream(String var1) {
+	public final InputStream getStream(String url) {
 		throw new UnsupportedOperationException();
 	}
 }

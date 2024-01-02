@@ -15,10 +15,10 @@ final class JarLoader {
 
 	final byte[] read(int flowObfuscator, String name) {
 		try {
-			return this.cache.remove(name);
+			return this.cache.get(name);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			app.DialogMessage.showError(500, appletviewer.c(1555, "err_get_file") + ":" + name + " [" + ex.toString() + "]");
+			app.DialogMessage.showError(500, appletviewer.getLocalization(1555, "err_get_file") + ":" + name + " [" + ex.toString() + "]");
 			return null;
 		}
 	}

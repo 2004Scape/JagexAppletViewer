@@ -19,12 +19,12 @@ final class DialogUrl extends WindowAdapter implements ActionListener {
 	DialogUrl(String var1) {
 		super();
 		boolean var5 = Preferences.dialogVisible;
-		this.a = new Dialog(appletviewer.frame, appletviewer.c(1555, "information"), true);
+		this.a = new Dialog(appletviewer.frame, appletviewer.getLocalization(1555, "information"), true);
 		TextArea var2 = new TextArea();
-		var2.setText(appletviewer.c(1555, "copy_paste_url") + ":\n" + var1);
+		var2.setText(appletviewer.getLocalization(1555, "copy_paste_url") + ":\n" + var1);
 		var2.setEditable(false);
 		this.a.add(var2);
-		Button var3 = new Button(appletviewer.c(1555, "ok"));
+		Button var3 = new Button(appletviewer.getLocalization(1555, "ok"));
 		var3.addActionListener(this);
 		DialogPanel panel = new DialogPanel();
 		panel.setLayout(new FlowLayout(1));

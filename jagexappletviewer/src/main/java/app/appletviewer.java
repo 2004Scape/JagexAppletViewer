@@ -39,13 +39,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	static Frame frame;
 	private static DialogPreferences dialogPreferences;
 	static boolean isWindows;
-	private static Hashtable h = new Hashtable();
+	private static Hashtable properties = new Hashtable();
 	static boolean debug = false;
 	private static Panel mainPanel;
 	private static PopupWindow switchServerWindow;
 	private static boolean isWindows64;
-	private static Hashtable n = new Hashtable();
-	static Hashtable o = new Hashtable();
+	private static Hashtable params = new Hashtable();
+	static Hashtable localization = new Hashtable();
 	private static float progress = 0.0F;
 	private static Config currentConfig = null;
 	private static boolean r = true;
@@ -100,10 +100,10 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			int var1 = !topBar.isVisible() ? 0 : 20;
 			int var2 = 0;
 			int var3 = !copyright.isVisible() ? 0 : 40;
-			int var4 = Integer.parseInt(a("applet_minwidth", true));
-			int var5 = Integer.parseInt(a("applet_minheight", true));
-			int var6 = Integer.parseInt(a("applet_maxwidth", true));
-			int var7 = Integer.parseInt(a("applet_maxheight", true));
+			int var4 = Integer.parseInt(getProperty("applet_minwidth", true));
+			int var5 = Integer.parseInt(getProperty("applet_minheight", true));
+			int var6 = Integer.parseInt(getProperty("applet_maxwidth", true));
+			int var7 = Integer.parseInt(getProperty("applet_maxheight", true));
 			Dimension var8 = mainPanel.getSize();
 			if (action > -95) {
 				a(1, 10);
@@ -260,7 +260,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 				progress += (float) read;
 				offset += read;
-				app.ComponentProgress.setProgress((int) (100.0F * (progress / maxProgress)), 140);
+				ComponentProgress.setProgress((int) (100.0F * (progress / maxProgress)), 140);
 				if (var7) {
 					break;
 				}
@@ -272,7 +272,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				ex.printStackTrace();
 			}
 
-			DialogMessage.showError(500, c(1555, "err_downloading") + ": " + file);
+			DialogMessage.showError(500, getLocalization(1555, "err_downloading") + ": " + file);
 		}
 
 		byte[] data = new byte[offset];
@@ -288,27 +288,28 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		b((byte) -127);
 	}
 
-	static final String a(String name, int flowObfuscator) {
+	static final String getParam(String name, int flowObfuscator) {
 		if (flowObfuscator <= 14) {
 			return (String) null;
 		} else {
 			if (currentConfig != null) {
-				String var2 = (String) currentConfig.c.get(name);
-				if (var2 != null) {
-					return var2;
+				String value = (String) currentConfig.params.get(name);
+				if (value != null) {
+					return value;
 				}
 			}
 
-			return (String) n.get(name);
+			return (String) params.get(name);
 		}
 	}
 
-	private static final void a(Config config, int flowObfuscator) {
+	private static final void switchToServer(Config config, int flowObfuscator) {
 		if (config != null) {
-			app.ComponentProgress.setText(c(1555, "loading_app"), (byte) 31);
-			app.ComponentProgress.setProgress(0, 140);
-			app.ComponentProgress.show(flowObfuscator ^ 48);
-			app.ComponentProgress.refresh((byte) -98);
+			ComponentProgress.setText(getLocalization(1555, "loading_app"), (byte) 31);
+			ComponentProgress.setProgress(0, 140);
+			ComponentProgress.show(flowObfuscator ^ 48);
+			ComponentProgress.refresh((byte) -98);
+
 			if (mainapp != null) {
 				if (copyright.isVisible()) {
 					copyright.setVisible(false);
@@ -316,8 +317,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				}
 
 				mainapp.stop();
-				app.ComponentProgress.setProgress(25, 140);
-				app.ComponentProgress.refresh((byte) -98);
+				ComponentProgress.setProgress(25, 140);
+				ComponentProgress.refresh((byte) -98);
 				mainapp.destroy();
 				mainPanel.remove(mainapp);
 				mainapp = null;
@@ -325,35 +326,32 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 
 			currentConfig = config;
-			app.ComponentProgress.setProgress(flowObfuscator, 140);
-			app.ComponentProgress.refresh((byte) -98);
-			if (isWindows) {
-				app.SystemClassLoader.a((byte) 127);
-			}
+			ComponentProgress.setProgress(flowObfuscator, 140);
+			ComponentProgress.refresh((byte) -98);
 
 			try {
-				String codebase = a("codebase", true);
-				byte[] jar = downloadFile(a("loader_jar", true), codebase, (byte) 114);
-				app.ComponentProgress.setProgress(75, 140);
-				app.ComponentProgress.refresh((byte) -98);
+				String codebase = getProperty("codebase", true);
+				byte[] jar = downloadFile(getProperty("loader_jar", true), codebase, (byte) 114);
+				ComponentProgress.setProgress(75, 140);
+				ComponentProgress.refresh((byte) -98);
 				JarClassLoader loader = new JarClassLoader(jar);
 				mainapp = (Applet) loader.loadClass("loader").newInstance();
 				if (debug) {
 					System.out.println("loader_jar : " + jar.length);
 				}
 
-				app.ComponentProgress.hide(flowObfuscator ^ -1109);
-			} catch (Exception var5) {
+				ComponentProgress.hide(flowObfuscator ^ -1109);
+			} catch (Exception ex) {
 				if (debug) {
-					var5.printStackTrace();
+					ex.printStackTrace();
 				}
 
-				app.ComponentProgress.hide((int) -1127);
-				DialogMessage.showError(500, c(flowObfuscator + 1505, "err_target_applet"));
+				ComponentProgress.hide((int) -1127);
+				DialogMessage.showError(500, getLocalization(flowObfuscator + 1505, "err_target_applet"));
 			}
 
 			mainPanel.add(mainapp);
-			copyright = new CopyrightBar(c(1555, "tandc"));
+			copyright = new CopyrightBar(getLocalization(1555, "tandc"));
 			mainPanel.add(copyright);
 			r = true;
 			b((byte) -119);
@@ -365,7 +363,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 	static final void c(byte var0) {
 		boolean var9 = Preferences.dialogVisible;
-		String serverlist = a("serverlist", true);
+		String serverlist = getProperty("serverlist", true);
 		Config[] var2 = configs;
 		int var3 = configs.length;
 		if (serverlist != null) {
@@ -420,7 +418,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		int var12 = 0;
 
 		while (var3 > var12) {
-			var11[var12] = (String) var2[var12].a.get("servername");
+			var11[var12] = (String) var2[var12].properties.get("servername");
 			++var12;
 			if (var9) {
 				break;
@@ -431,7 +429,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		var12 = switchServerWindow.a(-1);
 		if (var0 == -90) {
 			if (var12 >= 0) {
-				a(var2[var12], var0 ^ -108);
+				switchToServer(var2[var12], var0 ^ -108);
 			}
 		}
 	}
@@ -439,13 +437,13 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	private static final boolean a(int var0, int var1) {
 		boolean var16 = Preferences.dialogVisible;
 		int var2 = 0;
-		n.clear();
-		app.Language.a(var1, -11712);
+		params.clear();
+		Language.a(var1, -11712);
 		if (var0 < 12) {
-			h = (Hashtable) null;
+			properties = (Hashtable) null;
 		}
 
-		h.clear();
+		properties.clear();
 		configs = null;
 		currentConfig = null;
 		int serverCount = 0;
@@ -454,9 +452,9 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		int var25;
 		try {
 			BufferedReader var5 = a(w, true, localConfig);
-			Hashtable var6 = n;
-			Hashtable var7 = h;
-			Hashtable var8 = o;
+			Hashtable var6 = params;
+			Hashtable var7 = properties;
+			Hashtable var8 = localization;
 
 			label200:
 			do {
@@ -486,9 +484,9 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 					}
 
 					var4[serverCount++] = var11;
-					var8 = var11.d;
-					var7 = var11.a;
-					var6 = var11.c;
+					var8 = var11.localization;
+					var7 = var11.properties;
+					var6 = var11.params;
 				}
 
 				String var27;
@@ -573,20 +571,20 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				var19.printStackTrace();
 			}
 
-			DialogMessage.showError(500, c(1555, "err_load_config"));
+			DialogMessage.showError(500, getLocalization(1555, "err_load_config"));
 		} catch (Exception var20) {
 			if (debug) {
 				var20.printStackTrace();
 			}
 
-			DialogMessage.showError(500, c(1555, "err_decode_config"));
+			DialogMessage.showError(500, getLocalization(1555, "err_decode_config"));
 		}
 
 		if (~var2 < -1) {
 			s = new String[var2];
 			v = new int[var2];
 			int var21 = 0;
-			Enumeration var22 = o.keys();
+			Enumeration var22 = localization.keys();
 
 			label143:
 			do {
@@ -626,7 +624,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 							}
 
 							v[var26] = var24;
-							s[var26] = c(1555, var23);
+							s[var26] = getLocalization(1555, var23);
 							if (!var16) {
 								break;
 							}
@@ -643,12 +641,12 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				}
 			} while (!var16);
 
-			languageWindow = new PopupWindow(c(1555, "language"));
+			languageWindow = new PopupWindow(getLocalization(1555, "language"));
 			languageWindow.a(s, 2);
 			if (serverCount > 0) {
 				configs = new Config[serverCount];
 				System.arraycopy(var4, 0, configs, 0, serverCount);
-				switchServerWindow = new PopupWindow(c(1555, "switchserver"));
+				switchServerWindow = new PopupWindow(getLocalization(1555, "switchserver"));
 			}
 
 			if (Preferences.get("Language", 1) == null) {
@@ -760,7 +758,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			var3 = Integer.parseInt(var2);
 		}
 
-		app.Language.a(var3, -11712);
+		Language.a(var3, -11712);
 		frame = new Frame();
 		frame.getToolkit().setDynamicLayout(true);
 		frame.setBackground(Color.BLACK);
@@ -774,14 +772,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 		}
 
-		app.ComponentProgress.init(1);
-		app.ComponentProgress.show(2);
-		app.ComponentProgress.setText(c(1555, "loading_config"), (byte) 31);
+		ComponentProgress.init(1);
+		ComponentProgress.show(2);
+		ComponentProgress.setText(getLocalization(1555, "loading_config"), (byte) 31);
 		configuri = System.getProperty("com.jagex.config");
 		String configfile = System.getProperty("com.jagex.configfile");
 		if (null == configuri) {
 			if (null == configfile) {
-				DialogMessage.showError(500, c(1555, "err_missing_config"));
+				DialogMessage.showError(500, getLocalization(1555, "err_missing_config"));
 			}
 
 			localConfig = new File(configpath, configfile);
@@ -807,21 +805,21 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 		}
 
-		String var8 = a("viewerversion", true);
+		String var8 = getProperty("viewerversion", true);
 		int modewhat;
 		if (null != var8) {
 			try {
 				modewhat = Integer.parseInt(var8);
 				if (-111 > ~modewhat) {
-					DialogMessage.showMessage(0, c(1555, "new_version"));
+					DialogMessage.showMessage(0, getLocalization(1555, "new_version"));
 				}
 			} catch (NumberFormatException ignored) {
 			}
 		}
 
-		modewhat = Integer.parseInt(a((String) "modewhat", 61)) + 32;
-		String cachesubdir = a("cachesubdir", true);
-		String codebase = a("codebase", true);
+		modewhat = Integer.parseInt(getParam((String) "modewhat", 61)) + 32;
+		String cachesubdir = getProperty("cachesubdir", true);
+		String codebase = getProperty("codebase", true);
 		String osName = System.getProperty("os.name").toLowerCase();
 		String osArch = System.getProperty("os.arch").toLowerCase();
 		isWindows = osName.startsWith("win");
@@ -840,17 +838,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			userHome = "~/";
 		}
 
-		app.ComponentProgress.setText(c(1555, "loading_app_resources"), (byte) 31);
+		ComponentProgress.setText(getLocalization(1555, "loading_app_resources"), (byte) 31);
 		File file = null;
 
 		byte[] data;
-		app.ComponentProgress.setText(c(1555, "loading_app"), (byte) 31);
-		if (isWindows) {
-			app.SystemClassLoader.a((byte) 127);
-		}
+		ComponentProgress.setText(getLocalization(1555, "loading_app"), (byte) 31);
 
 		try {
-			data = downloadFile(a("loader_jar", true), codebase, (byte) -125);
+			data = downloadFile(getProperty("loader_jar", true), codebase, (byte) -125);
 			JarClassLoader loader = new JarClassLoader(data);
 			mainapp = (Applet) loader.loadClass("loader").newInstance();
 			if (debug) {
@@ -861,21 +856,21 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				ex.printStackTrace();
 			}
 
-			DialogMessage.showError(500, c(1555, "err_target_applet"));
+			DialogMessage.showError(500, getLocalization(1555, "err_target_applet"));
 		}
 
-		app.ComponentProgress.hide((int) -1127);
-		app.UrlThread.a((byte) 42);
-		frame.setTitle(a("title", true));
+		ComponentProgress.hide((int) -1127);
+		UrlThread.a((byte) 42);
+		frame.setTitle(getProperty("title", true));
 		int var44 = 0;
 		if (var0 < 11) {
 			isWindows = true;
 		}
 
-		int preferredWidth = Integer.parseInt(a("window_preferredwidth", true));
-		int preferredHeight = Integer.parseInt(a("window_preferredheight", true));
-		int minWidth = Integer.parseInt(a("applet_minwidth", true));
-		int minheight = Integer.parseInt(a("applet_minheight", true));
+		int preferredWidth = Integer.parseInt(getProperty("window_preferredwidth", true));
+		int preferredHeight = Integer.parseInt(getProperty("window_preferredheight", true));
+		int minWidth = Integer.parseInt(getProperty("applet_minwidth", true));
+		int minheight = Integer.parseInt(getProperty("applet_minheight", true));
 		frame.setVisible(true);
 		byte var21 = 40;
 		frame.createBufferStrategy(2);
@@ -924,20 +919,20 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		topBar = new TopPanelBar(new DialogLanguage());
 		topBar.setBackground(Color.BLACK);
 		topBar.setForeground(Color.GRAY);
-		topBar.a((byte) -121, c(1555, "language"));
+		topBar.a((byte) -121, getLocalization(1555, "language"));
 		if (null != configs && -2 > ~configs.length) {
-			topBar.a((byte) -108, c(1555, "switchserver"));
+			topBar.a((byte) -108, getLocalization(1555, "switchserver"));
 		}
 
 		topBar.setFont(new Font("SansSerif", 0, 10));
 		mainPanel.add(topBar);
-		copyright = new CopyrightBar(c(1555, "tandc"));
+		copyright = new CopyrightBar(getLocalization(1555, "tandc"));
 		mainPanel.add(copyright);
 		loaded = true;
 		frame.doLayout();
 		b((byte) -127);
 
-		frame.addWindowListener(app.WindowListener.create(-21945));
+		frame.addWindowListener(WindowListener.create(-21945));
 		mainapp.setStub(new GameAppletStub());
 		mainapp.init();
 		mainapp.start();
@@ -958,15 +953,15 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 	public final void componentMoved(ComponentEvent event) {
 	}
 
-	static final String a(String name, boolean var1) {
+	static final String getProperty(String name, boolean flowObfuscator) {
 		if (null != currentConfig) {
-			String var2 = (String) currentConfig.a.get(name);
-			if (null != var2) {
-				return var2;
+			String value = (String) currentConfig.properties.get(name);
+			if (null != value) {
+				return value;
 			}
 		}
 
-		return !var1 ? (String) null : (String) h.get(name);
+		return !flowObfuscator ? (String) null : (String) properties.get(name);
 	}
 
 	private static final File load(String var0, String var1, int flowObfuscator, int var3, String filename) {
@@ -1089,18 +1084,18 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 		}
 	}
 
-	static final String c(int flowObfuscator, String name) {
+	static final String getLocalization(int flowObfuscator, String name) {
 		if (flowObfuscator != 1555) {
 			return (String) null;
 		} else {
 			if (currentConfig != null) {
-				String var2 = (String) currentConfig.d.get(name);
-				if (null != var2) {
-					return var2;
+				String value = (String) currentConfig.localization.get(name);
+				if (null != value) {
+					return value;
 				}
 			}
 
-			return (String) o.get(name);
+			return (String) localization.get(name);
 		}
 	}
 
@@ -1122,7 +1117,7 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 				ex.printStackTrace();
 			}
 
-			DialogMessage.showError(500, c(1555, "err_save_file"));
+			DialogMessage.showError(500, getLocalization(1555, "err_save_file"));
 			return false;
 		}
 	}

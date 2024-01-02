@@ -5,7 +5,7 @@ import java.util.Hashtable;
 final class Language {
 	static final void a(int var0, int var1) {
 		boolean var4 = Preferences.dialogVisible;
-		Hashtable var2 = appletviewer.o;
+		Hashtable var2 = appletviewer.localization;
 		if (var1 == -11712) {
 			label65:
 			{

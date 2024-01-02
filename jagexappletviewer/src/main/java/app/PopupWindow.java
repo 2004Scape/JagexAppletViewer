@@ -16,39 +16,39 @@ final class PopupWindow implements ActionListener, WindowListener {
 	private int b;
 	private Dialog c;
 
-	public final void windowDeiconified(WindowEvent var1) {
+	public final void windowDeiconified(WindowEvent event) {
 	}
 
-	private final void a(boolean var1) {
+	private final void a(boolean flowObfuscator) {
 		this.b = -1;
 		this.c.setVisible(false);
-		if (!var1) {
+		if (!flowObfuscator) {
 			this.windowActivated((WindowEvent) null);
 		}
 
 	}
 
-	public final void windowClosing(WindowEvent var1) {
+	public final void windowClosing(WindowEvent event) {
 		this.a(true);
 	}
 
-	public final void windowClosed(WindowEvent var1) {
+	public final void windowClosed(WindowEvent event) {
 	}
 
-	public final void windowIconified(WindowEvent var1) {
+	public final void windowIconified(WindowEvent event) {
 	}
 
-	public final void windowDeactivated(WindowEvent var1) {
+	public final void windowDeactivated(WindowEvent event) {
 	}
 
-	public final void windowOpened(WindowEvent var1) {
+	public final void windowOpened(WindowEvent event) {
 	}
 
-	public final void windowActivated(WindowEvent var1) {
+	public final void windowActivated(WindowEvent event) {
 	}
 
-	public final void actionPerformed(ActionEvent var1) {
-		if (var1.getActionCommand().equals("ok")) {
+	public final void actionPerformed(ActionEvent event) {
+		if (event.getActionCommand().equals("ok")) {
 			this.b = this.a.getSelectedIndex();
 			this.c.setVisible(false);
 			if (!Preferences.dialogVisible) {
@@ -59,9 +59,9 @@ final class PopupWindow implements ActionListener, WindowListener {
 		this.a(true);
 	}
 
-	final int a(int var1) {
+	final int a(int flowObfuscator) {
 		this.c.setLocationRelativeTo(appletviewer.frame);
-		if (var1 != -1) {
+		if (flowObfuscator != -1) {
 			this.a(117);
 		}
 
@@ -69,7 +69,7 @@ final class PopupWindow implements ActionListener, WindowListener {
 		return this.b;
 	}
 
-	PopupWindow(String var1) {
+	PopupWindow(String title) {
 		super();
 		boolean var6 = Preferences.dialogVisible;
 		Panel var2 = new Panel();
@@ -79,15 +79,15 @@ final class PopupWindow implements ActionListener, WindowListener {
 		Panel var3 = new Panel();
 		var3.setLayout(new GridLayout(1, 2));
 		var2.add(var3, "South");
-		Button var4 = new Button(appletviewer.c(1555, "ok"));
+		Button var4 = new Button(appletviewer.getLocalization(1555, "ok"));
 		var4.setActionCommand("ok");
 		var4.addActionListener(this);
-		Button var5 = new Button(appletviewer.c(1555, "cancel"));
+		Button var5 = new Button(appletviewer.getLocalization(1555, "cancel"));
 		var5.setActionCommand("cancel");
 		var5.addActionListener(this);
 		var3.add(var4);
 		var3.add(var5);
-		this.c = new Dialog(appletviewer.frame, var1, true);
+		this.c = new Dialog(appletviewer.frame, title, true);
 		this.c.addWindowListener(this);
 		this.c.setSize(200, 150);
 		this.c.add(var2);
@@ -97,10 +97,10 @@ final class PopupWindow implements ActionListener, WindowListener {
 
 	}
 
-	final void a(String[] var1, int var2) {
+	final void a(String[] var1, int flowObfuscator) {
 		boolean var5 = Preferences.dialogVisible;
 		this.a.removeAll();
-		if (var2 == 2) {
+		if (flowObfuscator == 2) {
 			int var3 = 0;
 
 			while (~var3 > ~var1.length) {

@@ -13,7 +13,7 @@ final class DialogMessage {
 
 	static final void showError(int flowObfuscator, String message) {
 		app.ComponentProgress.hide((int) -1127);
-		show(appletviewer.c(1555, "quit"), appletviewer.c(1555, "error"), message, (byte) 20);
+		show(appletviewer.getLocalization(1555, "quit"), appletviewer.getLocalization(1555, "error"), message, (byte) 20);
 		dialog.addWindowListener(WindowListener.create(-21945));
 		if (flowObfuscator != 500) {
 			dialog = null;
@@ -24,7 +24,7 @@ final class DialogMessage {
 	}
 
 	static final void showMessage(int flowObfuscator, String message) {
-		show(appletviewer.c(1555, "ok"), appletviewer.c(flowObfuscator + 1555, "message"), message, (byte) 20);
+		show(appletviewer.getLocalization(1555, "ok"), appletviewer.getLocalization(flowObfuscator + 1555, "message"), message, (byte) 20);
 		if (flowObfuscator != 0) {
 			showError(114, (String) null);
 		}

@@ -56,7 +56,7 @@ final class ComponentProgress extends Component {
 	}
 
 	static final void init(int flowObfuscator) {
-		progress = new ComponentProgress(appletviewer.c(1555, "loaderbox_initial"));
+		progress = new ComponentProgress(appletviewer.getLocalization(1555, "loaderbox_initial"));
 		progress.font = new Font("Helvetica", 1, 13);
 		progress.fontMetrics = progress.getFontMetrics(progress.font);
 		dialog = new Dialog(appletviewer.frame, "Jagex Ltd.", false);
