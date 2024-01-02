@@ -12,7 +12,7 @@ import java.awt.image.ImageObserver;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-final class n extends Canvas implements Adjustable {
+final class DialogPreferences extends Canvas implements Adjustable {
 	boolean a = false;
 	private int b = 20;
 	int c = 0;
@@ -67,7 +67,7 @@ final class n extends Canvas implements Adjustable {
 	}
 
 	private final boolean a(int var1) {
-		boolean var6 = Preferences.c;
+		boolean var6 = Preferences.dialogVisible;
 		boolean var2 = this.isEnabled();
 		int var3 = this.getHeight();
 		if (var3 == 0) {
@@ -159,7 +159,7 @@ final class n extends Canvas implements Adjustable {
 	}
 
 	private final void a(int var1, AdjustmentEvent var2) {
-		boolean var6 = Preferences.c;
+		boolean var6 = Preferences.dialogVisible;
 		Iterator var3 = this.e.iterator();
 		int var4 = 1 / ((12 - var1) / 48);
 
@@ -198,12 +198,12 @@ final class n extends Canvas implements Adjustable {
 		return this.b;
 	}
 
-	public n() {
+	public DialogPreferences() {
 		this.setMinimumSize(new Dimension(15, 40));
 		this.setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
 		this.setMaximumSize(new Dimension(15, Integer.MAX_VALUE));
 		this.setBackground(Color.BLACK);
-		p var1 = new p(this);
+		PreferencesListener var1 = new PreferencesListener(this);
 		this.addMouseListener(var1);
 		this.addMouseMotionListener(var1);
 	}

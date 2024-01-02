@@ -4,15 +4,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-final class p implements Runnable, MouseListener, MouseMotionListener {
+final class PreferencesListener implements Runnable, MouseListener, MouseMotionListener {
 	private int a = 0;
 	private int b = -1;
 	private int c = 0;
 	private int d = 0;
-	private n e;
+	private DialogPreferences e;
 
 	public final void run() {
-		boolean var3 = Preferences.c;
+		boolean var3 = Preferences.dialogVisible;
 
 		while (true) {
 			while (true) {
@@ -65,21 +65,21 @@ final class p implements Runnable, MouseListener, MouseMotionListener {
 		}
 	}
 
-	public final void mouseDragged(MouseEvent var1) {
+	public final void mouseDragged(MouseEvent event) {
 		if (this.b >= 0) {
-			int var2 = var1.getY();
+			int var2 = event.getY();
 			this.e.setValue(this.c - -((this.e.g + -this.e.c) * (var2 - this.b) / this.e.j));
 		}
 	}
 
-	public final void mouseMoved(MouseEvent var1) {
+	public final void mouseMoved(MouseEvent event) {
 	}
 
-	public final void mousePressed(MouseEvent var1) {
+	public final void mousePressed(MouseEvent event) {
 		if (this.e.isEnabled()) {
 			this.e.a = true;
 			int var2 = this.e.getHeight();
-			int var3 = var1.getY();
+			int var3 = event.getY();
 			if (~var3 <= -16) {
 				if (~(-15 + var2) > ~var3) {
 					this.e.setValue(this.e.getValue() - -this.e.h);
@@ -117,25 +117,25 @@ final class p implements Runnable, MouseListener, MouseMotionListener {
 		}
 	}
 
-	public final void mouseExited(MouseEvent var1) {
+	public final void mouseExited(MouseEvent event) {
 	}
 
-	public final void mouseClicked(MouseEvent var1) {
+	public final void mouseClicked(MouseEvent event) {
 	}
 
-	p(n var1) {
+	PreferencesListener(DialogPreferences var1) {
 		this.e = var1;
-		Thread var2 = new Thread(this);
-		var2.setDaemon(true);
-		var2.start();
+		Thread thread = new Thread(this);
+		thread.setDaemon(true);
+		thread.start();
 	}
 
-	public final void mouseReleased(MouseEvent var1) {
+	public final void mouseReleased(MouseEvent event) {
 		this.b = -1;
 		this.a = 0;
 		this.e.a = false;
 	}
 
-	public final void mouseEntered(MouseEvent var1) {
+	public final void mouseEntered(MouseEvent event) {
 	}
 }

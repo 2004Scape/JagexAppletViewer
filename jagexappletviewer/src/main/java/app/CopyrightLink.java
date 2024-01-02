@@ -3,10 +3,10 @@ package app;
 import java.awt.Rectangle;
 
 final class CopyrightLink {
-	String a;
-	Rectangle b = new Rectangle();
+	String url;
+	Rectangle bounds = new Rectangle();
 
-	CopyrightLink(String var1) {
-		this.a = var1;
+	CopyrightLink(String url) {
+		this.url = url;
 	}
 }

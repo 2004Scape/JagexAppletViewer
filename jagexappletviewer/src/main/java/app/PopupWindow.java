@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-final class f implements ActionListener, WindowListener {
+final class PopupWindow implements ActionListener, WindowListener {
 	private List a;
 	private int b;
 	private Dialog c;
@@ -51,7 +51,7 @@ final class f implements ActionListener, WindowListener {
 		if (var1.getActionCommand().equals("ok")) {
 			this.b = this.a.getSelectedIndex();
 			this.c.setVisible(false);
-			if (!Preferences.c) {
+			if (!Preferences.dialogVisible) {
 				return;
 			}
 		}
@@ -69,9 +69,9 @@ final class f implements ActionListener, WindowListener {
 		return this.b;
 	}
 
-	f(String var1) {
+	PopupWindow(String var1) {
 		super();
-		boolean var6 = Preferences.c;
+		boolean var6 = Preferences.dialogVisible;
 		Panel var2 = new Panel();
 		this.a = new List();
 		var2.setLayout(new BorderLayout());
@@ -98,7 +98,7 @@ final class f implements ActionListener, WindowListener {
 	}
 
 	final void a(String[] var1, int var2) {
-		boolean var5 = Preferences.c;
+		boolean var5 = Preferences.dialogVisible;
 		this.a.removeAll();
 		if (var2 == 2) {
 			int var3 = 0;

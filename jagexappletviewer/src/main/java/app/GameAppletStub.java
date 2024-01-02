@@ -35,7 +35,7 @@ final class GameAppletStub implements AppletStub, AppletContext {
 			System.out.println("showdocument url:" + var1);
 		}
 
-		i.showurl(var1.toString(), (String) null);
+		UrlThread.showurl(var1.toString(), (String) null);
 	}
 
 	public final Enumeration getApplets() {
@@ -53,12 +53,12 @@ final class GameAppletStub implements AppletStub, AppletContext {
 		return this;
 	}
 
-	public final void showDocument(URL var1, String var2) {
+	public final void showDocument(URL url, String target) {
 		if (appletviewer.debug) {
-			System.out.println("showdocument url:" + var1 + " target:" + var2);
+			System.out.println("showdocument url:" + url + " target:" + target);
 		}
 
-		i.showurl(var1.toString(), var2);
+		UrlThread.showurl(url.toString(), target);
 	}
 
 	public final void appletResize(int var1, int var2) {
@@ -68,18 +68,14 @@ final class GameAppletStub implements AppletStub, AppletContext {
 		throw new UnsupportedOperationException();
 	}
 
-	public final String getParameter(String var1) {
-		String var2 = appletviewer.a((String) var1, 123);
-		if (appletviewer.debug && null == var2) {
-			if ("force64mb".equals(var1)) {
-				System.out.println("Returning false for force64mb");
-				return "false";
-			}
+	public final String getParameter(String name) {
+		String value = appletviewer.a((String) name, 123);
 
-			System.out.println("Unavailable param:" + var1);
+		if (appletviewer.debug && value == null) {
+			System.out.println("Unavailable param:" + name);
 		}
 
-		return var2;
+		return value;
 	}
 
 	public final Iterator getStreamKeys() {

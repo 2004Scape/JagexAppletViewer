@@ -8,39 +8,39 @@ import java.awt.Label;
 import java.awt.Panel;
 
 final class DialogMessage {
-	static Dialog a;
-	private static Button b;
+	static Dialog dialog;
+	private static Button button;
 
-	static final void a(int var0, String var1) {
-		app.ComponentProgress.a((int) -1127);
-		a(appletviewer.c(1555, "quit"), appletviewer.c(1555, "error"), var1, (byte) 20);
-		a.addWindowListener(k.a(-21945));
-		if (var0 != 500) {
-			a = (Dialog) null;
+	static final void showError(int flowObfuscator, String message) {
+		app.ComponentProgress.hide((int) -1127);
+		show(appletviewer.c(1555, "quit"), appletviewer.c(1555, "error"), message, (byte) 20);
+		dialog.addWindowListener(WindowListener.create(-21945));
+		if (flowObfuscator != 500) {
+			dialog = null;
 		}
 
-		b.addActionListener(k.a(var0 + -22445));
-		a.setVisible(true);
+		button.addActionListener(WindowListener.create(flowObfuscator + -22445));
+		dialog.setVisible(true);
 	}
 
-	static final void b(int var0, String var1) {
-		a(appletviewer.c(1555, "ok"), appletviewer.c(var0 + 1555, "message"), var1, (byte) 20);
-		if (var0 != 0) {
-			a(114, (String) null);
+	static final void showMessage(int flowObfuscator, String message) {
+		show(appletviewer.c(1555, "ok"), appletviewer.c(flowObfuscator + 1555, "message"), message, (byte) 20);
+		if (flowObfuscator != 0) {
+			showError(114, (String) null);
 		}
 
-		b.addActionListener(new d());
-		a.setVisible(true);
+		button.addActionListener(new DialogListener());
+		dialog.setVisible(true);
 	}
 
-	private static final void a(String var0, String var1, String var2, byte var3) {
-		boolean var10 = Preferences.c;
-		a = new Dialog(appletviewer.frame, var1, true);
+	private static final void show(String yesText, String message, String noText, byte flowObfuscator) {
+		boolean var10 = Preferences.dialogVisible;
+		dialog = new Dialog(appletviewer.frame, message, true);
 		int var4 = 0;
 		int var5 = -1;
 
 		do {
-			var5 = var2.indexOf(10, var5 - -1);
+			var5 = noText.indexOf(10, var5 - -1);
 			++var4;
 		} while (0 <= var5);
 
@@ -53,20 +53,20 @@ final class DialogMessage {
 		int var8;
 		do {
 			var8 = 1 + var5;
-			var5 = var2.indexOf(10, 1 + var5);
+			var5 = noText.indexOf(10, 1 + var5);
 			if (var5 < 0) {
-				var6[var4++] = var2.substring(var8);
+				var6[var4++] = noText.substring(var8);
 				if (!var10) {
 					continue;
 				}
 			}
 
-			var6[var4++] = var2.substring(var8, var5);
+			var6[var4++] = noText.substring(var8, var5);
 		} while (0 <= var5);
 
 		var8 = 0;
-		if (var3 != 20) {
-			b = (Button) null;
+		if (flowObfuscator != 20) {
+			button = (Button) null;
 		}
 
 		while (~var6.length < ~var8) {
@@ -78,14 +78,14 @@ final class DialogMessage {
 			}
 		}
 
-		a.add(var7, "Center");
-		b = new Button(var0);
-		a var11 = new a();
-		var11.setLayout(new FlowLayout(1));
-		var11.add(b);
-		a.add(var11, "South");
-		a.setResizable(false);
-		a.setSize(500, 100);
-		a.setLocationRelativeTo(appletviewer.frame);
+		dialog.add(var7, "Center");
+		button = new Button(yesText);
+		DialogPanel panel = new DialogPanel();
+		panel.setLayout(new FlowLayout(1));
+		panel.add(button);
+		dialog.add(panel, "South");
+		dialog.setResizable(false);
+		dialog.setSize(500, 100);
+		dialog.setLocationRelativeTo(appletviewer.frame);
 	}
 }

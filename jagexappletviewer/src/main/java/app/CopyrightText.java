@@ -1,15 +1,15 @@
 package app;
 
 final class CopyrightText {
-	CopyrightLink a = null;
-	String b;
+	CopyrightLink link = null;
+	String text;
 
-	CopyrightText(String var1) {
-		this.b = var1;
+	CopyrightText(String text) {
+		this.text = text;
 	}
 
-	CopyrightText(String var1, String var2) {
-		this.b = var1;
-		this.a = new CopyrightLink(var2);
+	CopyrightText(String text, String link) {
+		this.text = text;
+		this.link = new CopyrightLink(link);
 	}
 }

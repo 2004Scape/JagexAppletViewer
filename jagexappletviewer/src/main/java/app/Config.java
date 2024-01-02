@@ -2,13 +2,13 @@ package app;
 
 import java.util.Hashtable;
 
-final class m {
+final class Config {
 	Hashtable a = new Hashtable();
-	String b;
+	String name;
 	Hashtable c = new Hashtable();
 	Hashtable d = new Hashtable();
 
-	m(String var1) {
-		this.b = var1;
+	Config(String name) {
+		this.name = name;
 	}
 }

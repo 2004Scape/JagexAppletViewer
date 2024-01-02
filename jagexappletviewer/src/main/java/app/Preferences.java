@@ -12,24 +12,24 @@ import java.util.Hashtable;
 public final class Preferences {
 	private static Hashtable a = new Hashtable();
 	private static File b = new File(new File(System.getProperty("user.home")), "jagexappletviewer.preferences");
-	public static boolean c;
+	public static boolean dialogVisible;
 
-	static final String a(String var0, int var1) {
-		if (var1 != 1) {
+	static final String get(String key, int flowObfuscator) {
+		if (flowObfuscator != 1) {
 			a = (Hashtable) null;
 		}
 
-		return (String) a.get(var0);
+		return (String) a.get(key);
 	}
 
-	public static final void a(String var0, int var1, String var2) {
-		if (var1 < -121) {
-			a.put(var2, var0);
+	public static final void set(String value, int flowObfuscator, String key) {
+		if (flowObfuscator < -121) {
+			a.put(key, value);
 		}
 	}
 
-	public static final void a(byte var0) {
-		boolean var6 = c;
+	public static final void save(byte flowObfuscator) {
+		boolean var6 = Preferences.dialogVisible;
 		PrintStream var1 = null;
 
 		try {
@@ -45,11 +45,11 @@ public final class Preferences {
 				}
 			}
 
-			if (var0 <= 97) {
+			if (flowObfuscator <= 97) {
 				b = (File) null;
 			}
-		} catch (IOException var9) {
-			var9.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		} finally {
 			if (null != var1) {
 				var1.close();
@@ -59,10 +59,10 @@ public final class Preferences {
 
 	}
 
-	static final void b(byte var0) {
-		boolean var6 = c;
+	static final void load(byte flowObfuscator) {
+		boolean var6 = Preferences.dialogVisible;
 		BufferedReader var1 = null;
-		if (var0 > 101) {
+		if (flowObfuscator > 101) {
 			try {
 				var1 = new BufferedReader(new FileReader(b));
 

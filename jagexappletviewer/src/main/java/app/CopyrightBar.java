@@ -26,7 +26,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 	}
 
 	public final void paint(Graphics var1) {
-		boolean var15 = Preferences.c;
+		boolean var15 = Preferences.dialogVisible;
 		int var2 = this.getWidth();
 		FontMetrics var3 = var1.getFontMetrics();
 		int var4 = var3.getHeight();
@@ -40,7 +40,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 				int var9 = 0;
 
 				while (~var9 > ~var7.length) {
-					var8 += var3.stringWidth(var7[var9].b);
+					var8 += var3.stringWidth(var7[var9].text);
 					++var9;
 					if (var15) {
 						break;
@@ -56,11 +56,11 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 					label32:
 					{
 						var11 = var7[var10];
-						var12 = var3.stringWidth(var11.b);
-						CopyrightLink var13 = var11.a;
+						var12 = var3.stringWidth(var11.text);
+						CopyrightLink var13 = var11.link;
 						if (null != var13) {
 							var1.setColor(e);
-							Rectangle var14 = var13.b;
+							Rectangle var14 = var13.bounds;
 							var14.height = var4;
 							var14.y = -var4 + var5;
 							var14.x = var9;
@@ -73,7 +73,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 						var1.setColor(d);
 					}
 
-					var1.drawString(var11.b, var9, var5);
+					var1.drawString(var11.text, var9, var5);
 					var9 += var12;
 					++var10;
 					if (var15) {
@@ -98,13 +98,13 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 	}
 
 	public final void mousePressed(MouseEvent var1) {
-		boolean var4 = Preferences.c;
+		boolean var4 = Preferences.dialogVisible;
 		Point var2 = var1.getPoint();
 		int var3 = 0;
 
 		while (~var3 > ~this.links.length) {
-			if (this.links[var3].b.contains(var2)) {
-				i.showurl(this.links[var3].a, (String) null);
+			if (this.links[var3].bounds.contains(var2)) {
+				UrlThread.showurl(this.links[var3].url, (String) null);
 			}
 
 			++var3;
@@ -119,12 +119,12 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 	}
 
 	public final void mouseMoved(MouseEvent var1) {
-		boolean var4 = Preferences.c;
+		boolean var4 = Preferences.dialogVisible;
 		Point var2 = var1.getPoint();
 		int var3 = 0;
 
 		while (this.links.length > var3) {
-			if (this.links[var3].b.contains(var2)) {
+			if (this.links[var3].bounds.contains(var2)) {
 				this.setCursor(Cursor.getPredefinedCursor(12));
 				return;
 			}
@@ -139,7 +139,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 	}
 
 	private final void a(byte var1, String var2) {
-		boolean var14 = Preferences.c;
+		boolean var14 = Preferences.dialogVisible;
 		if (null != var2) {
 			if (var1 < 113) {
 				this.mouseClicked((MouseEvent) null);
@@ -206,7 +206,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 
 	CopyrightBar(String var1) {
 		super();
-		boolean var7 = Preferences.c;
+		boolean var7 = Preferences.dialogVisible;
 		this.lines = (CopyrightText[][]) null;
 		this.setBackground(c);
 		this.addMouseListener(this);
@@ -221,7 +221,7 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 				int var5 = 0;
 
 				while (var5 < var4.length) {
-					if (null != var4[var5].a) {
+					if (null != var4[var5].link) {
 						++var2;
 					}
 
@@ -246,8 +246,8 @@ final class CopyrightBar extends Component implements MouseListener, MouseMotion
 				int var6 = 0;
 
 				while (var9.length > var6) {
-					if (var9[var6].a != null) {
-						this.links[var3++] = var9[var6].a;
+					if (var9[var6].link != null) {
+						this.links[var3++] = var9[var6].link;
 					}
 
 					++var6;

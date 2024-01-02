@@ -1,8 +1,8 @@
 package app;
 
-final class i implements Runnable {
+final class UrlThread implements Runnable {
 	private String a = null;
-	private static i b = null;
+	private static UrlThread b = null;
 	private String c = null;
 
 	public static final void showurl(String var0, String var1) {
@@ -16,7 +16,7 @@ final class i implements Runnable {
 	static final void a(byte var0) {
 		if (b == null) {
 			if (var0 == 42) {
-				b = new i();
+				b = new UrlThread();
 				Thread var1 = new Thread(b);
 				var1.setPriority(10);
 				var1.setDaemon(true);
@@ -26,11 +26,11 @@ final class i implements Runnable {
 	}
 
 	public final void run() {
-		boolean var6 = Preferences.c;
+		boolean var6 = Preferences.dialogVisible;
 
 		while (true) {
 			String var1 = null;
-			String var2 = null;
+			String url = null;
 			synchronized (this) {
 				while (null == this.a) {
 					try {
@@ -40,29 +40,29 @@ final class i implements Runnable {
 				}
 
 				var1 = this.c;
-				var2 = this.a;
+				url = this.a;
 				this.a = null;
 				this.c = null;
 			}
 
 			try {
-				if (var1 != null && var1.equals("_top") && (var2.endsWith("MAGICQUIT") || ~var2.indexOf("/quit.ws") != 0 || var2.indexOf(".ws") == -1 && var2.endsWith("/"))) {
-					appletviewer.b((int) 122);
+				if (var1 != null && var1.equals("_top") && (url.endsWith("MAGICQUIT") || ~url.indexOf("/quit.ws") != 0 || url.indexOf(".ws") == -1 && url.endsWith("/"))) {
+					appletviewer.shutdown((int) 122);
 				}
 
-				if (!appletviewer.g) {
+				if (!appletviewer.isWindows) {
 					throw new Exception("Not windows");
 				}
 
-				if (!var2.startsWith("http://") && !var2.startsWith("https://")) {
+				if (!url.startsWith("http://") && !url.startsWith("https://")) {
 					throw new Exception();
 				}
 
 				String var3 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?&=,.%+-_#:/*";
 				int var4 = 0;
 
-				while (var4 < var2.length()) {
-					if (var3.indexOf(var2.charAt(var4)) == -1) {
+				while (var4 < url.length()) {
+					if (var3.indexOf(url.charAt(var4)) == -1) {
 						throw new Exception();
 					}
 
@@ -72,14 +72,14 @@ final class i implements Runnable {
 					}
 				}
 
-				Runtime.getRuntime().exec("cmd /c start \"j\" \"" + var2 + "\"");
+				Runtime.getRuntime().exec("cmd /c start \"j\" \"" + url + "\"");
 			} catch (Exception ex) {
 				if (appletviewer.debug) {
 					ex.printStackTrace();
 				}
 
 				try {
-					new DialogUrl(var2);
+					new DialogUrl(url);
 				} catch (Exception ex2) {
 					if (appletviewer.debug) {
 						ex2.printStackTrace();
@@ -89,6 +89,6 @@ final class i implements Runnable {
 		}
 	}
 
-	public i() {
+	public UrlThread() {
 	}
 }

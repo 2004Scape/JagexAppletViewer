@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 final class DialogLanguage implements ActionListener {
-	public final void actionPerformed(ActionEvent var1) {
+	public final void actionPerformed(ActionEvent event) {
 		label31:
 		{
-			boolean var4 = Preferences.c;
-			int var2 = var1.getID();
+			boolean var4 = Preferences.dialogVisible;
+			int var2 = event.getID();
 			if (0 != var2 || var4) {
 				if (var2 != 1) {
 					return;
@@ -23,7 +23,7 @@ final class DialogLanguage implements ActionListener {
 				return;
 			}
 
-			DialogMessage.b(0, appletviewer.c(1555, "changes_on_restart"));
+			DialogMessage.showMessage(0, appletviewer.c(1555, "changes_on_restart"));
 			if (!var4) {
 				return;
 			}

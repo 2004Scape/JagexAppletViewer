@@ -8,101 +8,100 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 final class ComponentProgress extends Component {
-	private String a = "Loading...";
-	private static Dialog b;
-	private Font c;
-	private int d = 0;
-	private static ComponentProgress e;
-	private Color f = new Color(140, 11, 1);
-	private FontMetrics g;
+	private String text = "Loading...";
+	private static Dialog dialog;
+	private Font font;
+	private int percent = 0;
+	private static ComponentProgress progress;
+	private Color barColor = new Color(140, 11, 1);
+	private FontMetrics fontMetrics;
 
-	static final void a(int var0) {
-		if (var0 != -1127) {
-			a(62, 4);
+	static final void hide(int flowObfuscator) {
+		if (flowObfuscator != -1127) {
+			setProgress(62, 4);
 		}
 
-		if (null != b) {
-			b.setVisible(false);
+		if (null != dialog) {
+			dialog.setVisible(false);
 		}
-
 	}
 
-	static final void a(int var0, int var1) {
-		if (e != null) {
-			if (var0 > 100) {
-				var0 = 100;
+	static final void setProgress(int percent, int flowObfuscator) {
+		if (progress != null) {
+			if (percent > 100) {
+				percent = 100;
 			}
 
-			e.d = var0;
-			if (var1 != 140) {
-				e = null;
+			progress.percent = percent;
+			if (flowObfuscator != 140) {
+				progress = null;
 			}
 
-			e.repaint();
+			progress.repaint();
 		}
 	}
 
-	static final void a(byte var0) {
-		if (var0 == -98) {
-			e.paint(e.getGraphics());
+	static final void refresh(byte flowObfuscator) {
+		if (flowObfuscator == -98) {
+			progress.paint(progress.getGraphics());
 		}
 	}
 
-	static final void a(String var0, byte var1) {
-		e.a = var0;
-		e.repaint();
-		if (var1 != 31) {
-			b = (Dialog) null;
+	static final void setText(String text, byte flowObfuscator) {
+		progress.text = text;
+		progress.repaint();
+		if (flowObfuscator != 31) {
+			dialog = (Dialog) null;
+		}
+	}
+
+	static final void init(int flowObfuscator) {
+		progress = new ComponentProgress(appletviewer.c(1555, "loaderbox_initial"));
+		progress.font = new Font("Helvetica", 1, 13);
+		progress.fontMetrics = progress.getFontMetrics(progress.font);
+		dialog = new Dialog(appletviewer.frame, "Jagex Ltd.", false);
+		dialog.add(progress);
+		dialog.addWindowListener(WindowListener.create(-21945));
+		dialog.setResizable(false);
+		dialog.setSize(320, 100);
+	}
+
+	static final void show(int flowObfuscator) {
+		if (flowObfuscator != 2) {
+			init(-122);
 		}
 
+		dialog.setLocationRelativeTo(appletviewer.frame);
+		dialog.setVisible(true);
 	}
 
-	static final void b(int var0) {
-		e = new ComponentProgress(appletviewer.c(var0 + 1554, "loaderbox_initial"));
-		e.c = new Font("Helvetica", var0, 13);
-		e.g = e.getFontMetrics(e.c);
-		b = new Dialog(appletviewer.frame, "Jagex Ltd.", false);
-		b.add(e);
-		b.addWindowListener(k.a(-21945));
-		b.setResizable(false);
-		b.setSize(320, 100);
+	private ComponentProgress(String text) {
+		this.text = text;
 	}
 
-	static final void c(int var0) {
-		if (var0 != 2) {
-			b(-122);
-		}
-
-		b.setLocationRelativeTo(appletviewer.frame);
-		b.setVisible(true);
-	}
-
-	private ComponentProgress(String var1) {
-		this.a = var1;
-	}
-
-	public final void paint(Graphics var1) {
+	public final void paint(Graphics g) {
 		try {
-			if (var1 != null) {
-				int var2 = this.getWidth();
-				int var3 = this.getHeight();
-				var1.setColor(Color.black);
-				var1.fillRect(0, 0, var2, var3);
-				var1.setColor(this.f);
-				var1.drawRect(-152 + var2 / 2, -18 + var3 / 2, 303, 33);
-				var1.fillRect(2 + var2 / 2 + -152, -18 + var3 / 2 + 2, -3 + this.d * 303 / 100, 30);
-				String var4 = this.a + " - " + this.d + "%";
-				var1.setFont(this.c);
-				var1.setColor(Color.white);
-				var1.drawString(var4, (var2 + -this.g.stringWidth(var4)) / 2, var3 / 2 - -4);
-				if (!Preferences.c) {
+			if (g != null) {
+				int width = this.getWidth();
+				int height = this.getHeight();
+
+				g.setColor(Color.black);
+				g.fillRect(0, 0, width, height);
+				g.setColor(this.barColor);
+				g.drawRect(-152 + width / 2, -18 + height / 2, 303, 33);
+				g.fillRect(2 + width / 2 + -152, -18 + height / 2 + 2, -3 + this.percent * 303 / 100, 30);
+
+				String str = this.text + " - " + this.percent + "%";
+				g.setFont(this.font);
+				g.setColor(Color.white);
+				g.drawString(str, (width + -this.fontMetrics.stringWidth(str)) / 2, height / 2 - -4);
+				if (!Preferences.dialogVisible) {
 					return;
 				}
 			}
 
 			this.repaint();
-		} catch (Exception var5) {
+		} catch (Exception ignored) {
 		}
-
 	}
 }
