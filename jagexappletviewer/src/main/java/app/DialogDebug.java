@@ -58,7 +58,7 @@ final class DialogDebug extends OutputStream implements WindowListener {
 				this.frame.setVisible(true);
 				this.frame.setTitle(this.title);
 				this.frame.setLocation(320, 240);
-				this.frame.setSize(720, 260);
+				this.frame.setSize(720, 400);
 				this.frame.addWindowListener(this);
 				this.loaded = true;
 			}

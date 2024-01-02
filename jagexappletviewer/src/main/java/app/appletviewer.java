@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
@@ -250,7 +251,14 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 
 		int read;
 		try {
-			InputStream stream = (new URL(url + file)).openStream();
+			if (!url.endsWith("/")) {
+				url = url + "/";
+			}
+
+			URLConnection connection = new URL(url + file).openConnection();
+			connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0");
+			connection.connect();
+			InputStream stream = connection.getInputStream();
 
 			while (buf.length > offset) {
 				read = stream.read(buf, offset, buf.length - offset);
@@ -326,6 +334,8 @@ public final class appletviewer implements ComponentListener, AdjustmentListener
 			}
 
 			currentConfig = config;
+			frame.setTitle(getProperty("title", true));
+
 			ComponentProgress.setProgress(flowObfuscator, 140);
 			ComponentProgress.refresh((byte) -98);
 
