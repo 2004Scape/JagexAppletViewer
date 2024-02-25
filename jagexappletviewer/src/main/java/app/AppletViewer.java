@@ -279,8 +279,11 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			return;
 		}
 
-		if (browsercontrol.iscreated()) {
-			browsercontrol.destroy();
+		try {
+			if (browsercontrol.iscreated()) {
+				browsercontrol.destroy();
+			}
+		} catch (NoClassDefFoundError ignored) {
 		}
 
 		mainPanel.remove(canvas);
@@ -290,8 +293,11 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(I)V")
 	public static void close() {
-		if (browsercontrol.iscreated()) {
-			browsercontrol.destroy();
+		try {
+			if (browsercontrol.iscreated()) {
+				browsercontrol.destroy();
+			}
+		} catch (NoClassDefFoundError ignored) {
 		}
 
 		System.exit(0);
