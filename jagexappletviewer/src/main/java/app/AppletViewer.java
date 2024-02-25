@@ -376,6 +376,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			mainPanel.remove(copyright);
 		}
 		currentConfig = arg0;
+		frame.setTitle(getProperty("title"));
+
 		ComponentProgress.updateProgress(50, 140);
 		ComponentProgress.method20((byte) -98);
 		if (WIN32) {
