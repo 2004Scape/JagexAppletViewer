@@ -35,7 +35,7 @@ public final class DialogDebug extends OutputStream implements WindowListener {
 	private PrintStream aPrintStream1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/c", name = "a", descriptor = "(ILjava/lang/String;)Ljava/io/PrintStream;")
-	public static PrintStream method24(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
+	public static PrintStream getPrintStream(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
 		if (aDialogDebug == null) {
 			aDialogDebug = new DialogDebug(arg1);
 		}
@@ -89,7 +89,7 @@ public final class DialogDebug extends OutputStream implements WindowListener {
 					this.aFrame2.setVisible(true);
 					this.aFrame2.setTitle(this.aString3);
 					this.aFrame2.setLocation(320, 240);
-					this.aFrame2.setSize(720, 260);
+					this.aFrame2.setSize(720, 480);
 					this.aFrame2.addWindowListener(this);
 					this.aBoolean8 = true;
 				}

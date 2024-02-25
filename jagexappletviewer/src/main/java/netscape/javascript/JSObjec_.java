@@ -30,15 +30,15 @@ public final class JSObjec_ {
 		System.out.println("Received command: " + command);
 
 		if ("zap".equals(command)) {
-			Preferences.method26("yes", -124, "Member");
-			Preferences.method27((byte) 104);
+			Preferences.set("yes", -124, "Member");
+			Preferences.save();
 			AppletViewer.removeadvert();
-			AppletViewer.method17((byte) 66);
+			AppletViewer.method17();
 		} else if ("unzap".equals(command)) {
-			Preferences.method26("no", -124, "Member");
-			Preferences.method27((byte) 110);
+			Preferences.set("no", -124, "Member");
+			Preferences.save();
 			AppletViewer.readdadvert();
-			AppletViewer.method17((byte) 86);
+			AppletViewer.method17();
 		} else if ("loggedout".equals(command)) {
 			AppletViewer.method1((byte) -99);
 		} else if ("resizing".equals(command) && args != null && args.length > 0 && args[0] instanceof Integer) {

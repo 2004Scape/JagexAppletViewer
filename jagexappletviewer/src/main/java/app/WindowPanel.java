@@ -12,7 +12,7 @@ public final class WindowPanel extends Panel {
 	@OriginalMember(owner = "jagexappletviewer!app/aa", name = "paint", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override
 	public void paint(@OriginalArg(0) Graphics arg0) {
-		arg0.clearRect(0, 0, AppletViewer.aFrame1.getWidth(), AppletViewer.aFrame1.getHeight());
+		arg0.clearRect(0, 0, AppletViewer.frame.getWidth(), AppletViewer.frame.getHeight());
 		super.paint(arg0);
 	}
 

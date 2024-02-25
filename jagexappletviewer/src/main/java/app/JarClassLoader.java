@@ -18,46 +18,49 @@ import org.openrs2.deob.annotation.Pc;
 public final class JarClassLoader extends ClassLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "a", descriptor = "Ljava/util/Hashtable;")
-	private Hashtable aHashtable5 = new Hashtable();
+	private Hashtable cache = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "b", descriptor = "Ljagexappletviewer!app/u;")
-	private JarLoader aJarLoader_1;
+	private JarLoader loader;
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "c", descriptor = "Ljava/security/ProtectionDomain;")
-	private ProtectionDomain aProtectionDomain1;
+	private ProtectionDomain domain;
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "<init>", descriptor = "([B)V")
-	public JarClassLoader(@OriginalArg(0) byte[] arg0) throws IOException {
-		this.aJarLoader_1 = new JarLoader(arg0);
-		@Pc(19) CodeSource local19 = new CodeSource(null, (Certificate[]) null);
-		@Pc(23) Permissions local23 = new Permissions();
-		local23.add(new AllPermission());
-		this.aProtectionDomain1 = new ProtectionDomain(local19, local23);
+	public JarClassLoader(@OriginalArg(0) byte[] src) throws IOException {
+		this.loader = new JarLoader(src);
+		@Pc(19) CodeSource source = new CodeSource(null, (Certificate[]) null);
+		@Pc(23) Permissions perms = new Permissions();
+		perms.add(new AllPermission());
+		this.domain = new ProtectionDomain(source, perms);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "loadClass", descriptor = "(Ljava/lang/String;Z)Ljava/lang/Class;")
 	@Override
-	protected synchronized Class loadClass(@OriginalArg(0) String arg0, @OriginalArg(1) boolean arg1) throws ClassNotFoundException {
-		@Pc(5) Class local5 = (Class) this.aHashtable5.get(arg0);
-		if (local5 != null) {
-			return local5;
+	protected synchronized Class loadClass(@OriginalArg(0) String name, @OriginalArg(1) boolean resolve) throws ClassNotFoundException {
+		@Pc(5) Class instance = (Class) this.cache.get(name);
+		if (instance != null) {
+			return instance;
 		}
-		@Pc(23) byte[] local23 = this.aJarLoader_1.method44(90, arg0 + ".class");
-		if (local23 == null) {
-			return super.findSystemClass(arg0);
+
+		@Pc(23) byte[] src = this.loader.read(name + ".class");
+		if (src == null) {
+			return super.findSystemClass(name);
 		}
-		local5 = this.defineClass(arg0, local23, 0, local23.length, this.aProtectionDomain1);
-		if (arg1) {
-			this.resolveClass(local5);
+
+		instance = this.defineClass(name, src, 0, src.length, this.domain);
+		if (resolve) {
+			this.resolveClass(instance);
 		}
-		this.aHashtable5.put(arg0, local5);
-		return local5;
+
+		this.cache.put(name, instance);
+		return instance;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "getResourceAsStream", descriptor = "(Ljava/lang/String;)Ljava/io/InputStream;")
 	@Override
-	public InputStream getResourceAsStream(@OriginalArg(0) String arg0) {
-		@Pc(5) byte[] local5 = this.aJarLoader_1.method44(118, arg0);
-		return local5 == null ? ClassLoader.getSystemResourceAsStream(arg0) : new ByteArrayInputStream(local5);
+	public InputStream getResourceAsStream(@OriginalArg(0) String name) {
+		@Pc(5) byte[] src = this.loader.read(name);
+		return src == null ? ClassLoader.getSystemResourceAsStream(name) : new ByteArrayInputStream(src);
 	}
 }

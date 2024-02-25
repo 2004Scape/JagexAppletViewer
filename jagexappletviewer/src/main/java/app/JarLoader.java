@@ -20,7 +20,7 @@ import sun.security.pkcs.SignerInfo;
 public final class JarLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "a", descriptor = "Ljava/util/Hashtable;")
-	private Hashtable aHashtable9 = new Hashtable();
+	private Hashtable cache = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "b", descriptor = "Ljava/util/Hashtable;")
 	private Hashtable aHashtable10 = new Hashtable();
@@ -29,14 +29,14 @@ public final class JarLoader {
 	private Hashtable aHashtable11 = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "d", descriptor = "Lsun/security/pkcs/PKCS7;")
-	private PKCS7 aPKCS7_1;
+	private PKCS7 signature;
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "e", descriptor = "[B")
 	private byte[] aByteArray2;
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "<init>", descriptor = "([B)V")
-	public JarLoader(@OriginalArg(0) byte[] arg0) throws IOException {
-		@Pc(26) ZipInputStream local26 = new ZipInputStream(new ByteArrayInputStream(arg0));
+	public JarLoader(@OriginalArg(0) byte[] src) throws IOException {
+		@Pc(26) ZipInputStream local26 = new ZipInputStream(new ByteArrayInputStream(src));
 		@Pc(29) byte[] local29 = new byte[1000];
 		while (true) {
 			while (true) {
@@ -52,9 +52,9 @@ public final class JarLoader {
 						@Pc(65) byte[] local65 = local43.toByteArray();
 						if (!local39.equals("META-INF/manifest.mf") && !local39.equals("META-INF/zigbert.sf")) {
 							if (local39.equals("META-INF/zigbert.rsa")) {
-								this.aPKCS7_1 = new PKCS7(local65);
+								this.signature = new PKCS7(local65);
 							} else {
-								this.aHashtable9.put(local39, local65);
+								this.cache.put(local39, local65);
 							}
 							break;
 						}
@@ -112,94 +112,109 @@ public final class JarLoader {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "a", descriptor = "(ILjava/lang/String;)[B")
-	public byte[] method44(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
+	public byte[] read(@OriginalArg(1) String name) {
 		try {
-			@Pc(8) byte[] local8 = (byte[]) this.aHashtable9.remove(arg1);
-			if (local8 == null) {
+			@Pc(8) byte[] src = (byte[]) this.cache.remove(name);
+			if (src == null) {
 				return null;
 			}
-			@Pc(19) JarLoader_Class1 local19 = (JarLoader_Class1) this.aHashtable10.get(arg1);
+
+			@Pc(19) JarLoader_Class1 local19 = (JarLoader_Class1) this.aHashtable10.get(name);
 			if (local19 == null) {
 				return null;
 			}
-			@Pc(30) JarLoader_Class1 local30 = (JarLoader_Class1) this.aHashtable11.get(arg1);
+
+			@Pc(30) JarLoader_Class1 local30 = (JarLoader_Class1) this.aHashtable11.get(name);
 			if (local30 == null) {
 				return null;
 			}
-			@Pc(38) MessageDigest local38 = MessageDigest.getInstance("MD5");
-			local38.reset();
-			local38.update(local8);
-			@Pc(46) byte[] local46 = local38.digest();
-			@Pc(54) int local54 = -39 % ((-arg0 - 25) / 42);
-			@Pc(58) String local58 = JarLoader_Class2.method43(local46, (byte) -49);
+
+			@Pc(38) MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.reset();
+			md5.update(src);
+			@Pc(46) byte[] md5Digest = md5.digest();
+			@Pc(58) String local58 = JarLoader_Class2.method43(md5Digest, (byte) -49);
 			if (!local58.equals(local19.aString5)) {
 				return null;
 			}
-			@Pc(68) MessageDigest local68 = MessageDigest.getInstance("SHA");
-			local68.reset();
-			local68.update(local8);
-			@Pc(76) byte[] local76 = local68.digest();
-			@Pc(80) String local80 = JarLoader_Class2.method43(local76, (byte) -49);
+
+			@Pc(68) MessageDigest sha = MessageDigest.getInstance("SHA");
+			sha.reset();
+			sha.update(src);
+			@Pc(76) byte[] shaDigest = sha.digest();
+			@Pc(80) String local80 = JarLoader_Class2.method43(shaDigest, (byte) -49);
 			if (!local80.equals(local19.aString6)) {
 				return null;
 			}
-			local38.reset();
-			local38.update(local19.aByteArray1);
-			local46 = local38.digest();
-			local58 = JarLoader_Class2.method43(local46, (byte) -49);
+
+			md5.reset();
+			md5.update(local19.aByteArray1);
+			md5Digest = md5.digest();
+			local58 = JarLoader_Class2.method43(md5Digest, (byte) -49);
 			if (!local58.equals(local30.aString5)) {
 				return null;
 			}
-			local68.reset();
-			local68.update(local19.aByteArray1);
-			local76 = local68.digest();
-			local80 = JarLoader_Class2.method43(local76, (byte) -49);
+
+			sha.reset();
+			sha.update(local19.aByteArray1);
+			shaDigest = sha.digest();
+			local80 = JarLoader_Class2.method43(shaDigest, (byte) -49);
 			if (!local80.equals(local30.aString6)) {
 				return null;
 			}
-			@Pc(135) SignerInfo[] local135 = this.aPKCS7_1.verify(this.aByteArray2);
+
+			@Pc(135) SignerInfo[] local135 = this.signature.verify(this.aByteArray2);
 			if (local135 == null || local135.length == 0) {
 				return null;
 			}
-			@Pc(154) ArrayList local154 = local135[0].getCertificateChain(this.aPKCS7_1);
+
+			@Pc(154) ArrayList local154 = local135[0].getCertificateChain(this.signature);
 			@Pc(157) int local157 = local154.size();
 			if (local157 < 2) {
 				return null;
 			}
+
 			for (@Pc(164) int local164 = 0; local164 < local157; local164++) {
 				@Pc(172) X509Certificate local172 = (X509Certificate) local154.get(local164);
 				@Pc(176) String local176 = local172.getSubjectX500Principal().getName();
 				@Pc(180) String local180 = local172.getSerialNumber().toString();
 				@Pc(184) byte[] local184 = local172.getPublicKey().getEncoded();
 				@Pc(188) String local188 = JarLoader_Class2.method43(local184, (byte) -49);
+
 				if (local164 == 0) {
 					@Pc(198) int local198 = local176.indexOf("CN=");
 					if (local198 < 0) {
 						return null;
 					}
+
 					@Pc(211) int local211 = local176.indexOf(",", local198);
 					if (local211 < 0) {
 						local211 = local176.length();
 					}
+
 					if (!local176.substring(local198 + 3, local211).equals("Jagex Ltd")) {
 						return null;
 					}
+
 					@Pc(233) int local233 = local176.indexOf("O=");
 					if (local233 < 0) {
 						return null;
 					}
+
 					@Pc(242) int local242 = local176.indexOf(",", local233);
 					if (local242 < 0) {
 						local242 = local176.length();
 					}
+
 					if (!local176.substring(local233 + 2, local242).equals("Jagex Ltd")) {
 						return null;
 					}
 				}
+
 				if (local164 != local157 - 1) {
-					@Pc(293) X509Certificate local293 = (X509Certificate) local154.get(local164 + 1);
+					@Pc(293) X509Certificate cert = (X509Certificate) local154.get(local164 + 1);
 					try {
-						local172.verify(local293.getPublicKey());
+						local172.verify(cert.getPublicKey());
 					} catch (@Pc(299) Exception local299) {
 						return null;
 					}
@@ -207,10 +222,11 @@ public final class JarLoader {
 					return null;
 				}
 			}
-			return local8;
-		} catch (@Pc(307) Exception local307) {
-			local307.printStackTrace();
-			DialogMessage.method29(500, AppletViewer.method15(1555, "err_get_file") + ":" + arg1 + " [" + local307.toString() + "]");
+
+			return src;
+		} catch (@Pc(307) Exception ex) {
+			ex.printStackTrace();
+			DialogMessage.showError(AppletViewer.translate("err_get_file") + ":" + name + " [" + ex.toString() + "]");
 			return null;
 		}
 	}

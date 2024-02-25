@@ -65,7 +65,7 @@ public final class UrlThread implements Runnable {
 				if (local3 != null && local3.equals("_top") && (local5.endsWith("MAGICQUIT") || local5.indexOf("/quit.ws") != -1 || local5.indexOf(".ws") == -1 && local5.endsWith("/"))) {
 					AppletViewer.method5(122);
 				}
-				if (!AppletViewer.aBoolean1) {
+				if (!AppletViewer.WIN32) {
 					throw new Exception("Not windows");
 				}
 				if (!local5.startsWith("http://") && !local5.startsWith("https://")) {
@@ -79,13 +79,13 @@ public final class UrlThread implements Runnable {
 				}
 				Runtime.getRuntime().exec("cmd /c start \"j\" \"" + local5 + "\"");
 			} catch (@Pc(125) Exception local125) {
-				if (AppletViewer.aBoolean2) {
+				if (AppletViewer.VERBOSE) {
 					local125.printStackTrace();
 				}
 				try {
 					new DialogUrl(local5);
 				} catch (@Pc(137) Exception local137) {
-					if (AppletViewer.aBoolean2) {
+					if (AppletViewer.VERBOSE) {
 						local137.printStackTrace();
 					}
 				}

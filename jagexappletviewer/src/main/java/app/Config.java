@@ -9,19 +9,19 @@ import org.openrs2.deob.annotation.OriginalMember;
 public final class Config {
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "a", descriptor = "Ljava/util/Hashtable;")
-	public Hashtable aHashtable6 = new Hashtable();
+	public Hashtable properties = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "c", descriptor = "Ljava/util/Hashtable;")
-	public Hashtable aHashtable7 = new Hashtable();
+	public Hashtable params = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "d", descriptor = "Ljava/util/Hashtable;")
-	public Hashtable aHashtable8 = new Hashtable();
+	public Hashtable localization = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "b", descriptor = "Ljava/lang/String;")
-	public String aString9;
+	public String name;
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	public Config(@OriginalArg(0) String arg0) {
-		this.aString9 = arg0;
+	public Config(@OriginalArg(0) String name) {
+		this.name = name;
 	}
 }

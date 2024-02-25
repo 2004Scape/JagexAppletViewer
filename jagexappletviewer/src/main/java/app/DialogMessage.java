@@ -15,34 +15,35 @@ import org.openrs2.deob.annotation.Pc;
 public final class DialogMessage {
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "a", descriptor = "Ljava/awt/Dialog;")
-	public static Dialog aDialog3;
+	public static Dialog dialog;
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "b", descriptor = "Ljava/awt/Button;")
-	private static Button aButton1;
+	private static Button button;
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "a", descriptor = "(ILjava/lang/String;)V")
-	public static void method29(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
+	public static void showError(@OriginalArg(1) String text) {
 		ComponentProgress.method18(-1127);
-		method31(AppletViewer.method15(1555, "quit"), AppletViewer.method15(1555, "error"), arg1, (byte) 20);
-		aDialog3.addWindowListener(WindowListener.method38(-21945));
-		aButton1.addActionListener(WindowListener.method38(-21945));
-		aDialog3.setVisible(true);
+		show(AppletViewer.translate("quit"), AppletViewer.translate("error"), text);
+		dialog.addWindowListener(WindowListener.create(-21945));
+		button.addActionListener(WindowListener.create(-21945));
+		dialog.setVisible(true);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "b", descriptor = "(ILjava/lang/String;)V")
-	public static void method30(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
-		method31(AppletViewer.method15(1555, "ok"), AppletViewer.method15(1555, "message"), arg1, (byte) 20);
-		aButton1.addActionListener(new DialogListener());
-		aDialog3.setVisible(true);
+	public static void showMessage(@OriginalArg(1) String text) {
+		show(AppletViewer.translate("ok"), AppletViewer.translate("message"), text);
+		button.addActionListener(new DialogListener());
+		dialog.setVisible(true);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "a", descriptor = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;B)V")
-	private static void method31(@OriginalArg(0) String arg0, @OriginalArg(1) String arg1, @OriginalArg(2) String arg2, @OriginalArg(3) byte arg3) {
-		aDialog3 = new Dialog(AppletViewer.aFrame1, arg1, true);
+	private static void show(@OriginalArg(0) String buttonText, @OriginalArg(1) String title, @OriginalArg(2) String text) {
+		dialog = new Dialog(AppletViewer.frame, title, true);
+
 		@Pc(10) int local10 = 0;
 		@Pc(12) int local12 = -1;
 		do {
-			local12 = arg2.indexOf(10, local12 + 1);
+			local12 = text.indexOf(10, local12 + 1);
 			local10++;
 		} while (local12 >= 0);
 		@Pc(26) String[] local26 = new String[local10];
@@ -53,25 +54,27 @@ public final class DialogMessage {
 		@Pc(45) int local45;
 		do {
 			local45 = local12 + 1;
-			local12 = arg2.indexOf(10, local12 + 1);
+			local12 = text.indexOf(10, local12 + 1);
 			if (local12 < 0) {
-				local26[local10++] = arg2.substring(local45);
+				local26[local10++] = text.substring(local45);
 			} else {
-				local26[local10++] = arg2.substring(local45, local12);
+				local26[local10++] = text.substring(local45, local12);
 			}
 		} while (local12 >= 0);
 		for (local45 = 0; local45 < local26.length; local45++) {
 			@Pc(98) Label local98 = new Label(local26[local45], 1);
 			local30.add(local98);
 		}
-		aDialog3.add(local30, "Center");
-		aButton1 = new Button(arg0);
-		@Pc(118) DialogPanel local118 = new DialogPanel();
-		local118.setLayout(new FlowLayout(1));
-		local118.add(aButton1);
-		aDialog3.add(local118, "South");
-		aDialog3.setResizable(false);
-		aDialog3.setSize(500, 100);
-		aDialog3.setLocationRelativeTo(AppletViewer.aFrame1);
+		dialog.add(local30, "Center");
+
+		button = new Button(buttonText);
+		@Pc(118) DialogPanel panel = new DialogPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.add(button);
+		dialog.add(panel, "South");
+
+		dialog.setResizable(false);
+		dialog.setSize(500, 100);
+		dialog.setLocationRelativeTo(AppletViewer.frame);
 	}
 }

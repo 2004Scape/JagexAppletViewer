@@ -31,12 +31,12 @@ public final class Preferences {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "(Ljava/lang/String;ILjava/lang/String;)V")
-	public static void method26(@OriginalArg(0) String arg0, @OriginalArg(1) int arg1, @OriginalArg(2) String arg2) {
+	public static void set(@OriginalArg(0) String arg0, @OriginalArg(1) int arg1, @OriginalArg(2) String arg2) {
 		aHashtable4.put(arg2, arg0);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "(B)V")
-	public static void method27(@OriginalArg(0) byte arg0) {
+	public static void save() {
 		@Pc(3) PrintStream local3 = null;
 		try {
 			local3 = new PrintStream(new FileOutputStream(aFile2));

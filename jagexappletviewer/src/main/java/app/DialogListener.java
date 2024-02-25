@@ -11,7 +11,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 public final class DialogListener implements ActionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/d", name = "a", descriptor = "Ljava/awt/Dialog;")
-	private Dialog aDialog2 = DialogMessage.aDialog3;
+	private Dialog aDialog2 = DialogMessage.dialog;
 
 	@OriginalMember(owner = "jagexappletviewer!app/d", name = "actionPerformed", descriptor = "(Ljava/awt/event/ActionEvent;)V")
 	@Override

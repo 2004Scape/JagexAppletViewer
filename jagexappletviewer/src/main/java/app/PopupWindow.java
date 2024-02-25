@@ -36,15 +36,15 @@ public final class PopupWindow implements ActionListener, WindowListener {
 		@Pc(26) Panel local26 = new Panel();
 		local26.setLayout(new GridLayout(1, 2));
 		local7.add(local26, "South");
-		@Pc(44) Button local44 = new Button(AppletViewer.method15(1555, "ok"));
+		@Pc(44) Button local44 = new Button(AppletViewer.translate("ok"));
 		local44.setActionCommand("ok");
 		local44.addActionListener(this);
-		@Pc(57) Button local57 = new Button(AppletViewer.method15(1555, "cancel"));
+		@Pc(57) Button local57 = new Button(AppletViewer.translate("cancel"));
 		local57.setActionCommand("cancel");
 		local57.addActionListener(this);
 		local26.add(local44);
 		local26.add(local57);
-		this.aDialog4 = new Dialog(AppletViewer.aFrame1, arg0, true);
+		this.aDialog4 = new Dialog(AppletViewer.frame, arg0, true);
 		this.aDialog4.addWindowListener(this);
 		this.aDialog4.setSize(200, 150);
 		this.aDialog4.add(local7);
@@ -105,7 +105,7 @@ public final class PopupWindow implements ActionListener, WindowListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "a", descriptor = "(I)I")
 	public int method33(@OriginalArg(0) int arg0) {
-		this.aDialog4.setLocationRelativeTo(AppletViewer.aFrame1);
+		this.aDialog4.setLocationRelativeTo(AppletViewer.frame);
 		this.aDialog4.setVisible(true);
 		return this.anInt4;
 	}

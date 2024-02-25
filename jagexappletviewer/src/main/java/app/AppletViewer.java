@@ -39,37 +39,37 @@ import org.openrs2.deob.annotation.Pc;
 public final class AppletViewer implements ComponentListener, AdjustmentListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "Ljagexappletviewer!app/g;")
-	private static TopPanelBar aTopPanelBar;
+	private static TopPanelBar topBar;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "Ljava/awt/Component;")
-	private static Component aComponent1;
+	private static Component copyright;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "c", descriptor = "Ljagexappletviewer!app/f;")
-	private static PopupWindow aPopupWindow_1;
+	private static PopupWindow languageWindow;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "d", descriptor = "Ljava/applet/Applet;")
-	private static Applet anApplet1;
+	private static Applet mainapp;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "e", descriptor = "Ljava/awt/Frame;")
-	public static Frame aFrame1;
+	public static Frame frame;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "f", descriptor = "Ljagexappletviewer!app/n;")
-	private static DialogPreferences aDialogPreferences_1;
+	private static DialogPreferences dialogPreferences;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "g", descriptor = "Z")
-	public static boolean aBoolean1;
+	public static boolean WIN32;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "j", descriptor = "Ljava/awt/Panel;")
-	private static Panel aPanel1;
+	private static Panel mainPanel;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "k", descriptor = "Ljagexappletviewer!app/f;")
-	private static PopupWindow aPopupWindow_2;
+	private static PopupWindow switchServerWindow;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "l", descriptor = "Z")
-	private static boolean aBoolean3;
+	private static boolean WIN64;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "m", descriptor = "Ljava/awt/Canvas;")
-	private static Canvas aCanvas1;
+	private static Canvas canvas;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "s", descriptor = "[Ljava/lang/String;")
 	private static String[] aStringArray1;
@@ -87,25 +87,25 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	private static int anInt2;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "i", descriptor = "Z")
-	public static boolean aBoolean2 = false;
+	public static boolean VERBOSE = false;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "h", descriptor = "Ljava/util/Hashtable;")
-	private static Hashtable aHashtable1 = new Hashtable();
+	private static Hashtable properties = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "n", descriptor = "Ljava/util/Hashtable;")
-	private static Hashtable aHashtable2 = new Hashtable();
+	private static Hashtable params = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "o", descriptor = "Ljava/util/Hashtable;")
-	public static Hashtable aHashtable3 = new Hashtable();
+	public static Hashtable localization = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "q", descriptor = "Ljagexappletviewer!app/m;")
-	private static Config aConfig_1 = null;
+	private static Config currentConfig = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "t", descriptor = "F")
-	private static float aFloat2 = 58988.0F;
+	private static float progressLimit = 58988.0F;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "u", descriptor = "[Ljagexappletviewer!app/m;")
-	private static Config[] aConfigArray1 = null;
+	private static Config[] configs = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "x", descriptor = "Ljava/io/File;")
 	private static File aFile1 = null;
@@ -114,60 +114,62 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	private static String aString1 = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "y", descriptor = "Z")
-	private static boolean aBoolean5 = false;
+	private static boolean loaded = false;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "r", descriptor = "Z")
-	private static boolean aBoolean4 = true;
+	private static boolean resize = true;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "p", descriptor = "F")
-	private static float aFloat1 = 0.0F;
+	private static float progress = 0.0F;
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(B)V")
 	public static void method1(@OriginalArg(0) byte arg0) {
 		@Pc(1) boolean local1 = false;
-		if (!aTopPanelBar.isVisible()) {
+		if (!topBar.isVisible()) {
 			local1 = true;
-			aTopPanelBar.setVisible(true);
+			topBar.setVisible(true);
 		}
-		if (!aComponent1.isVisible()) {
-			aComponent1.setVisible(true);
+
+		if (!copyright.isVisible()) {
+			copyright.setVisible(true);
 			local1 = true;
 		}
+
 		if (local1) {
-			method3((byte) -103);
+			method3();
 		}
+
 		if (arg0 != -99) {
 			aString1 = null;
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(I)I")
-	public static int method2(@OriginalArg(0) int arg0) {
-		@Pc(7) boolean local7 = true;
-		@Pc(11) int local11 = aPopupWindow_1.method33(-1);
+	public static int method2() {
+		@Pc(11) int local11 = languageWindow.method33(-1);
 		if (local11 < 0) {
 			return -1;
 		} else {
-			Preferences.method26(Integer.toString(anIntArray1[local11]), -128, "Language");
-			Preferences.method27((byte) 124);
+			Preferences.set(Integer.toString(anIntArray1[local11]), -128, "Language");
+			Preferences.save();
 			return local11;
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(B)V")
-	private static void method3(@OriginalArg(0) byte arg0) {
-		if (!aBoolean5) {
+	private static void method3() {
+		if (!loaded) {
 			return;
 		}
-		@Pc(10) int local10 = aTopPanelBar.isVisible() ? 20 : 0;
-		@Pc(20) int local20 = aCanvas1 == null ? 0 : Integer.parseInt(method13("advert_height", true));
-		@Pc(27) int local27 = aComponent1.isVisible() ? 40 : 0;
-		@Pc(32) int local32 = Integer.parseInt(method13("applet_minwidth", true));
-		@Pc(37) int local37 = Integer.parseInt(method13("applet_minheight", true));
-		@Pc(42) int local42 = Integer.parseInt(method13("applet_maxwidth", true));
-		@Pc(47) int local47 = Integer.parseInt(method13("applet_maxheight", true));
-		@Pc(50) Dimension local50 = aPanel1.getSize();
-		@Pc(60) Insets local60 = aPanel1.getInsets();
+		@Pc(10) int local10 = topBar.isVisible() ? 20 : 0;
+		@Pc(20) int local20 = canvas == null ? 0 : Integer.parseInt(getProperty("advert_height"));
+		@Pc(27) int local27 = copyright.isVisible() ? 40 : 0;
+		@Pc(32) int local32 = Integer.parseInt(getProperty("applet_minwidth"));
+		@Pc(37) int local37 = Integer.parseInt(getProperty("applet_minheight"));
+		@Pc(42) int local42 = Integer.parseInt(getProperty("applet_maxwidth"));
+		@Pc(47) int local47 = Integer.parseInt(getProperty("applet_maxheight"));
+		@Pc(50) Dimension local50 = mainPanel.getSize();
+		@Pc(60) Insets local60 = mainPanel.getInsets();
 		@Pc(71) int local71 = local50.width - local60.left - local60.right;
 		@Pc(82) int local82 = local50.height - local60.top - local60.bottom;
 		@Pc(84) int local84 = local71;
@@ -181,16 +183,16 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			local94 = local37;
 		}
 		if (local102) {
-			if (aDialogPreferences_1.getParent() == null) {
-				aFrame1.add(aDialogPreferences_1, "East");
-				aDialogPreferences_1.setValue(0);
-				aFrame1.validate();
+			if (dialogPreferences.getParent() == null) {
+				frame.add(dialogPreferences, "East");
+				dialogPreferences.setValue(0);
+				frame.validate();
 			}
-		} else if (aDialogPreferences_1.getParent() != null) {
-			aFrame1.remove(aDialogPreferences_1);
-			aFrame1.validate();
+		} else if (dialogPreferences.getParent() != null) {
+			frame.remove(dialogPreferences);
+			frame.validate();
 		}
-		if (aBoolean4) {
+		if (resize) {
 			if (local47 < local94) {
 				local94 = local47;
 			}
@@ -206,36 +208,33 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			@Pc(193) int local193 = local20 + local37 + local27 + local10;
 		}
 		@Pc(196) int local196 = 0;
-		if (aDialogPreferences_1.getParent() != null) {
-			local196 = aDialogPreferences_1.getValue();
+		if (dialogPreferences.getParent() != null) {
+			local196 = dialogPreferences.getValue();
 			@Pc(211) int local211 = local27 + local20 + local10 + local94;
 			if (local82 + local196 > local211) {
 				local196 = local211 - local82;
 				if (local196 < 0) {
 					local196 = 0;
 				}
-				aDialogPreferences_1.setValue(local196);
+				dialogPreferences.setValue(local196);
 			}
-			aDialogPreferences_1.setMaximum(local211);
-			aDialogPreferences_1.setVisibleAmount(local82);
+			dialogPreferences.setMaximum(local211);
+			dialogPreferences.setVisibleAmount(local82);
 		}
-		aTopPanelBar.setBounds((local162 - local84) / 2, -local196, local84, local10);
-		if (aCanvas1 != null) {
-			aCanvas1.setBounds((local162 - local84) / 2, local10 - local196, local84, local20);
+		topBar.setBounds((local162 - local84) / 2, -local196, local84, local10);
+		if (canvas != null) {
+			canvas.setBounds((local162 - local84) / 2, local10 - local196, local84, local20);
 		}
-		anApplet1.setBounds((local162 - local84) / 2, local20 + local10 - local196, local84, local94);
-		aComponent1.setBounds((local162 - local84) / 2, local10 + local20 + local94 - local196, local84, local27);
-		if (aCanvas1 != null && browsercontrol.iscreated()) {
-			browsercontrol.resize(aCanvas1.getSize().width, aCanvas1.getSize().height);
+		mainapp.setBounds((local162 - local84) / 2, local20 + local10 - local196, local84, local94);
+		copyright.setBounds((local162 - local84) / 2, local10 + local20 + local94 - local196, local84, local27);
+		if (canvas != null && browsercontrol.iscreated()) {
+			browsercontrol.resize(canvas.getSize().width, canvas.getSize().height);
 		}
-		aFrame1.repaint();
+		frame.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(ILjava/lang/String;)Ljava/lang/String;")
 	private static String method4(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
-		if (arg0 <= 100) {
-			method16(null, 53, null);
-		}
 		@Pc(13) String local13 = arg1;
 		while (true) {
 			@Pc(17) int local17 = local13.indexOf("$(");
@@ -264,15 +263,15 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "removeadvert", descriptor = "()V")
 	public static void removeadvert() {
-		if (aCanvas1 == null) {
+		if (canvas == null) {
 			return;
 		}
 		if (browsercontrol.iscreated()) {
 			browsercontrol.destroy();
 		}
-		aPanel1.remove(aCanvas1);
-		aCanvas1 = null;
-		method3((byte) -123);
+		mainPanel.remove(canvas);
+		canvas = null;
+		method3();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(I)V")
@@ -285,133 +284,139 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "readdadvert", descriptor = "()V")
 	public static void readdadvert() {
-		if (!aBoolean1 || aCanvas1 != null) {
+		if (!WIN32 || canvas != null) {
 			return;
 		}
-		aCanvas1 = new Canvas();
-		aPanel1.add(aCanvas1);
-		method3((byte) -116);
-		while (!aCanvas1.isDisplayable() || !aCanvas1.isShowing()) {
+		canvas = new Canvas();
+		mainPanel.add(canvas);
+		method3();
+		while (!canvas.isDisplayable() || !canvas.isShowing()) {
 			try {
 				Thread.sleep(100L);
 			} catch (@Pc(26) Exception local26) {
 			}
 		}
 		try {
-			browsercontrol.create(aCanvas1, method13("adverturl", true));
-			browsercontrol.resize(aCanvas1.getSize().width, aCanvas1.getSize().height);
-		} catch (@Pc(42) Throwable local42) {
-			if (aBoolean2) {
-				local42.printStackTrace();
+			browsercontrol.create(canvas, getProperty("adverturl"));
+			browsercontrol.resize(canvas.getSize().width, canvas.getSize().height);
+		} catch (@Pc(42) Throwable ex) {
+			if (VERBOSE) {
+				ex.printStackTrace();
 			}
-			DialogMessage.method29(500, method15(1555, "err_create_advertising"));
-			return;
+
+			DialogMessage.showError(translate("err_create_advertising"));
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/lang/String;Ljava/lang/String;B)[B")
-	private static byte[] method6(@OriginalArg(0) String arg0, @OriginalArg(1) String arg1, @OriginalArg(2) byte arg2) {
-		@Pc(4) byte[] local4 = new byte[300000];
-		@Pc(6) int local6 = 0;
+	private static byte[] download(@OriginalArg(0) String file, @OriginalArg(1) String host) {
+		@Pc(4) byte[] dest = new byte[300000];
+		@Pc(6) int offset = 0;
+
 		try {
-			@Pc(19) InputStream local19 = (new URL(arg1 + arg0)).openStream();
-			while (local4.length > local6) {
-				@Pc(32) int local32 = local19.read(local4, local6, local4.length - local6);
-				if (local32 < 0) {
+			@Pc(19) InputStream stream = new URL(host + file).openStream();
+
+			while (dest.length > offset) {
+				@Pc(32) int read = stream.read(dest, offset, dest.length - offset);
+				if (read < 0) {
 					break;
 				}
-				aFloat1 += local32;
-				local6 += local32;
-				ComponentProgress.method19((int) (aFloat1 / aFloat2 * 100.0F), 140);
+
+				progress += read;
+				offset += read;
+				ComponentProgress.updateProgress((int) (progress / progressLimit * 100.0F), 140);
 			}
-			local19.close();
-		} catch (@Pc(60) Exception local60) {
-			if (aBoolean2) {
-				local60.printStackTrace();
+
+			stream.close();
+		} catch (@Pc(60) Exception ex) {
+			if (VERBOSE) {
+				ex.printStackTrace();
 			}
-			DialogMessage.method29(500, method15(1555, "err_downloading") + ": " + arg0);
+
+			DialogMessage.showError(translate("err_downloading") + ": " + file);
 		}
-		@Pc(82) byte[] local82 = new byte[local6];
-		System.arraycopy(local4, 0, local82, 0, local6);
-		@Pc(96) boolean local96 = true;
-		return local82;
+
+		@Pc(82) byte[] data = new byte[offset];
+		System.arraycopy(dest, 0, data, 0, offset);
+		return data;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/lang/String;I)Ljava/lang/String;")
-	public static String method7(@OriginalArg(0) String arg0, @OriginalArg(1) int arg1) {
-		if (aConfig_1 != null) {
-			@Pc(14) String local14 = (String) aConfig_1.aHashtable7.get(arg0);
-			if (local14 != null) {
-				return local14;
+	public static String getParameter(@OriginalArg(0) String name) {
+		if (currentConfig != null) {
+			@Pc(14) String value = (String) currentConfig.params.get(name);
+			if (value != null) {
+				return value;
 			}
 		}
-		return (String) aHashtable2.get(arg0);
+
+		return (String) params.get(name);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljagexappletviewer!app/m;I)V")
-	private static void method8(@OriginalArg(0) Config arg0, @OriginalArg(1) int arg1) {
+	private static void switchToServer(@OriginalArg(0) Config arg0, @OriginalArg(1) int arg1) {
 		if (arg0 == null) {
 			return;
 		}
-		ComponentProgress.method21(method15(1555, "loading_app"), (byte) 31);
-		ComponentProgress.method19(0, 140);
-		ComponentProgress.method23(2);
+		ComponentProgress.setText(translate("loading_app"), (byte) 31);
+		ComponentProgress.updateProgress(0, 140);
+		ComponentProgress.show(2);
 		ComponentProgress.method20((byte) -98);
-		if (anApplet1 != null) {
-			if (aComponent1.isVisible()) {
-				aComponent1.setVisible(false);
-				method3((byte) -96);
+		if (mainapp != null) {
+			if (copyright.isVisible()) {
+				copyright.setVisible(false);
+				method3();
 			}
-			anApplet1.stop();
-			ComponentProgress.method19(25, 140);
+			mainapp.stop();
+			ComponentProgress.updateProgress(25, 140);
 			ComponentProgress.method20((byte) -98);
-			anApplet1.destroy();
-			aPanel1.remove(anApplet1);
-			anApplet1 = null;
-			aPanel1.remove(aComponent1);
+			mainapp.destroy();
+			mainPanel.remove(mainapp);
+			mainapp = null;
+			mainPanel.remove(copyright);
 		}
-		aConfig_1 = arg0;
-		ComponentProgress.method19(50, 140);
+		currentConfig = arg0;
+		ComponentProgress.updateProgress(50, 140);
 		ComponentProgress.method20((byte) -98);
-		if (aBoolean1) {
+		if (WIN32) {
 			JarWinClassLoader.method45((byte) 127);
 		}
 		try {
-			@Pc(61) String local61 = method13("codebase", true);
-			@Pc(68) byte[] local68 = method6(method13("loader_jar", true), local61, (byte) 114);
-			ComponentProgress.method19(75, 140);
+			@Pc(61) String local61 = getProperty("codebase");
+			@Pc(68) byte[] local68 = download(getProperty("loader_jar"), local61);
+			ComponentProgress.updateProgress(75, 140);
 			ComponentProgress.method20((byte) -98);
 			@Pc(78) JarClassLoader local78 = new JarClassLoader(local68);
-			anApplet1 = (Applet) local78.loadClass("loader").getDeclaredConstructor().newInstance();
-			if (aBoolean2) {
+			mainapp = (Applet) local78.loadClass("loader").getDeclaredConstructor().newInstance();
+			if (VERBOSE) {
 				System.out.println("loader_jar : " + local68.length);
 			}
 			ComponentProgress.method18(-1127);
 		} catch (@Pc(104) Exception local104) {
-			if (aBoolean2) {
+			if (VERBOSE) {
 				local104.printStackTrace();
 			}
 			ComponentProgress.method18(-1127);
-			DialogMessage.method29(500, method15(1555, "err_target_applet"));
+			DialogMessage.showError(translate("err_target_applet"));
 		}
-		aPanel1.add(anApplet1);
-		aComponent1 = new CopyrightBar(method15(1555, "tandc"));
-		aPanel1.add(aComponent1);
-		aBoolean4 = true;
-		method3((byte) -119);
-		anApplet1.setStub(new GameAppletStub());
-		anApplet1.init();
-		anApplet1.start();
+		mainPanel.add(mainapp);
+		copyright = new CopyrightBar(translate("tandc"));
+		mainPanel.add(copyright);
+		resize = true;
+		method3();
+		mainapp.setStub(new GameAppletStub());
+		mainapp.init();
+		mainapp.start();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "c", descriptor = "(B)V")
 	public static void method9(@OriginalArg(0) byte arg0) {
-		@Pc(5) String local5 = method13("serverlist", true);
-		@Pc(7) Config[] local7 = aConfigArray1;
-		@Pc(10) int local10 = aConfigArray1.length;
+		@Pc(5) String local5 = getProperty("serverlist");
+		@Pc(7) Config[] local7 = configs;
+		@Pc(10) int local10 = configs.length;
 		if (local5 != null) {
 			local10 = 0;
-			local7 = new Config[aConfigArray1.length];
+			local7 = new Config[configs.length];
 			try {
 				@Pc(23) BufferedReader local23 = method11(local5, true, null);
 				label61: while (true) {
@@ -431,48 +436,45 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 						} while (local42.length < 2);
 					} while (!local42[1].trim().toLowerCase().equals("true"));
 					@Pc(60) String local60 = local42[0].trim();
-					for (@Pc(62) int local62 = 0; local62 < aConfigArray1.length; local62++) {
-						if (aConfigArray1[local62].aString9.equals(local60)) {
-							local7[local10++] = aConfigArray1[local62];
+					for (@Pc(62) int local62 = 0; local62 < configs.length; local62++) {
+						if (configs[local62].name.equals(local60)) {
+							local7[local10++] = configs[local62];
 						}
 					}
 				}
 			} catch (@Pc(89) IOException local89) {
-				local10 = aConfigArray1.length;
-				local7 = aConfigArray1;
+				local10 = configs.length;
+				local7 = configs;
 			}
 		}
 		@Pc(97) String[] local97 = new String[local10];
 		@Pc(99) int local99;
 		for (local99 = 0; local99 < local10; local99++) {
-			local97[local99] = (String) local7[local99].aHashtable6.get("servername");
+			local97[local99] = (String) local7[local99].properties.get("servername");
 		}
-		aPopupWindow_2.method34(local97, 2);
-		local99 = aPopupWindow_2.method33(-1);
+		switchServerWindow.method34(local97, 2);
+		local99 = switchServerWindow.method33(-1);
 		if (local99 >= 0) {
-			method8(local7[local99], 50);
+			switchToServer(local7[local99], 50);
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(II)Z")
-	private static boolean method10(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
+	private static boolean method10(@OriginalArg(1) int lang) {
 		@Pc(3) int local3 = 0;
-		aHashtable2.clear();
-		Language.method41(arg1, -11712);
-		if (arg0 < 12) {
-			aHashtable1 = null;
-		}
-		aHashtable1.clear();
-		aConfigArray1 = null;
-		aConfig_1 = null;
+		params.clear();
+		Language.load(lang);
+		properties.clear();
+		configs = null;
+		currentConfig = null;
 		@Pc(22) int local22 = 0;
 		@Pc(25) Config[] local25 = new Config[50];
 		@Pc(121) int local121;
 		try {
 			@Pc(30) BufferedReader local30 = method11(aString1, true, aFile1);
-			@Pc(32) Hashtable local32 = aHashtable2;
-			@Pc(34) Hashtable local34 = aHashtable1;
-			@Pc(36) Hashtable local36 = aHashtable3;
+			@Pc(32) Hashtable local32 = params;
+			@Pc(34) Hashtable local34 = properties;
+			@Pc(36) Hashtable local36 = localization;
 			label194: while (true) {
 				@Pc(39) String local39;
 				@Pc(134) String local134;
@@ -492,8 +494,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 							if (local39.startsWith("[")) {
 								@Pc(64) String local64 = local39.substring(1, local39.lastIndexOf(93));
 								@Pc(69) Config local69 = new Config(local64);
-								if (aConfig_1 == null) {
-									aConfig_1 = local69;
+								if (currentConfig == null) {
+									currentConfig = local69;
 								}
 								if (local25.length <= local22) {
 									@Pc(82) Config[] local82 = new Config[local22 + 10];
@@ -501,9 +503,9 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 									local25 = local82;
 								}
 								local25[local22++] = local69;
-								local36 = local69.aHashtable8;
-								local34 = local69.aHashtable6;
-								local32 = local69.aHashtable7;
+								local36 = local69.localization;
+								local34 = local69.properties;
+								local32 = local69.params;
 							}
 							@Pc(264) String local264;
 							if (local39.startsWith("param=")) {
@@ -513,7 +515,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 									local134 = local39.substring(0, local121).trim().toLowerCase();
 									local264 = local39.substring(local121 + 1).trim();
 									local32.put(local134, local264);
-									if (aBoolean2) {
+									if (VERBOSE) {
 										System.out.println("Innerconfig - variable=" + local134 + " value=" + local264);
 									}
 								}
@@ -528,7 +530,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 									local134 = local39.substring(0, local121).trim().toLowerCase();
 									local264 = local39.substring(local121 + 1).trim();
 									local34.put(local134, local264);
-									if (aBoolean2) {
+									if (VERBOSE) {
 										System.out.println("Ourconfig - variable=" + local134 + " value=" + local264);
 									}
 								}
@@ -548,11 +550,11 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 								try {
 									local3++;
 									Integer.parseInt(local134.substring(4));
-								} catch (@Pc(215) NumberFormatException local215) {
+								} catch (@Pc(215) NumberFormatException ignored) {
 								}
 							}
 							local36.put(local134, local144.toString());
-							if (aBoolean2) {
+							if (VERBOSE) {
 								System.out.println("Message - name=" + local134 + " text=" + local144.toString());
 							}
 							continue label194;
@@ -567,39 +569,43 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					}
 				}
 			}
-		} catch (@Pc(340) IOException local340) {
-			if (aBoolean2) {
-				local340.printStackTrace();
+		} catch (@Pc(340) IOException ex) {
+			if (VERBOSE) {
+				ex.printStackTrace();
 			}
-			DialogMessage.method29(500, method15(1555, "err_load_config"));
-		} catch (@Pc(351) Exception local351) {
-			if (aBoolean2) {
-				local351.printStackTrace();
+
+			DialogMessage.showError(translate("err_load_config"));
+		} catch (@Pc(351) Exception ex) {
+			if (VERBOSE) {
+				ex.printStackTrace();
 			}
-			DialogMessage.method29(500, method15(1555, "err_decode_config"));
+
+			DialogMessage.showError(translate("err_decode_config"));
 		}
+
 		if (local3 <= 0) {
 			return true;
 		}
+
 		aStringArray1 = new String[local3];
 		anIntArray1 = new int[local3];
 		@Pc(374) int local374 = 0;
-		@Pc(377) Enumeration local377 = aHashtable3.keys();
+		@Pc(377) Enumeration local377 = localization.keys();
 		while (true) {
 			@Pc(384) String var22;
 			@Pc(395) int var24;
 			while (true) {
 				do {
 					if (!local377.hasMoreElements()) {
-						aPopupWindow_1 = new PopupWindow(method15(1555, "language"));
-						aPopupWindow_1.method34(aStringArray1, 2);
+						languageWindow = new PopupWindow(translate("language"));
+						languageWindow.method34(aStringArray1, 2);
 						if (local22 > 0) {
-							aConfigArray1 = new Config[local22];
-							System.arraycopy(local25, 0, aConfigArray1, 0, local22);
-							aPopupWindow_2 = new PopupWindow(method15(1555, "switchserver"));
+							configs = new Config[local22];
+							System.arraycopy(local25, 0, configs, 0, local22);
+							switchServerWindow = new PopupWindow(translate("switchserver"));
 						}
 						if (Preferences.method25("Language", 1) == null) {
-							return method2(84) < 0;
+							return method2() < 0;
 						}
 						return true;
 					}
@@ -619,7 +625,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 						anIntArray1[local121] = anIntArray1[local121 - 1];
 					}
 					anIntArray1[local401] = var24;
-					aStringArray1[local401] = method15(1555, var22);
+					aStringArray1[local401] = translate(var22);
 					break;
 				}
 			}
@@ -638,16 +644,18 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(ILjava/lang/String;)V")
 	public static void start(@OriginalArg(1) String arg1) {
-		aBoolean5 = false;
-		aBoolean2 = Boolean.getBoolean("com.jagex.debug");
-		if (aBoolean2) {
-			System.setErr(DialogDebug.method24(29, "Jagex host console"));
-			System.setOut(DialogDebug.method24(27, "Jagex host console"));
+		loaded = false;
+		VERBOSE = Boolean.getBoolean("com.jagex.debug");
+
+		if (VERBOSE) {
+			System.setErr(DialogDebug.getPrintStream(29, "Jagex host console"));
+			System.setOut(DialogDebug.getPrintStream(27, "Jagex host console"));
 			System.out.println("release #7");
 			System.out.println("java.version = " + System.getProperty("java.version"));
 			System.out.println("os.name = " + System.getProperty("os.name"));
 			System.out.println("os.arch = " + System.getProperty("os.arch"));
 		}
+
 		Preferences.method28((byte) 109);
 		@Pc(58) String local58 = Preferences.method25("Language", 1);
 		@Pc(60) int local60 = 0;
@@ -685,136 +693,154 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				}
 			}
 			if (local73 >= 0) {
-				Preferences.method26(Integer.toString(local73), -127, "Language");
-				Preferences.method27((byte) 111);
+				Preferences.set(Integer.toString(local73), -127, "Language");
+				Preferences.save();
 			}
 		} else {
 			local60 = Integer.parseInt(local58);
 		}
-		Language.method41(local60, -11712);
-		aFrame1 = new Frame();
-		aFrame1.getToolkit().setDynamicLayout(true);
-		aFrame1.setBackground(Color.BLACK);
+		Language.load(local60);
+		frame = new Frame();
+		frame.getToolkit().setDynamicLayout(true);
+		frame.setBackground(Color.BLACK);
 		@Pc(186) File local186 = new File((new File(System.getProperty("user.dir"))).getParentFile(), arg1);
 		@Pc(192) File local192 = new File(local186, "jagexappletviewer.png");
 		System.out.println("Trying to load icon file: " + local192.getAbsolutePath());
 		if (local192.exists()) {
 			@Pc(212) Image local212 = Toolkit.getDefaultToolkit().getImage(local192.getAbsolutePath());
 			if (local212 != null) {
-				aFrame1.setIconImage(local212);
+				frame.setIconImage(local212);
 			}
 		}
-		ComponentProgress.method22(1);
-		ComponentProgress.method23(2);
-		ComponentProgress.method21(method15(1555, "loading_config"), (byte) 31);
+		ComponentProgress.init(1);
+		ComponentProgress.show(2);
+		ComponentProgress.setText(translate("loading_config"), (byte) 31);
 		local71 = System.getProperty("com.jagex.config");
 		@Pc(232) String local232 = System.getProperty("com.jagex.configfile");
 		if (local71 == null) {
 			if (local232 == null) {
-				DialogMessage.method29(500, method15(1555, "err_missing_config"));
+				DialogMessage.showError(translate("err_missing_config"));
 			}
 			aFile1 = new File(local186, local232);
 		}
+
 		while (true) {
 			if (local71 != null) {
 				aString1 = method4(101, local71);
 				System.out.println("Config URL is " + aString1);
 			}
-			if (method10(16, local60)) {
-				@Pc(291) String local291 = method13("viewerversion", true);
+
+			if (method10(local60)) {
+				@Pc(291) String local291 = getProperty("viewerversion");
 				@Pc(298) int local298;
 				if (local291 != null) {
 					try {
 						local298 = Integer.parseInt(local291);
 						if (local298 > 110) {
-							DialogMessage.method30(0, method15(1555, "new_version"));
+							DialogMessage.showMessage(translate("new_version"));
 						}
 					} catch (@Pc(310) NumberFormatException local310) {
 					}
 				}
-				local298 = Integer.parseInt(method7("modewhat", 61)) + 32;
-				@Pc(321) String local321 = method13("cachesubdir", true);
-				@Pc(325) String local325 = method13("codebase", true);
+
+				int modeWhat = Integer.parseInt(getParameter("modewhat")) + 32;
+
+				@Pc(321) String local321 = getProperty("cachesubdir");
+				@Pc(325) String local325 = getProperty("codebase");
 				@Pc(329) String local329 = System.getProperty("os.name").toLowerCase();
 				@Pc(333) String local333 = System.getProperty("os.arch").toLowerCase();
-				aBoolean1 = local329.startsWith("win");
-				aBoolean3 = aBoolean1 && local333.startsWith("amd64") || local333.startsWith("x86_64");
+				WIN32 = local329.startsWith("win");
+				WIN64 = WIN32 && local333.startsWith("amd64") || local333.startsWith("x86_64");
 				@Pc(353) String local353 = null;
 				try {
 					local353 = System.getProperty("user.home");
 					if (local353 != null) {
 						local353 = local353 + "/";
 					}
-				} catch (@Pc(370) Exception local370) {
+				} catch (@Pc(370) Exception ignored) {
 				}
+
 				if (local353 == null) {
 					local353 = "~/";
 				}
-				ComponentProgress.method21(method15(1555, "loading_app_resources"), (byte) 31);
+
+				ComponentProgress.setText(translate("loading_app_resources"), (byte) 31);
+
 				@Pc(381) File local381 = null;
 				@Pc(390) byte[] local390;
 				try {
 					@Pc(405) byte[] local405;
-					if (aBoolean3) {
-						local390 = method6(method13("browsercontrol_win_amd64_jar", true), local325, (byte) -73);
-						local381 = method14(local353, local321, -28252, local298, "browsercontrol64.dll");
-						local405 = (new JarLoader(local390)).method44(49, "browsercontrol64.dll");
+
+					if (WIN64) {
+						local390 = download(getProperty("browsercontrol_win_amd64_jar"), local325);
+						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol64.dll");
+						local405 = (new JarLoader(local390)).read("browsercontrol64.dll");
+
 						if (local405 == null) {
-							DialogMessage.method29(500, method15(1555, "err_verify_bc64"));
+							DialogMessage.showError(translate("err_verify_bc64"));
 							local381 = null;
 						}
-						method16(local381, -109, local405);
-					} else if (aBoolean1) {
-						local390 = method6(method13("browsercontrol_win_x86_jar", true), local325, (byte) 102);
-						local381 = method14(local353, local321, -28252, local298, "browsercontrol.dll");
-						local405 = (new JarLoader(local390)).method44(104, "browsercontrol.dll");
+
+						save(local381, local405);
+					} else if (WIN32) {
+						local390 = download(getProperty("browsercontrol_win_x86_jar"), local325);
+						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol.dll");
+						local405 = (new JarLoader(local390)).read("browsercontrol.dll");
+
 						if (local405 == null) {
-							DialogMessage.method29(500, method15(1555, "err_verify_bc"));
+							DialogMessage.showError(translate("err_verify_bc"));
 							local381 = null;
 						}
-						method16(local381, -111, local405);
-						if (aBoolean2) {
+
+						save(local381, local405);
+
+						if (VERBOSE) {
 							System.out.println("dlldata : " + local390.length);
 						}
 					}
-				} catch (@Pc(475) Exception local475) {
-					if (aBoolean2) {
-						local475.printStackTrace();
+				} catch (@Pc(475) Exception ex) {
+					if (VERBOSE) {
+						ex.printStackTrace();
 					}
-					DialogMessage.method29(500, method15(1555, "err_load_bc"));
+
+					DialogMessage.showError(translate("err_load_bc"));
 				}
-				ComponentProgress.method21(method15(1555, "loading_app"), (byte) 31);
-				if (aBoolean1) {
+
+				ComponentProgress.setText(translate("loading_app"), (byte) 31);
+				if (WIN32) {
 					JarWinClassLoader.method45((byte) 127);
 				}
+
 				try {
-					local390 = method6(method13("loader_jar", true), local325, (byte) -125);
-					@Pc(506) JarClassLoader local506 = new JarClassLoader(local390);
-					anApplet1 = (Applet) local506.loadClass("loader").getDeclaredConstructor().newInstance();
-					if (aBoolean2) {
+					local390 = download(getProperty("loader_jar"), local325);
+					@Pc(506) JarClassLoader loader = new JarClassLoader(local390);
+					mainapp = (Applet) loader.loadClass("loader").getDeclaredConstructor().newInstance();
+
+					if (VERBOSE) {
 						System.out.println("loader_jar : " + local390.length);
 					}
-				} catch (@Pc(528) Exception local528) {
-					if (aBoolean2) {
-						local528.printStackTrace();
+				} catch (@Pc(528) Exception ex) {
+					if (VERBOSE) {
+						ex.printStackTrace();
 					}
-					DialogMessage.method29(500, method15(1555, "err_target_applet"));
+
+					DialogMessage.showError(translate("err_target_applet"));
 				}
+
 				ComponentProgress.method18(-1127);
 				UrlThread.method36((byte) 42);
-				aFrame1.setTitle(method13("title", true));
-				@Pc(556) int local556 = aBoolean1 ? Integer.parseInt(method13("advert_height", true)) : 0;
-				@Pc(566) int local566 = Integer.parseInt(method13("window_preferredwidth", true));
-				@Pc(571) int local571 = Integer.parseInt(method13("window_preferredheight", true));
-				@Pc(576) int local576 = Integer.parseInt(method13("applet_minwidth", true));
-				@Pc(581) int local581 = Integer.parseInt(method13("applet_minheight", true));
-				aFrame1.setVisible(true);
-				@Pc(586) boolean local586 = true;
-				aFrame1.createBufferStrategy(2);
-				@Pc(592) Insets local592 = aFrame1.getInsets();
+				frame.setTitle(getProperty("title"));
+				@Pc(556) int local556 = WIN32 ? Integer.parseInt(getProperty("advert_height")) : 0;
+				@Pc(566) int local566 = Integer.parseInt(getProperty("window_preferredwidth"));
+				@Pc(571) int local571 = Integer.parseInt(getProperty("window_preferredheight"));
+				@Pc(576) int local576 = Integer.parseInt(getProperty("applet_minwidth"));
+				@Pc(581) int local581 = Integer.parseInt(getProperty("applet_minheight"));
+				frame.setVisible(true);
+				frame.createBufferStrategy(2);
+				@Pc(592) Insets local592 = frame.getInsets();
 				@Pc(602) int local602 = local592.right + local566 + local592.left + 15;
 				@Pc(615) int local615 = local571 + local556 + local592.top + local592.bottom + 40;
-				@Pc(619) Rectangle local619 = aFrame1.getGraphicsConfiguration().getBounds();
+				@Pc(619) Rectangle local619 = frame.getGraphicsConfiguration().getBounds();
 				@Pc(624) int local624 = local619.width - 50;
 				@Pc(629) int local629 = local619.height - 50;
 				if (local624 < local602) {
@@ -832,63 +858,76 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					local666 = true;
 					local615 = local629;
 				}
-				aFrame1.setSize(local602, local615);
-				aFrame1.setLocationRelativeTo(null);
+
+				frame.setSize(local602, local615);
+				frame.setLocationRelativeTo(null);
+
 				if (local666) {
-					aFrame1.setExtendedState(6);
+					frame.setExtendedState(6);
 				}
-				aPanel1 = new WindowPanel();
-				aPanel1.setBackground(Color.black);
-				aPanel1.setLayout(null);
-				aFrame1.setLayout(new BorderLayout());
+
+				mainPanel = new WindowPanel();
+				mainPanel.setBackground(Color.black);
+				mainPanel.setLayout(null);
+				frame.setLayout(new BorderLayout());
+
 				@Pc(720) AppletViewer local720 = new AppletViewer();
-				aFrame1.add(aPanel1, "Center");
-				aPanel1.addComponentListener(local720);
-				aDialogPreferences_1 = new DialogPreferences();
-				aDialogPreferences_1.addAdjustmentListener(local720);
+				frame.add(mainPanel, "Center");
+				mainPanel.addComponentListener(local720);
+
+				dialogPreferences = new DialogPreferences();
+				dialogPreferences.addAdjustmentListener(local720);
+
 				@Pc(744) boolean local744 = !"yes".equals(Preferences.method25("Member", 1));
-				if (aBoolean1 && local744) {
-					aCanvas1 = new Canvas();
-					aPanel1.add(aCanvas1);
+				if (WIN32 && local744) {
+					canvas = new Canvas();
+					mainPanel.add(canvas);
 				}
-				aPanel1.add(anApplet1);
-				aTopPanelBar = new TopPanelBar(new DialogLanguage());
-				aTopPanelBar.setBackground(Color.BLACK);
-				aTopPanelBar.setForeground(Color.GRAY);
-				aTopPanelBar.method35((byte) -121, method15(1555, "language"));
-				if (aConfigArray1 != null && aConfigArray1.length > 1) {
-					aTopPanelBar.method35((byte) -108, method15(1555, "switchserver"));
+
+				mainPanel.add(mainapp);
+				topBar = new TopPanelBar(new DialogLanguage());
+				topBar.setBackground(Color.BLACK);
+				topBar.setForeground(Color.GRAY);
+				topBar.method35((byte) -121, translate("language"));
+
+				if (configs != null && configs.length > 1) {
+					topBar.method35((byte) -108, translate("switchserver"));
 				}
-				aTopPanelBar.setFont(new Font("SansSerif", 0, 10));
-				aPanel1.add(aTopPanelBar);
-				aComponent1 = new CopyrightBar(method15(1555, "tandc"));
-				aPanel1.add(aComponent1);
-				aBoolean5 = true;
-				aFrame1.doLayout();
-				method3((byte) -127);
-				if (aBoolean1) {
+
+				topBar.setFont(new Font("SansSerif", 0, 10));
+				mainPanel.add(topBar);
+				copyright = new CopyrightBar(translate("tandc"));
+				mainPanel.add(copyright);
+				loaded = true;
+
+				frame.doLayout();
+				method3();
+
+				if (WIN32) {
 					try {
 						System.load(local381.toString());
 					} catch (@Pc(832) Throwable local832) {
-						if (aBoolean2) {
+						if (VERBOSE) {
 							local832.printStackTrace();
 						}
-						DialogMessage.method29(500, method15(1555, "err_create_advertising"));
+						DialogMessage.showError(translate("err_create_advertising"));
 						return;
 					}
 				}
-				if (aBoolean1 && local744) {
+
+				if (WIN32 && local744) {
 					while (true) {
-						if (aCanvas1.isDisplayable() && aCanvas1.isShowing()) {
+						if (canvas.isDisplayable() && canvas.isShowing()) {
 							try {
-								browsercontrol.create(aCanvas1, method13("adverturl", true));
-								browsercontrol.resize(aCanvas1.getSize().width, aCanvas1.getSize().height);
+								browsercontrol.create(canvas, getProperty("adverturl"));
+								browsercontrol.resize(canvas.getSize().width, canvas.getSize().height);
 								break;
-							} catch (@Pc(876) Throwable local876) {
-								if (aBoolean2) {
-									local876.printStackTrace();
+							} catch (@Pc(876) Throwable ex) {
+								if (VERBOSE) {
+									ex.printStackTrace();
 								}
-								DialogMessage.method29(500, method15(1555, "err_create_advertising"));
+
+								DialogMessage.showError(translate("err_create_advertising"));
 								return;
 							}
 						}
@@ -898,12 +937,14 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 						}
 					}
 				}
-				aFrame1.addWindowListener(WindowListener.method38(-21945));
-				anApplet1.setStub(new GameAppletStub());
-				anApplet1.init();
-				anApplet1.start();
+
+				frame.addWindowListener(WindowListener.create(-21945));
+				mainapp.setStub(new GameAppletStub());
+				mainapp.init();
+				mainapp.start();
 				return;
 			}
+
 			local58 = Preferences.method25("Language", 1);
 			local60 = 0;
 			if (local58 != null) {
@@ -913,27 +954,28 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "doresize", descriptor = "(I)V")
-	public static void doresize(@OriginalArg(0) int arg0) {
-		if (arg0 == 0) {
-			if (!aBoolean4) {
-				aBoolean4 = true;
-				method3((byte) -124);
+	public static void doresize(@OriginalArg(0) int type) {
+		if (type == 0) {
+			if (!resize) {
+				resize = true;
+				method3();
 			}
-		} else if (arg0 == 1 && aBoolean4) {
-			aBoolean4 = false;
-			method3((byte) -127);
+		} else if (type == 1 && resize) {
+			resize = false;
+			method3();
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/lang/String;Z)Ljava/lang/String;")
-	public static String method13(@OriginalArg(0) String arg0, @OriginalArg(1) boolean arg1) {
-		if (aConfig_1 != null) {
-			@Pc(8) String local8 = (String) aConfig_1.aHashtable6.get(arg0);
-			if (local8 != null) {
-				return local8;
+	public static String getProperty(@OriginalArg(0) String name) {
+		if (currentConfig != null) {
+			@Pc(8) String value = (String) currentConfig.properties.get(name);
+			if (value != null) {
+				return value;
 			}
 		}
-		return (String) aHashtable1.get(arg0);
+
+		return (String) properties.get(name);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)Ljava/io/File;")
@@ -967,7 +1009,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 							}
 						}
 					} catch (@Pc(225) Exception local225) {
-						if (aBoolean2) {
+						if (VERBOSE) {
 							System.out.println("Unable to open/write: " + local121);
 						}
 						try {
@@ -981,59 +1023,56 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				}
 			}
 		}
-		if (aBoolean2) {
+		if (VERBOSE) {
 			throw new RuntimeException("Fatal - could not find ANY location for file: " + arg4);
 		}
 		throw new RuntimeException();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "c", descriptor = "(ILjava/lang/String;)Ljava/lang/String;")
-	public static String method15(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
-		if (aConfig_1 != null) {
-			@Pc(13) String local13 = (String) aConfig_1.aHashtable8.get(arg1);
-			if (local13 != null) {
-				return local13;
+	public static String translate(@OriginalArg(1) String name) {
+		if (currentConfig != null) {
+			@Pc(13) String value = (String) currentConfig.localization.get(name);
+			if (value != null) {
+				return value;
 			}
 		}
-		return (String) aHashtable3.get(arg1);
+
+		return (String) localization.get(name);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/io/File;I[B)Z")
-	private static boolean method16(@OriginalArg(0) File arg0, @OriginalArg(1) int arg1, @OriginalArg(2) byte[] arg2) {
+	private static boolean save(@OriginalArg(0) File file, @OriginalArg(2) byte[] src) {
 		try {
-			@Pc(4) FileOutputStream local4 = new FileOutputStream(arg0);
-			if (arg1 > -91) {
-				return false;
-			} else {
-				local4.write(arg2, 0, arg2.length);
-				local4.close();
-				return true;
+			@Pc(4) FileOutputStream stream = new FileOutputStream(file);
+			stream.write(src, 0, src.length);
+			stream.close();
+			return true;
+		} catch (@Pc(20) IOException ex) {
+			if (VERBOSE) {
+				ex.printStackTrace();
 			}
-		} catch (@Pc(20) IOException local20) {
-			if (aBoolean2) {
-				local20.printStackTrace();
-			}
-			DialogMessage.method29(500, method15(1555, "err_save_file"));
+
+			DialogMessage.showError(translate("err_save_file"));
 			return false;
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "d", descriptor = "(B)V")
-	public static void method17(@OriginalArg(0) byte arg0) {
+	public static void method17() {
 		@Pc(1) boolean local1 = false;
-		if (aConfigArray1 == null && aTopPanelBar.isVisible()) {
+		if (configs == null && topBar.isVisible()) {
 			local1 = true;
-			aTopPanelBar.setVisible(false);
+			topBar.setVisible(false);
 		}
-		if (aComponent1.isVisible()) {
-			aComponent1.setVisible(false);
+
+		if (copyright.isVisible()) {
+			copyright.setVisible(false);
 			local1 = true;
 		}
+
 		if (local1) {
-			method3((byte) -119);
-		}
-		if (arg0 <= 8) {
-			aBoolean4 = true;
+			method3();
 		}
 	}
 
@@ -1043,30 +1082,30 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "adjustmentValueChanged", descriptor = "(Ljava/awt/event/AdjustmentEvent;)V")
 	@Override
-	public void adjustmentValueChanged(@OriginalArg(0) AdjustmentEvent arg0) {
-		if (arg0.getValueIsAdjusting()) {
-			method3((byte) -120);
+	public void adjustmentValueChanged(@OriginalArg(0) AdjustmentEvent e) {
+		if (e.getValueIsAdjusting()) {
+			method3();
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentShown", descriptor = "(Ljava/awt/event/ComponentEvent;)V")
 	@Override
-	public void componentShown(@OriginalArg(0) ComponentEvent arg0) {
+	public void componentShown(@OriginalArg(0) ComponentEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentResized", descriptor = "(Ljava/awt/event/ComponentEvent;)V")
 	@Override
-	public void componentResized(@OriginalArg(0) ComponentEvent arg0) {
-		method3((byte) -127);
+	public void componentResized(@OriginalArg(0) ComponentEvent e) {
+		method3();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentMoved", descriptor = "(Ljava/awt/event/ComponentEvent;)V")
 	@Override
-	public void componentMoved(@OriginalArg(0) ComponentEvent arg0) {
+	public void componentMoved(@OriginalArg(0) ComponentEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentHidden", descriptor = "(Ljava/awt/event/ComponentEvent;)V")
 	@Override
-	public void componentHidden(@OriginalArg(0) ComponentEvent arg0) {
+	public void componentHidden(@OriginalArg(0) ComponentEvent e) {
 	}
 }

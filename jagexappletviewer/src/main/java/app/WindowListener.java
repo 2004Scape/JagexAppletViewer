@@ -15,7 +15,7 @@ public final class WindowListener extends WindowAdapter implements ActionListene
 	private static WindowListener aWindowAdapter_Sub1_1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "a", descriptor = "(I)Ljagexappletviewer!app/k;")
-	public static WindowListener method38(@OriginalArg(0) int arg0) {
+	public static WindowListener create(@OriginalArg(0) int arg0) {
 		if (aWindowAdapter_Sub1_1 == null) {
 			aWindowAdapter_Sub1_1 = new WindowListener();
 		}

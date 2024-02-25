@@ -43,7 +43,7 @@ public final class ComponentProgress extends Component {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(II)V")
-	public static void method19(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
+	public static void updateProgress(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
 		if (aComponent_Progress == null) {
 			return;
 		}
@@ -60,26 +60,26 @@ public final class ComponentProgress extends Component {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(Ljava/lang/String;B)V")
-	public static void method21(@OriginalArg(0) String arg0, @OriginalArg(1) byte arg1) {
+	public static void setText(@OriginalArg(0) String arg0, @OriginalArg(1) byte arg1) {
 		aComponent_Progress.aString2 = arg0;
 		aComponent_Progress.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "b", descriptor = "(I)V")
-	public static void method22(@OriginalArg(0) int arg0) {
-		aComponent_Progress = new ComponentProgress(AppletViewer.method15(arg0 + 1554, "loaderbox_initial"));
+	public static void init(@OriginalArg(0) int arg0) {
+		aComponent_Progress = new ComponentProgress(AppletViewer.translate("loaderbox_initial"));
 		aComponent_Progress.aFont1 = new Font("Helvetica", arg0, 13);
 		aComponent_Progress.aFontMetrics1 = aComponent_Progress.getFontMetrics(aComponent_Progress.aFont1);
-		aDialog1 = new Dialog(AppletViewer.aFrame1, "Jagex Ltd.", false);
+		aDialog1 = new Dialog(AppletViewer.frame, "Jagex Ltd.", false);
 		aDialog1.add(aComponent_Progress);
-		aDialog1.addWindowListener(WindowListener.method38(-21945));
+		aDialog1.addWindowListener(WindowListener.create(-21945));
 		aDialog1.setResizable(false);
 		aDialog1.setSize(320, 100);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "c", descriptor = "(I)V")
-	public static void method23(@OriginalArg(0) int arg0) {
-		aDialog1.setLocationRelativeTo(AppletViewer.aFrame1);
+	public static void show(@OriginalArg(0) int arg0) {
+		aDialog1.setLocationRelativeTo(AppletViewer.frame);
 		aDialog1.setVisible(true);
 	}
 

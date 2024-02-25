@@ -15,8 +15,8 @@ public final class DialogLanguage implements ActionListener {
 	public void actionPerformed(@OriginalArg(0) ActionEvent arg0) {
 		@Pc(4) int local4 = arg0.getID();
 		if (local4 == 0) {
-			if (AppletViewer.method2(113) >= 0) {
-				DialogMessage.method30(0, AppletViewer.method15(1555, "changes_on_restart"));
+			if (AppletViewer.method2() >= 0) {
+				DialogMessage.showMessage(AppletViewer.translate("changes_on_restart"));
 			}
 		} else if (local4 == 1) {
 			AppletViewer.method9((byte) -90);
