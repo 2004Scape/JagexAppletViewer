@@ -1,0 +1,6 @@
+rootProject.name = "JagexAppletViewer"
+
+include(
+    "deob-annotations",
+    "jagexappletviewer"
+)
