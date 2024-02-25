@@ -19,104 +19,110 @@ import org.openrs2.deob.annotation.Pc;
 public final class PopupWindow implements ActionListener, WindowListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "b", descriptor = "I")
-	private int anInt4;
+	private int selectedIndex;
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "a", descriptor = "Ljava/awt/List;")
-	private List aList1;
+	private List list;
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "c", descriptor = "Ljava/awt/Dialog;")
-	private Dialog aDialog4;
+	private Dialog dialog;
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	public PopupWindow(@OriginalArg(0) String arg0) {
-		@Pc(7) Panel local7 = new Panel();
-		this.aList1 = new List();
-		local7.setLayout(new BorderLayout());
-		local7.add(this.aList1, "Center");
-		@Pc(26) Panel local26 = new Panel();
-		local26.setLayout(new GridLayout(1, 2));
-		local7.add(local26, "South");
-		@Pc(44) Button local44 = new Button(AppletViewer.translate("ok"));
-		local44.setActionCommand("ok");
-		local44.addActionListener(this);
-		@Pc(57) Button local57 = new Button(AppletViewer.translate("cancel"));
-		local57.setActionCommand("cancel");
-		local57.addActionListener(this);
-		local26.add(local44);
-		local26.add(local57);
-		this.aDialog4 = new Dialog(AppletViewer.frame, arg0, true);
-		this.aDialog4.addWindowListener(this);
-		this.aDialog4.setSize(200, 150);
-		this.aDialog4.add(local7);
+	public PopupWindow(@OriginalArg(0) String title) {
+		@Pc(7) Panel centerPanel = new Panel();
+		this.list = new List();
+		centerPanel.setLayout(new BorderLayout());
+		centerPanel.add(this.list, "Center");
+
+		@Pc(26) Panel southPanel = new Panel();
+		southPanel.setLayout(new GridLayout(1, 2));
+		centerPanel.add(southPanel, "South");
+
+		@Pc(44) Button okButton = new Button(AppletViewer.translate("ok"));
+		okButton.setActionCommand("ok");
+		okButton.addActionListener(this);
+
+		@Pc(57) Button cancelButton = new Button(AppletViewer.translate("cancel"));
+		cancelButton.setActionCommand("cancel");
+		cancelButton.addActionListener(this);
+
+		southPanel.add(okButton);
+		southPanel.add(cancelButton);
+
+		this.dialog = new Dialog(AppletViewer.frame, title, true);
+		this.dialog.addWindowListener(this);
+		this.dialog.setSize(200, 150);
+		this.dialog.add(centerPanel);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowDeiconified", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowDeiconified(@OriginalArg(0) WindowEvent arg0) {
+	public void windowDeiconified(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "a", descriptor = "(Z)V")
-	private void method32(@OriginalArg(0) boolean arg0) {
-		this.anInt4 = -1;
-		this.aDialog4.setVisible(false);
+	private void close() {
+		this.selectedIndex = -1;
+		this.dialog.setVisible(false);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowClosing", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowClosing(@OriginalArg(0) WindowEvent arg0) {
-		this.method32(true);
+	public void windowClosing(@OriginalArg(0) WindowEvent e) {
+		this.close();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowClosed", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowClosed(@OriginalArg(0) WindowEvent arg0) {
+	public void windowClosed(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowIconified", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowIconified(@OriginalArg(0) WindowEvent arg0) {
+	public void windowIconified(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowDeactivated", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowDeactivated(@OriginalArg(0) WindowEvent arg0) {
+	public void windowDeactivated(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowOpened", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowOpened(@OriginalArg(0) WindowEvent arg0) {
+	public void windowOpened(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "windowActivated", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowActivated(@OriginalArg(0) WindowEvent arg0) {
+	public void windowActivated(@OriginalArg(0) WindowEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "actionPerformed", descriptor = "(Ljava/awt/event/ActionEvent;)V")
 	@Override
-	public void actionPerformed(@OriginalArg(0) ActionEvent arg0) {
-		if (arg0.getActionCommand().equals("ok")) {
-			this.anInt4 = this.aList1.getSelectedIndex();
-			this.aDialog4.setVisible(false);
+	public void actionPerformed(@OriginalArg(0) ActionEvent e) {
+		if (e.getActionCommand().equals("ok")) {
+			this.selectedIndex = this.list.getSelectedIndex();
+			this.dialog.setVisible(false);
 		} else {
-			this.method32(true);
+			this.close();
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "a", descriptor = "(I)I")
-	public int method33(@OriginalArg(0) int arg0) {
-		this.aDialog4.setLocationRelativeTo(AppletViewer.frame);
-		this.aDialog4.setVisible(true);
-		return this.anInt4;
+	public int getSelectedIndex() {
+		this.dialog.setLocationRelativeTo(AppletViewer.frame);
+		this.dialog.setVisible(true);
+		return this.selectedIndex;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/f", name = "a", descriptor = "([Ljava/lang/String;I)V")
-	public void method34(@OriginalArg(0) String[] arg0, @OriginalArg(1) int arg1) {
-		this.aList1.removeAll();
-		for (@Pc(10) int local10 = 0; local10 < arg0.length; local10++) {
-			@Pc(22) String local22 = arg0[local10];
-			if (local22 != null) {
-				this.aList1.add(local22);
+	public void add(@OriginalArg(0) String[] list) {
+		this.list.removeAll();
+
+		for (@Pc(10) int i = 0; i < list.length; i++) {
+			@Pc(22) String value = list[i];
+			if (value != null) {
+				this.list.add(value);
 			}
 		}
 	}

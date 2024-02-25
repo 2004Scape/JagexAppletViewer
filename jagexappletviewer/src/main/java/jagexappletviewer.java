@@ -16,6 +16,6 @@ public class jagexappletviewer {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!jagexappletviewer", name = "<init>", descriptor = "()V")
-	private jagexappletviewer() {
+	public jagexappletviewer() {
 	}
 }

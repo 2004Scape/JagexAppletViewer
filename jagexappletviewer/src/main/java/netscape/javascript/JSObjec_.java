@@ -30,12 +30,12 @@ public final class JSObjec_ {
 		System.out.println("Received command: " + command);
 
 		if ("zap".equals(command)) {
-			Preferences.set("yes", -124, "Member");
+			Preferences.set("yes", "Member");
 			Preferences.save();
 			AppletViewer.removeadvert();
 			AppletViewer.method17();
 		} else if ("unzap".equals(command)) {
-			Preferences.set("no", -124, "Member");
+			Preferences.set("no", "Member");
 			Preferences.save();
 			AppletViewer.readdadvert();
 			AppletViewer.method17();

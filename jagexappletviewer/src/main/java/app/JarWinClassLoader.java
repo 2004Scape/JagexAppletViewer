@@ -19,15 +19,15 @@ import org.openrs2.deob.annotation.Pc;
 public final class JarWinClassLoader extends ClassLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "a", descriptor = "Ljava/lang/ClassLoader;")
-	private static ClassLoader aClassLoader1;
+	private static ClassLoader loader;
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "b", descriptor = "Ljagexappletviewer!app/v;")
-	private static JarWinClassLoader aJarWinClassLoader__1;
+	private static JarWinClassLoader winLoader;
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "a", descriptor = "(B)V")
-	public static void method45(@OriginalArg(0) byte arg0) {
-		aJarWinClassLoader__1 = new JarWinClassLoader();
-		aJarWinClassLoader__1.method46((byte) -122);
+	public static void method45() {
+		winLoader = new JarWinClassLoader();
+		winLoader.method46();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "<init>", descriptor = "()V")
@@ -36,12 +36,13 @@ public final class JarWinClassLoader extends ClassLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "loadClass", descriptor = "(Ljava/lang/String;)Ljava/lang/Class;")
 	@Override
-	public Class loadClass(@OriginalArg(0) String arg0) throws ClassNotFoundException {
-		if ("netscape.javascript.JSObject".equals(arg0)) {
-			@Pc(13) CodeSource local13 = new CodeSource(null, (Certificate[]) null);
-			@Pc(17) Permissions local17 = new Permissions();
-			local17.add(new AllPermission());
-			@Pc(28) ProtectionDomain local28 = new ProtectionDomain(local13, local17);
+	public Class loadClass(@OriginalArg(0) String name) throws ClassNotFoundException {
+		if ("netscape.javascript.JSObject".equals(name)) {
+			@Pc(13) CodeSource source = new CodeSource(null, (Certificate[]) null);
+			@Pc(17) Permissions perm = new Permissions();
+			perm.add(new AllPermission());
+			@Pc(28) ProtectionDomain domain = new ProtectionDomain(source, perm);
+
 			try {
 				@Pc(34) URL local34 = this.getClass().getClassLoader().getResource("netscape/javascript/JSObjec_.class");
 				@Pc(37) URLConnection local37 = local34.openConnection();
@@ -49,6 +50,7 @@ public final class JarWinClassLoader extends ClassLoader {
 				@Pc(44) byte[] local44 = new byte[local37.getContentLength()];
 				for (@Pc(46) int local46 = 0; local46 < local44.length; local46 += local40.read(local44, local46, local44.length - local46)) {
 				}
+
 				for (@Pc(69) int local69 = 0; local69 < local44.length; local69++) {
 					@Pc(83) int local83 = local44[local69] & 0xFF;
 					if ("JSObject".charAt(0) == local83) {
@@ -64,27 +66,30 @@ public final class JarWinClassLoader extends ClassLoader {
 						}
 					}
 				}
-				return this.defineClass(arg0, local44, 0, local44.length, local28);
-			} catch (@Pc(149) IOException local149) {
-				local149.printStackTrace();
+
+				return this.defineClass(name, local44, 0, local44.length, domain);
+			} catch (@Pc(149) IOException ex) {
+				ex.printStackTrace();
 			}
 		}
+
 		try {
-			return this.getClass().getClassLoader().loadClass(arg0);
-		} catch (@Pc(158) Exception local158) {
-			return aClassLoader1.loadClass(arg0);
+			return this.getClass().getClassLoader().loadClass(name);
+		} catch (@Pc(158) Exception ignored) {
+			return loader.loadClass(name);
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "b", descriptor = "(B)V")
-	private void method46(@OriginalArg(0) byte arg0) {
+	private void method46() {
 		try {
-			aClassLoader1 = ClassLoader.getSystemClassLoader();
-			@Pc(12) Field local12 = ClassLoader.class.getDeclaredField("scl");
-			local12.setAccessible(true);
-			local12.set(aClassLoader1, this);
-			local12.setAccessible(false);
-		} catch (@Pc(28) Throwable local28) {
+			loader = ClassLoader.getSystemClassLoader();
+
+			@Pc(12) Field sclField = ClassLoader.class.getDeclaredField("scl");
+			sclField.setAccessible(true);
+			sclField.set(loader, this);
+			sclField.setAccessible(false);
+		} catch (@Pc(28) Throwable ignored) {
 		}
 	}
 }

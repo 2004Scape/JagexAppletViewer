@@ -17,65 +17,59 @@ import org.openrs2.deob.annotation.Pc;
 public final class Preferences {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "Ljava/util/Hashtable;")
-	private static Hashtable aHashtable4 = new Hashtable();
+	private static Hashtable prefs = new Hashtable();
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "b", descriptor = "Ljava/io/File;")
-	private static File aFile2 = new File(new File(System.getProperty("user.home")), "jagexappletviewer.preferences");
+	private static File preferencesFile = new File(new File(System.getProperty("user.home")), "jagexappletviewer.preferences");
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "(Ljava/lang/String;I)Ljava/lang/String;")
-	public static String method25(@OriginalArg(0) String arg0, @OriginalArg(1) int arg1) {
-		if (arg1 != 1) {
-			aHashtable4 = null;
-		}
-		return (String) aHashtable4.get(arg0);
+	public static String get(@OriginalArg(0) String key) {
+		return (String) prefs.get(key);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "(Ljava/lang/String;ILjava/lang/String;)V")
-	public static void set(@OriginalArg(0) String arg0, @OriginalArg(1) int arg1, @OriginalArg(2) String arg2) {
-		aHashtable4.put(arg2, arg0);
+	public static void set(@OriginalArg(0) String value, @OriginalArg(2) String key) {
+		prefs.put(key, value);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "(B)V")
 	public static void save() {
-		@Pc(3) PrintStream local3 = null;
+		@Pc(3) PrintStream stream = null;
 		try {
-			local3 = new PrintStream(new FileOutputStream(aFile2));
-			@Pc(14) Enumeration local14 = aHashtable4.keys();
+			stream = new PrintStream(new FileOutputStream(preferencesFile));
+			@Pc(14) Enumeration local14 = prefs.keys();
 			while (local14.hasMoreElements()) {
 				@Pc(21) String local21 = (String) local14.nextElement();
-				@Pc(26) String local26 = (String) aHashtable4.get(local21);
-				local3.println(local21 + "=" + local26);
+				@Pc(26) String local26 = (String) prefs.get(local21);
+				stream.println(local21 + "=" + local26);
 			}
-		} catch (@Pc(53) IOException local53) {
-			local53.printStackTrace();
+		} catch (@Pc(53) IOException ex) {
+			ex.printStackTrace();
 		} finally {
-			if (local3 != null) {
-				local3.close();
+			if (stream != null) {
+				stream.close();
 			}
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "b", descriptor = "(B)V")
-	public static void method28(@OriginalArg(0) byte arg0) {
-		@Pc(3) BufferedReader local3 = null;
-		if (arg0 <= 101) {
-			return;
-		}
+	public static void load() {
+		@Pc(3) BufferedReader reader = null;
 		try {
-			local3 = new BufferedReader(new FileReader(aFile2));
-			while (local3.ready()) {
-				@Pc(21) String local21 = local3.readLine();
-				@Pc(25) int local25 = local21.indexOf("=");
-				if (local25 >= 0) {
-					aHashtable4.put(local21.substring(0, local25), local21.substring(local25 + 1));
+			reader = new BufferedReader(new FileReader(preferencesFile));
+			while (reader.ready()) {
+				@Pc(21) String line = reader.readLine();
+				@Pc(25) int separatorIndex = line.indexOf("=");
+				if (separatorIndex >= 0) {
+					prefs.put(line.substring(0, separatorIndex), line.substring(separatorIndex + 1));
 				}
 			}
-		} catch (@Pc(52) IOException local52) {
+		} catch (@Pc(52) IOException ignored) {
 		} finally {
-			if (local3 != null) {
+			if (reader != null) {
 				try {
-					local3.close();
-				} catch (@Pc(66) IOException local66) {
+					reader.close();
+				} catch (@Pc(66) IOException ignored) {
 				}
 			}
 		}

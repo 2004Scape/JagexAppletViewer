@@ -12,14 +12,15 @@ import org.openrs2.deob.annotation.OriginalMember;
 public final class WindowListener extends WindowAdapter implements ActionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "a", descriptor = "Ljagexappletviewer!app/k;")
-	private static WindowListener aWindowAdapter_Sub1_1;
+	private static WindowListener listener;
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "a", descriptor = "(I)Ljagexappletviewer!app/k;")
-	public static WindowListener create(@OriginalArg(0) int arg0) {
-		if (aWindowAdapter_Sub1_1 == null) {
-			aWindowAdapter_Sub1_1 = new WindowListener();
+	public static WindowListener create() {
+		if (listener == null) {
+			listener = new WindowListener();
 		}
-		return aWindowAdapter_Sub1_1;
+
+		return listener;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "<init>", descriptor = "()V")
@@ -28,13 +29,13 @@ public final class WindowListener extends WindowAdapter implements ActionListene
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "windowClosing", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowClosing(@OriginalArg(0) WindowEvent arg0) {
-		AppletViewer.method5(96);
+	public void windowClosing(@OriginalArg(0) WindowEvent e) {
+		AppletViewer.close();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/k", name = "actionPerformed", descriptor = "(Ljava/awt/event/ActionEvent;)V")
 	@Override
-	public void actionPerformed(@OriginalArg(0) ActionEvent arg0) {
-		AppletViewer.method5(122);
+	public void actionPerformed(@OriginalArg(0) ActionEvent e) {
+		AppletViewer.close();
 	}
 }

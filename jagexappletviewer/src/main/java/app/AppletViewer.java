@@ -136,7 +136,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		}
 
 		if (local1) {
-			method3();
+			resized();
 		}
 
 		if (arg0 != -99) {
@@ -146,21 +146,22 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(I)I")
 	public static int method2() {
-		@Pc(11) int local11 = languageWindow.method33(-1);
-		if (local11 < 0) {
+		@Pc(11) int index = languageWindow.getSelectedIndex();
+		if (index < 0) {
 			return -1;
 		} else {
-			Preferences.set(Integer.toString(anIntArray1[local11]), -128, "Language");
+			Preferences.set(Integer.toString(anIntArray1[index]), "Language");
 			Preferences.save();
-			return local11;
+			return index;
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(B)V")
-	private static void method3() {
+	private static void resized() {
 		if (!loaded) {
 			return;
 		}
+
 		@Pc(10) int local10 = topBar.isVisible() ? 20 : 0;
 		@Pc(20) int local20 = canvas == null ? 0 : Integer.parseInt(getProperty("advert_height"));
 		@Pc(27) int local27 = copyright.isVisible() ? 40 : 0;
@@ -174,14 +175,17 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		@Pc(82) int local82 = local50.height - local60.top - local60.bottom;
 		@Pc(84) int local84 = local71;
 		@Pc(94) int local94 = local82 - local10 - local20 - local27;
+
 		if (local32 > local71) {
 			local84 = local32;
 		}
+
 		@Pc(102) boolean local102 = false;
 		if (local94 < local37) {
 			local102 = true;
 			local94 = local37;
 		}
+
 		if (local102) {
 			if (dialogPreferences.getParent() == null) {
 				frame.add(dialogPreferences, "East");
@@ -200,13 +204,16 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				local84 = local42;
 			}
 		}
+
 		@Pc(162) int local162 = local71;
 		if (local71 < local32) {
 			local162 = local32;
 		}
+
 		if (local27 + local20 + local37 + local10 > local82) {
 			@Pc(193) int local193 = local20 + local37 + local27 + local10;
 		}
+
 		@Pc(196) int local196 = 0;
 		if (dialogPreferences.getParent() != null) {
 			local196 = dialogPreferences.getValue();
@@ -221,15 +228,20 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			dialogPreferences.setMaximum(local211);
 			dialogPreferences.setVisibleAmount(local82);
 		}
+
 		topBar.setBounds((local162 - local84) / 2, -local196, local84, local10);
+
 		if (canvas != null) {
 			canvas.setBounds((local162 - local84) / 2, local10 - local196, local84, local20);
 		}
+
 		mainapp.setBounds((local162 - local84) / 2, local20 + local10 - local196, local84, local94);
 		copyright.setBounds((local162 - local84) / 2, local10 + local20 + local94 - local196, local84, local27);
+
 		if (canvas != null && browsercontrol.iscreated()) {
 			browsercontrol.resize(canvas.getSize().width, canvas.getSize().height);
 		}
+
 		frame.repaint();
 	}
 
@@ -248,7 +260,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			}
 			@Pc(49) String local49 = local13.substring(local17 + 2, local29);
 			@Pc(56) String local56 = local13.substring(local29 + 1, local34);
-			@Pc(60) String local60 = Preferences.method25(local49, 1);
+			@Pc(60) String local60 = Preferences.get(local49);
 			if (local60 != null) {
 				local56 = local60;
 			}
@@ -266,19 +278,22 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		if (canvas == null) {
 			return;
 		}
+
 		if (browsercontrol.iscreated()) {
 			browsercontrol.destroy();
 		}
+
 		mainPanel.remove(canvas);
 		canvas = null;
-		method3();
+		resized();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "b", descriptor = "(I)V")
-	public static void method5(@OriginalArg(0) int arg0) {
+	public static void close() {
 		if (browsercontrol.iscreated()) {
 			browsercontrol.destroy();
 		}
+
 		System.exit(0);
 	}
 
@@ -287,9 +302,10 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		if (!WIN32 || canvas != null) {
 			return;
 		}
+
 		canvas = new Canvas();
 		mainPanel.add(canvas);
-		method3();
+		resized();
 		while (!canvas.isDisplayable() || !canvas.isShowing()) {
 			try {
 				Thread.sleep(100L);
@@ -324,7 +340,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 				progress += read;
 				offset += read;
-				ComponentProgress.updateProgress((int) (progress / progressLimit * 100.0F), 140);
+				ComponentProgress.updateProgress((int) (progress / progressLimit * 100.0F));
 			}
 
 			stream.close();
@@ -358,18 +374,18 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		if (arg0 == null) {
 			return;
 		}
-		ComponentProgress.setText(translate("loading_app"), (byte) 31);
-		ComponentProgress.updateProgress(0, 140);
-		ComponentProgress.show(2);
-		ComponentProgress.method20((byte) -98);
+		ComponentProgress.setText(translate("loading_app"));
+		ComponentProgress.updateProgress(0);
+		ComponentProgress.showDialog();
+		ComponentProgress.paint();
 		if (mainapp != null) {
 			if (copyright.isVisible()) {
 				copyright.setVisible(false);
-				method3();
+				resized();
 			}
 			mainapp.stop();
-			ComponentProgress.updateProgress(25, 140);
-			ComponentProgress.method20((byte) -98);
+			ComponentProgress.updateProgress(25);
+			ComponentProgress.paint();
 			mainapp.destroy();
 			mainPanel.remove(mainapp);
 			mainapp = null;
@@ -378,41 +394,41 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		currentConfig = arg0;
 		frame.setTitle(getProperty("title"));
 
-		ComponentProgress.updateProgress(50, 140);
-		ComponentProgress.method20((byte) -98);
+		ComponentProgress.updateProgress(50);
+		ComponentProgress.paint();
 		if (WIN32) {
-			JarWinClassLoader.method45((byte) 127);
+			JarWinClassLoader.method45();
 		}
 		try {
 			@Pc(61) String local61 = getProperty("codebase");
 			@Pc(68) byte[] local68 = download(getProperty("loader_jar"), local61);
-			ComponentProgress.updateProgress(75, 140);
-			ComponentProgress.method20((byte) -98);
+			ComponentProgress.updateProgress(75);
+			ComponentProgress.paint();
 			@Pc(78) JarClassLoader local78 = new JarClassLoader(local68);
 			mainapp = (Applet) local78.loadClass("loader").getDeclaredConstructor().newInstance();
 			if (VERBOSE) {
 				System.out.println("loader_jar : " + local68.length);
 			}
-			ComponentProgress.method18(-1127);
+			ComponentProgress.hideDialog();
 		} catch (@Pc(104) Exception local104) {
 			if (VERBOSE) {
 				local104.printStackTrace();
 			}
-			ComponentProgress.method18(-1127);
+			ComponentProgress.hideDialog();
 			DialogMessage.showError(translate("err_target_applet"));
 		}
 		mainPanel.add(mainapp);
 		copyright = new CopyrightBar(translate("tandc"));
 		mainPanel.add(copyright);
 		resize = true;
-		method3();
+		resized();
 		mainapp.setStub(new GameAppletStub());
 		mainapp.init();
 		mainapp.start();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "c", descriptor = "(B)V")
-	public static void method9(@OriginalArg(0) byte arg0) {
+	public static void method9() {
 		@Pc(5) String local5 = getProperty("serverlist");
 		@Pc(7) Config[] local7 = configs;
 		@Pc(10) int local10 = configs.length;
@@ -454,8 +470,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		for (local99 = 0; local99 < local10; local99++) {
 			local97[local99] = (String) local7[local99].properties.get("servername");
 		}
-		switchServerWindow.method34(local97, 2);
-		local99 = switchServerWindow.method33(-1);
+		switchServerWindow.add(local97);
+		local99 = switchServerWindow.getSelectedIndex();
 		if (local99 >= 0) {
 			switchToServer(local7[local99], 50);
 		}
@@ -600,13 +616,13 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				do {
 					if (!local377.hasMoreElements()) {
 						languageWindow = new PopupWindow(translate("language"));
-						languageWindow.method34(aStringArray1, 2);
+						languageWindow.add(aStringArray1);
 						if (local22 > 0) {
 							configs = new Config[local22];
 							System.arraycopy(local25, 0, configs, 0, local22);
 							switchServerWindow = new PopupWindow(translate("switchserver"));
 						}
-						if (Preferences.method25("Language", 1) == null) {
+						if (Preferences.get("Language") == null) {
 							return method2() < 0;
 						}
 						return true;
@@ -650,16 +666,16 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		VERBOSE = Boolean.getBoolean("com.jagex.debug");
 
 		if (VERBOSE) {
-			System.setErr(DialogDebug.getPrintStream(29, "Jagex host console"));
-			System.setOut(DialogDebug.getPrintStream(27, "Jagex host console"));
+			System.setErr(DialogDebug.getPrintStream("Jagex host console"));
+			System.setOut(DialogDebug.getPrintStream("Jagex host console"));
 			System.out.println("release #7");
 			System.out.println("java.version = " + System.getProperty("java.version"));
 			System.out.println("os.name = " + System.getProperty("os.name"));
 			System.out.println("os.arch = " + System.getProperty("os.arch"));
 		}
 
-		Preferences.method28((byte) 109);
-		@Pc(58) String local58 = Preferences.method25("Language", 1);
+		Preferences.load();
+		@Pc(58) String local58 = Preferences.get("Language");
 		@Pc(60) int local60 = 0;
 		@Pc(71) String local71;
 		if (local58 == null) {
@@ -695,7 +711,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				}
 			}
 			if (local73 >= 0) {
-				Preferences.set(Integer.toString(local73), -127, "Language");
+				Preferences.set(Integer.toString(local73), "Language");
 				Preferences.save();
 			}
 		} else {
@@ -715,8 +731,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 			}
 		}
 		ComponentProgress.init(1);
-		ComponentProgress.show(2);
-		ComponentProgress.setText(translate("loading_config"), (byte) 31);
+		ComponentProgress.showDialog();
+		ComponentProgress.setText(translate("loading_config"));
 		local71 = System.getProperty("com.jagex.config");
 		@Pc(232) String local232 = System.getProperty("com.jagex.configfile");
 		if (local71 == null) {
@@ -751,26 +767,27 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				} catch (Exception ignored) {
 				}
 
-				@Pc(321) String local321 = getProperty("cachesubdir");
-				@Pc(325) String local325 = getProperty("codebase");
-				@Pc(329) String local329 = System.getProperty("os.name").toLowerCase();
-				@Pc(333) String local333 = System.getProperty("os.arch").toLowerCase();
-				WIN32 = local329.startsWith("win");
-				WIN64 = WIN32 && local333.startsWith("amd64") || local333.startsWith("x86_64");
-				@Pc(353) String local353 = null;
+				@Pc(321) String cachesubdir = getProperty("cachesubdir");
+				@Pc(325) String codebase = getProperty("codebase");
+				@Pc(329) String osName = System.getProperty("os.name").toLowerCase();
+				@Pc(333) String osArch = System.getProperty("os.arch").toLowerCase();
+				WIN32 = osName.startsWith("win");
+				WIN64 = WIN32 && osArch.startsWith("amd64") || osArch.startsWith("x86_64");
+
+				@Pc(353) String userHome = null;
 				try {
-					local353 = System.getProperty("user.home");
-					if (local353 != null) {
-						local353 = local353 + "/";
+					userHome = System.getProperty("user.home");
+					if (userHome != null) {
+						userHome = userHome + "/";
 					}
 				} catch (@Pc(370) Exception ignored) {
 				}
 
-				if (local353 == null) {
-					local353 = "~/";
+				if (userHome == null) {
+					userHome = "~/";
 				}
 
-				ComponentProgress.setText(translate("loading_app_resources"), (byte) 31);
+				ComponentProgress.setText(translate("loading_app_resources"));
 
 				@Pc(381) File local381 = null;
 				@Pc(390) byte[] local390;
@@ -785,8 +802,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					}
 
 					if (WIN64) {
-						local390 = download(getProperty("browsercontrol_win_amd64_jar"), local325);
-						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol64.dll");
+						local390 = download(getProperty("browsercontrol_win_amd64_jar"), codebase);
+						local381 = openFile(userHome, cachesubdir, modeWhat, "browsercontrol64.dll");
 						local405 = (new JarLoader(local390)).read("browsercontrol64.dll", false);
 
 						if (local405 == null) {
@@ -796,8 +813,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 
 						save(local381, local405);
 					} else if (WIN32) {
-						local390 = download(getProperty("browsercontrol_win_x86_jar"), local325);
-						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol.dll");
+						local390 = download(getProperty("browsercontrol_win_x86_jar"), codebase);
+						local381 = openFile(userHome, cachesubdir, modeWhat, "browsercontrol.dll");
 						local405 = (new JarLoader(local390)).read("browsercontrol.dll", false);
 
 						if (local405 == null) {
@@ -819,13 +836,13 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					DialogMessage.showError(translate("err_load_bc"));
 				}
 
-				ComponentProgress.setText(translate("loading_app"), (byte) 31);
+				ComponentProgress.setText(translate("loading_app"));
 				if (WIN32) {
-					JarWinClassLoader.method45((byte) 127);
+					JarWinClassLoader.method45();
 				}
 
 				try {
-					local390 = download(getProperty("loader_jar"), local325);
+					local390 = download(getProperty("loader_jar"), codebase);
 					@Pc(506) JarClassLoader loader = new JarClassLoader(local390);
 					mainapp = (Applet) loader.loadClass("loader").getDeclaredConstructor().newInstance();
 
@@ -840,8 +857,8 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					DialogMessage.showError(translate("err_target_applet"));
 				}
 
-				ComponentProgress.method18(-1127);
-				UrlThread.method36((byte) 42);
+				ComponentProgress.hideDialog();
+				UrlThread.method36();
 				frame.setTitle(getProperty("title"));
 				@Pc(556) int local556 = WIN32 ? Integer.parseInt(getProperty("advert_height")) : 0;
 				@Pc(566) int local566 = Integer.parseInt(getProperty("window_preferredwidth"));
@@ -891,7 +908,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				dialogPreferences = new DialogPreferences();
 				dialogPreferences.addAdjustmentListener(local720);
 
-				@Pc(744) boolean local744 = !"yes".equals(Preferences.method25("Member", 1));
+				@Pc(744) boolean local744 = !"yes".equals(Preferences.get("Member"));
 				if (WIN32 && local744) {
 					canvas = new Canvas();
 					mainPanel.add(canvas);
@@ -901,20 +918,22 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				topBar = new TopPanelBar(new DialogLanguage());
 				topBar.setBackground(Color.BLACK);
 				topBar.setForeground(Color.GRAY);
-				topBar.method35((byte) -121, translate("language"));
+				topBar.method35(translate("language"));
 
 				if (configs != null && configs.length > 1) {
-					topBar.method35((byte) -108, translate("switchserver"));
+					topBar.method35(translate("switchserver"));
 				}
 
-				topBar.setFont(new Font("SansSerif", 0, 10));
+				topBar.setFont(new Font("SansSerif", Font.PLAIN, 10));
 				mainPanel.add(topBar);
+
 				copyright = new CopyrightBar(translate("tandc"));
 				mainPanel.add(copyright);
+
 				loaded = true;
 
 				frame.doLayout();
-				method3();
+				resized();
 
 				if (WIN32) {
 					try {
@@ -951,14 +970,14 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					}
 				}
 
-				frame.addWindowListener(WindowListener.create(-21945));
+				frame.addWindowListener(WindowListener.create());
 				mainapp.setStub(new GameAppletStub());
 				mainapp.init();
 				mainapp.start();
 				return;
 			}
 
-			local58 = Preferences.method25("Language", 1);
+			local58 = Preferences.get("Language");
 			local60 = 0;
 			if (local58 != null) {
 				local60 = Integer.parseInt(local58);
@@ -971,11 +990,11 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		if (type == 0) {
 			if (!resize) {
 				resize = true;
-				method3();
+				resized();
 			}
 		} else if (type == 1 && resize) {
 			resize = false;
-			method3();
+			resized();
 		}
 	}
 
@@ -992,16 +1011,14 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "a", descriptor = "(Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;)Ljava/io/File;")
-	private static File method14(@OriginalArg(0) String arg0, @OriginalArg(1) String arg1, @OriginalArg(2) int arg2, @OriginalArg(3) int arg3, @OriginalArg(4) String arg4) {
-		@Pc(36) String[] local36 = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", arg0, "/tmp/", "" };
-		@Pc(61) String[] local61 = new String[] { ".jagex_cache_" + arg3, ".file_store_" + arg3 };
-		if (arg2 != -28252) {
-			method4(27, null);
-		}
+	private static File openFile(@OriginalArg(0) String homeDirectory, @OriginalArg(1) String arg1, @OriginalArg(3) int modeWhat, @OriginalArg(4) String fileName) {
+		@Pc(36) String[] local36 = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", homeDirectory, "/tmp/", "" };
+		@Pc(61) String[] local61 = new String[] { ".jagex_cache_" + modeWhat, ".file_store_" + modeWhat };
+
 		for (@Pc(71) int local71 = 0; local71 < 2; local71++) {
 			for (@Pc(76) int local76 = 0; local76 < local61.length; local76++) {
 				for (@Pc(86) int local86 = 0; local86 < local36.length; local86++) {
-					@Pc(121) String local121 = local36[local86] + local61[local76] + "/" + (arg1 == null ? "" : arg1 + "/") + arg4;
+					@Pc(121) String local121 = local36[local86] + local61[local76] + "/" + (arg1 == null ? "" : arg1 + "/") + fileName;
 					@Pc(123) RandomAccessFile local123 = null;
 					try {
 						@Pc(128) File local128 = new File(local121);
@@ -1025,20 +1042,23 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 						if (VERBOSE) {
 							System.out.println("Unable to open/write: " + local121);
 						}
+
 						try {
 							if (local123 != null) {
 								local123.close();
 								local123 = null;
 							}
-						} catch (@Pc(247) Exception local247) {
+						} catch (@Pc(247) Exception ignored) {
 						}
 					}
 				}
 			}
 		}
+
 		if (VERBOSE) {
-			throw new RuntimeException("Fatal - could not find ANY location for file: " + arg4);
+			throw new RuntimeException("Fatal - could not find ANY location for file: " + fileName);
 		}
+
 		throw new RuntimeException();
 	}
 
@@ -1085,7 +1105,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		}
 
 		if (local1) {
-			method3();
+			resized();
 		}
 	}
 
@@ -1097,7 +1117,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	@Override
 	public void adjustmentValueChanged(@OriginalArg(0) AdjustmentEvent e) {
 		if (e.getValueIsAdjusting()) {
-			method3();
+			resized();
 		}
 	}
 
@@ -1109,7 +1129,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentResized", descriptor = "(Ljava/awt/event/ComponentEvent;)V")
 	@Override
 	public void componentResized(@OriginalArg(0) ComponentEvent e) {
-		method3();
+		resized();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/appletviewer", name = "componentMoved", descriptor = "(Ljava/awt/event/ComponentEvent;)V")

@@ -22,13 +22,13 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getImage", descriptor = "(Ljava/net/URL;)Ljava/awt/Image;")
 	@Override
-	public Image getImage(@OriginalArg(0) URL arg0) {
+	public Image getImage(@OriginalArg(0) URL url) {
 		throw new UnsupportedOperationException();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "showStatus", descriptor = "(Ljava/lang/String;)V")
 	@Override
-	public void showStatus(@OriginalArg(0) String arg0) {
+	public void showStatus(@OriginalArg(0) String url) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -37,18 +37,19 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 	public URL getCodeBase() {
 		try {
 			return new URL(AppletViewer.getProperty("codebase"));
-		} catch (@Pc(7) MalformedURLException local7) {
+		} catch (@Pc(7) MalformedURLException ignored) {
 			throw new InvalidParameterException();
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "showDocument", descriptor = "(Ljava/net/URL;)V")
 	@Override
-	public void showDocument(@OriginalArg(0) URL arg0) {
+	public void showDocument(@OriginalArg(0) URL url) {
 		if (AppletViewer.VERBOSE) {
-			System.out.println("showdocument url:" + arg0);
+			System.out.println("showdocument url:" + url);
 		}
-		UrlThread.showurl(arg0.toString(), null);
+
+		UrlThread.showurl(url.toString(), null);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getApplets", descriptor = "()Ljava/util/Enumeration;")
@@ -59,7 +60,7 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "setStream", descriptor = "(Ljava/lang/String;Ljava/io/InputStream;)V")
 	@Override
-	public void setStream(@OriginalArg(0) String arg0, @OriginalArg(1) InputStream arg1) throws IOException {
+	public void setStream(@OriginalArg(0) String key, @OriginalArg(1) InputStream stream) throws IOException {
 		throw new UnsupportedOperationException();
 	}
 
@@ -71,36 +72,40 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "showDocument", descriptor = "(Ljava/net/URL;Ljava/lang/String;)V")
 	@Override
-	public void showDocument(@OriginalArg(0) URL arg0, @OriginalArg(1) String arg1) {
+	public void showDocument(@OriginalArg(0) URL url, @OriginalArg(1) String target) {
 		if (AppletViewer.VERBOSE) {
-			System.out.println("showdocument url:" + arg0 + " target:" + arg1);
+			System.out.println("showdocument url:" + url + " target:" + target);
 		}
-		UrlThread.showurl(arg0.toString(), arg1);
+
+		UrlThread.showurl(url.toString(), target);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "appletResize", descriptor = "(II)V")
 	@Override
-	public void appletResize(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
+	public void appletResize(@OriginalArg(0) int width, @OriginalArg(1) int height) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getApplet", descriptor = "(Ljava/lang/String;)Ljava/applet/Applet;")
 	@Override
-	public Applet getApplet(@OriginalArg(0) String arg0) {
+	public Applet getApplet(@OriginalArg(0) String name) {
 		throw new UnsupportedOperationException();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getParameter", descriptor = "(Ljava/lang/String;)Ljava/lang/String;")
 	@Override
-	public String getParameter(@OriginalArg(0) String arg0) {
-		@Pc(3) String local3 = AppletViewer.getParameter(arg0);
-		if (AppletViewer.VERBOSE && local3 == null) {
-			if ("force64mb".equals(arg0)) {
+	public String getParameter(@OriginalArg(0) String name) {
+		@Pc(3) String value = AppletViewer.getParameter(name);
+
+		if (AppletViewer.VERBOSE && value == null) {
+			if ("force64mb".equals(name)) {
 				System.out.println("Returning false for force64mb");
 				return "false";
 			}
-			System.out.println("Unavailable param:" + arg0);
+
+			System.out.println("Unavailable param:" + name);
 		}
-		return local3;
+
+		return value;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getStreamKeys", descriptor = "()Ljava/util/Iterator;")
@@ -114,14 +119,14 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 	public URL getDocumentBase() {
 		try {
 			return new URL(AppletViewer.getProperty("codebase"));
-		} catch (@Pc(7) MalformedURLException local7) {
+		} catch (@Pc(7) MalformedURLException ignored) {
 			throw new InvalidParameterException();
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getAudioClip", descriptor = "(Ljava/net/URL;)Ljava/applet/AudioClip;")
 	@Override
-	public AudioClip getAudioClip(@OriginalArg(0) URL arg0) {
+	public AudioClip getAudioClip(@OriginalArg(0) URL url) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -133,7 +138,7 @@ public final class GameAppletStub implements AppletStub, AppletContext {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getStream", descriptor = "(Ljava/lang/String;)Ljava/io/InputStream;")
 	@Override
-	public InputStream getStream(@OriginalArg(0) String arg0) {
+	public InputStream getStream(@OriginalArg(0) String key) {
 		throw new UnsupportedOperationException();
 	}
 }

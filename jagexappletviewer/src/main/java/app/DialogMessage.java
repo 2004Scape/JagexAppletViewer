@@ -22,10 +22,10 @@ public final class DialogMessage {
 
 	@OriginalMember(owner = "jagexappletviewer!app/e", name = "a", descriptor = "(ILjava/lang/String;)V")
 	public static void showError(@OriginalArg(1) String text) {
-		ComponentProgress.method18(-1127);
+		ComponentProgress.hideDialog();
 		show(AppletViewer.translate("quit"), AppletViewer.translate("error"), text);
-		dialog.addWindowListener(WindowListener.create(-21945));
-		button.addActionListener(WindowListener.create(-21945));
+		dialog.addWindowListener(WindowListener.create());
+		button.addActionListener(WindowListener.create());
 		dialog.setVisible(true);
 	}
 

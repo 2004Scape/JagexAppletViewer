@@ -8,19 +8,19 @@ import org.openrs2.deob.annotation.OriginalMember;
 public final class CopyrightText {
 
 	@OriginalMember(owner = "jagexappletviewer!app/o", name = "a", descriptor = "Ljagexappletviewer!app/t;")
-	public CopyrightLink aCopyrightLink_1 = null;
+	public CopyrightLink url = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/o", name = "b", descriptor = "Ljava/lang/String;")
-	public String aString10;
+	public String text;
 
 	@OriginalMember(owner = "jagexappletviewer!app/o", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	public CopyrightText(@OriginalArg(0) String arg0) {
-		this.aString10 = arg0;
+	public CopyrightText(@OriginalArg(0) String text) {
+		this.text = text;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/o", name = "<init>", descriptor = "(Ljava/lang/String;Ljava/lang/String;)V")
-	public CopyrightText(@OriginalArg(0) String arg0, @OriginalArg(1) String arg1) {
-		this.aString10 = arg0;
-		this.aCopyrightLink_1 = new CopyrightLink(arg1);
+	public CopyrightText(@OriginalArg(0) String text, @OriginalArg(1) String url) {
+		this.text = text;
+		this.url = new CopyrightLink(url);
 	}
 }

@@ -33,24 +33,26 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 	private String[] aStringArray2 = new String[10];
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "a", descriptor = "Ljava/awt/event/ActionListener;")
-	private ActionListener anActionListener1;
+	private ActionListener listener;
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "<init>", descriptor = "(Ljava/awt/event/ActionListener;)V")
-	public TopPanelBar(@OriginalArg(0) ActionListener arg0) {
-		this.anActionListener1 = arg0;
+	public TopPanelBar(@OriginalArg(0) ActionListener listener) {
+		this.listener = listener;
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseReleased", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseReleased(@OriginalArg(0) MouseEvent arg0) {
-		this.anInt6 = arg0.getX();
-		arg0.getY();
+	public void mouseReleased(@OriginalArg(0) MouseEvent e) {
+		this.anInt6 = e.getX();
+		// e.getY();
+
 		@Pc(11) int local11 = this.anInt7;
 		if (this.anIntArray2 == null) {
 			return;
 		}
+
 		this.anInt7 = -1;
 		for (@Pc(20) int local20 = 0; local20 < this.anIntArray2.length - 1; local20++) {
 			if (this.anIntArray2[local20] <= this.anInt6 && this.anInt6 + 10 < this.anIntArray2[local20 + 1]) {
@@ -58,6 +60,7 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 				break;
 			}
 		}
+
 		if (local11 != this.anInt7) {
 			this.repaint();
 		}
@@ -65,23 +68,26 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mousePressed", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mousePressed(@OriginalArg(0) MouseEvent arg0) {
-		this.anInt6 = arg0.getX();
-		arg0.getY();
+	public void mousePressed(@OriginalArg(0) MouseEvent e) {
+		this.anInt6 = e.getX();
+		// e.getY();
+
 		@Pc(11) int local11 = this.anInt7;
 		if (this.anIntArray2 == null) {
 			return;
 		}
+
 		this.anInt7 = -1;
 		for (@Pc(19) int local19 = 0; local19 < this.anIntArray2.length - 1; local19++) {
 			if (this.anIntArray2[local19] <= this.anInt6 && this.anInt6 + 10 < this.anIntArray2[local19 + 1]) {
 				this.anInt7 = -1;
 				this.anInt6 = 0;
 				this.repaint();
-				this.anActionListener1.actionPerformed(new ActionEvent(this, local19, ""));
+				this.listener.actionPerformed(new ActionEvent(this, local19, ""));
 				break;
 			}
 		}
+
 		if (this.anInt7 != local11) {
 			this.repaint();
 		}
@@ -89,36 +95,42 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "paint", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override
-	public void paint(@OriginalArg(0) Graphics arg0) {
-		@Pc(4) int local4 = this.getWidth();
-		@Pc(7) int local7 = this.getHeight();
-		arg0.setColor(Color.BLACK);
-		arg0.fillRect(0, 0, local4, local7);
-		arg0.setFont(this.getFont());
-		@Pc(23) FontMetrics local23 = arg0.getFontMetrics();
+	public void paint(@OriginalArg(0) Graphics g) {
+		@Pc(4) int width = this.getWidth();
+		@Pc(7) int height = this.getHeight();
+
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, width, height);
+		g.setFont(this.getFont());
+
+		@Pc(23) FontMetrics metrics = g.getFontMetrics();
 		@Pc(25) int local25 = 10;
-		@Pc(35) int local35 = local23.getAscent() + (local7 - local23.getHeight()) / 2;
+		@Pc(35) int local35 = metrics.getAscent() + (height - metrics.getHeight()) / 2;
+
 		if (this.anIntArray2 == null || this.anInt5 + 1 != this.anIntArray2.length) {
 			this.anIntArray2 = new int[this.anInt5 + 1];
 		}
-		for (@Pc(59) int local59 = 0; local59 < this.anInt5; local59++) {
+
+		for (@Pc(59) int i = 0; i < this.anInt5; i++) {
 			@Pc(69) int local69 = local25;
-			this.anIntArray2[local59] = local25;
-			local25 += local23.stringWidth(this.aStringArray2[local59]);
+			this.anIntArray2[i] = local25;
+			local25 += metrics.stringWidth(this.aStringArray2[i]);
+
 			if (this.anInt6 >= local69 && local25 > this.anInt6) {
-				arg0.setColor(Color.YELLOW);
+				g.setColor(Color.YELLOW);
 			} else {
-				arg0.setColor(this.getForeground());
+				g.setColor(this.getForeground());
 			}
-			arg0.drawString(this.aStringArray2[local59], local69, local35);
+			g.drawString(this.aStringArray2[i], local69, local35);
 			local25 += 10;
 		}
+
 		this.anIntArray2[this.anInt5] = local25;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseExited", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseExited(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseExited(@OriginalArg(0) MouseEvent e) {
 		this.anInt6 = 0;
 		this.anInt7 = -1;
 		this.repaint();
@@ -126,13 +138,15 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseMoved", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseMoved(@OriginalArg(0) MouseEvent arg0) {
-		this.anInt6 = arg0.getX();
-		arg0.getY();
+	public void mouseMoved(@OriginalArg(0) MouseEvent e) {
+		this.anInt6 = e.getX();
+		// e.getY();
+
 		@Pc(11) int local11 = this.anInt7;
 		if (this.anIntArray2 == null) {
 			return;
 		}
+
 		this.anInt7 = -1;
 		for (@Pc(19) int local19 = 0; local19 < this.anIntArray2.length - 1; local19++) {
 			if (this.anInt6 >= this.anIntArray2[local19] && this.anInt6 + 10 < this.anIntArray2[local19 + 1]) {
@@ -140,6 +154,7 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 				break;
 			}
 		}
+
 		if (this.anInt7 != local11) {
 			this.repaint();
 		}
@@ -147,42 +162,42 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseClicked", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseClicked(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseClicked(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseEntered", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseEntered(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseEntered(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "update", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override
-	public void update(@OriginalArg(0) Graphics arg0) {
-		this.paint(arg0);
+	public void update(@OriginalArg(0) Graphics g) {
+		this.paint(g);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "a", descriptor = "(BLjava/lang/String;)V")
-	public void method35(@OriginalArg(0) byte arg0, @OriginalArg(1) String arg1) {
+	public void method35(@OriginalArg(1) String arg1) {
 		if (this.aStringArray2.length <= this.anInt5) {
 			@Pc(17) String[] local17 = new String[this.aStringArray2.length + 5];
 			System.arraycopy(this.aStringArray2, 0, local17, 0, this.aStringArray2.length);
 			this.aStringArray2 = local17;
 		}
+
 		this.aStringArray2[this.anInt5++] = arg1;
-		if (arg0 >= -75) {
-			this.anInt7 = 122;
-		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "mouseDragged", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseDragged(@OriginalArg(0) MouseEvent arg0) {
-		this.anInt6 = arg0.getX();
-		arg0.getY();
+	public void mouseDragged(@OriginalArg(0) MouseEvent e) {
+		this.anInt6 = e.getX();
+		// e.getY();
+
 		@Pc(11) int local11 = this.anInt7;
 		if (this.anIntArray2 == null) {
 			return;
 		}
+
 		this.anInt7 = -1;
 		for (@Pc(20) int local20 = 0; local20 < this.anIntArray2.length - 1; local20++) {
 			if (this.anIntArray2[local20] <= this.anInt6 && this.anInt6 + 10 < this.anIntArray2[local20 + 1]) {
@@ -190,6 +205,7 @@ public final class TopPanelBar extends Canvas implements MouseListener, MouseMot
 				break;
 			}
 		}
+
 		if (local11 != this.anInt7) {
 			this.repaint();
 		}

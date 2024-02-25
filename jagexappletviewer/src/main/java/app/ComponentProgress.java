@@ -15,99 +15,105 @@ import org.openrs2.deob.annotation.Pc;
 public final class ComponentProgress extends Component {
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "b", descriptor = "Ljava/awt/Dialog;")
-	private static Dialog aDialog1;
+	private static Dialog dialog;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "e", descriptor = "Ljagexappletviewer!app/b;")
-	private static ComponentProgress aComponent_Progress;
+	private static ComponentProgress progress;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "c", descriptor = "Ljava/awt/Font;")
-	private Font aFont1;
+	private Font activeFont;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "g", descriptor = "Ljava/awt/FontMetrics;")
-	private FontMetrics aFontMetrics1;
+	private FontMetrics activeFontMetrics;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "Ljava/lang/String;")
-	private String aString2 = "Loading...";
+	private String text = "Loading...";
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "d", descriptor = "I")
-	private int anInt3 = 0;
+	private int value = 0;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "f", descriptor = "Ljava/awt/Color;")
-	private Color aColor1 = new Color(140, 11, 1);
+	private Color BAR_COLOR = new Color(140, 11, 1);
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(I)V")
-	public static void method18(@OriginalArg(0) int arg0) {
-		if (aDialog1 != null) {
-			aDialog1.setVisible(false);
+	public static void hideDialog() {
+		if (dialog != null) {
+			dialog.setVisible(false);
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(II)V")
-	public static void updateProgress(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
-		if (aComponent_Progress == null) {
+	public static void updateProgress(@OriginalArg(0) int value) {
+		if (progress == null) {
 			return;
 		}
-		if (arg0 > 100) {
-			arg0 = 100;
+
+		if (value > 100) {
+			value = 100;
 		}
-		aComponent_Progress.anInt3 = arg0;
-		aComponent_Progress.repaint();
+
+		progress.value = value;
+		progress.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(B)V")
-	public static void method20(@OriginalArg(0) byte arg0) {
-		aComponent_Progress.paint(aComponent_Progress.getGraphics());
+	public static void paint() {
+		progress.paint(progress.getGraphics());
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(Ljava/lang/String;B)V")
-	public static void setText(@OriginalArg(0) String arg0, @OriginalArg(1) byte arg1) {
-		aComponent_Progress.aString2 = arg0;
-		aComponent_Progress.repaint();
+	public static void setText(@OriginalArg(0) String text) {
+		progress.text = text;
+		progress.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "b", descriptor = "(I)V")
-	public static void init(@OriginalArg(0) int arg0) {
-		aComponent_Progress = new ComponentProgress(AppletViewer.translate("loaderbox_initial"));
-		aComponent_Progress.aFont1 = new Font("Helvetica", arg0, 13);
-		aComponent_Progress.aFontMetrics1 = aComponent_Progress.getFontMetrics(aComponent_Progress.aFont1);
-		aDialog1 = new Dialog(AppletViewer.frame, "Jagex Ltd.", false);
-		aDialog1.add(aComponent_Progress);
-		aDialog1.addWindowListener(WindowListener.create(-21945));
-		aDialog1.setResizable(false);
-		aDialog1.setSize(320, 100);
+	public static void init(@OriginalArg(0) int fontStyle) {
+		progress = new ComponentProgress(AppletViewer.translate("loaderbox_initial"));
+		progress.activeFont = new Font("Helvetica", fontStyle, 13);
+		progress.activeFontMetrics = progress.getFontMetrics(progress.activeFont);
+
+		dialog = new Dialog(AppletViewer.frame, "Jagex Ltd.", false);
+		dialog.add(progress);
+		dialog.addWindowListener(WindowListener.create());
+		dialog.setResizable(false);
+		dialog.setSize(320, 100);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "c", descriptor = "(I)V")
-	public static void show(@OriginalArg(0) int arg0) {
-		aDialog1.setLocationRelativeTo(AppletViewer.frame);
-		aDialog1.setVisible(true);
+	public static void showDialog() {
+		dialog.setLocationRelativeTo(AppletViewer.frame);
+		dialog.setVisible(true);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	private ComponentProgress(@OriginalArg(0) String arg0) {
-		this.aString2 = arg0;
+	private ComponentProgress(@OriginalArg(0) String text) {
+		this.text = text;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "paint", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override
-	public void paint(@OriginalArg(0) Graphics arg0) {
+	public void paint(@OriginalArg(0) Graphics g) {
 		try {
-			if (arg0 == null) {
+			if (g == null) {
 				this.repaint();
 			} else {
-				@Pc(4) int local4 = this.getWidth();
-				@Pc(7) int local7 = this.getHeight();
-				arg0.setColor(Color.black);
-				arg0.fillRect(0, 0, local4, local7);
-				arg0.setColor(this.aColor1);
-				arg0.drawRect(local4 / 2 - 152, local7 / 2 + -18, 303, 33);
-				arg0.fillRect(local4 / 2 + 2 - 152, local7 / 2 + -18 + 2, this.anInt3 * 303 / 100 - 3, 30);
-				@Pc(74) String local74 = this.aString2 + " - " + this.anInt3 + "%";
-				arg0.setFont(this.aFont1);
-				arg0.setColor(Color.white);
-				arg0.drawString(local74, (local4 - this.aFontMetrics1.stringWidth(local74)) / 2, local7 / 2 + 4);
+				@Pc(4) int width = this.getWidth();
+				@Pc(7) int height = this.getHeight();
+
+				g.setColor(Color.black);
+				g.fillRect(0, 0, width, height);
+
+				g.setColor(this.BAR_COLOR);
+				g.drawRect(width / 2 - 152, height / 2 + -18, 303, 33);
+				g.fillRect(width / 2 + 2 - 152, height / 2 + -18 + 2, this.value * 303 / 100 - 3, 30);
+
+				@Pc(74) String str = this.text + " - " + this.value + "%";
+				g.setFont(this.activeFont);
+				g.setColor(Color.white);
+				g.drawString(str, (width - this.activeFontMetrics.stringWidth(str)) / 2, height / 2 + 4);
 			}
-		} catch (@Pc(104) Exception local104) {
+		} catch (@Pc(104) Exception ignored) {
 		}
 	}
 }

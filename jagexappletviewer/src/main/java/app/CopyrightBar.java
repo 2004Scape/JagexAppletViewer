@@ -20,44 +20,46 @@ import org.openrs2.deob.annotation.Pc;
 public final class CopyrightBar extends Component implements MouseListener, MouseMotionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "c", descriptor = "Ljava/awt/Color;")
-	private static Color aColor2 = new Color(12410);
+	private static Color BACKGROUND_COLOR = new Color(0x307a);
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "d", descriptor = "Ljava/awt/Color;")
-	private static Color aColor3 = new Color(16777215);
+	private static Color TEXT_COLOR = new Color(0xffffff);
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "e", descriptor = "Ljava/awt/Color;")
-	private static Color aColor4 = new Color(16765440);
+	private static Color LINK_COLOR = new Color(0xffd200);
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "a", descriptor = "[[Ljagexappletviewer!app/o;")
-	private CopyrightText[][] aCopyrightTextArrayArray1 = (CopyrightText[][]) null;
+	private CopyrightText[][] copyrightLines = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "b", descriptor = "[Ljagexappletviewer!app/t;")
-	private CopyrightLink[] aCopyrightLinkArray1;
+	private CopyrightLink[] copyrightLinks;
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	public CopyrightBar(@OriginalArg(0) String arg0) {
-		this.setBackground(aColor2);
+	public CopyrightBar(@OriginalArg(0) String text) {
+		this.setBackground(BACKGROUND_COLOR);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
-		this.method37((byte) 123, arg0);
-		if (this.aCopyrightTextArrayArray1 != null) {
-			@Pc(27) int local27 = 0;
-			@Pc(29) int local29;
-			for (local29 = 0; local29 < this.aCopyrightTextArrayArray1.length; local29++) {
-				@Pc(39) CopyrightText[] local39 = this.aCopyrightTextArrayArray1[local29];
-				for (@Pc(41) int local41 = 0; local41 < local39.length; local41++) {
-					if (local39[local41].aCopyrightLink_1 != null) {
-						local27++;
+
+		this.load(text);
+
+		if (this.copyrightLines != null) {
+			@Pc(27) int linkCount = 0;
+			for (int i = 0; i < this.copyrightLines.length; i++) {
+				@Pc(39) CopyrightText[] line = this.copyrightLines[i];
+				for (@Pc(41) int j = 0; j < line.length; j++) {
+					if (line[j].url != null) {
+						linkCount++;
 					}
 				}
 			}
-			this.aCopyrightLinkArray1 = new CopyrightLink[local27];
-			local29 = 0;
-			for (@Pc(67) int local67 = 0; local67 < this.aCopyrightTextArrayArray1.length; local67++) {
-				@Pc(77) CopyrightText[] local77 = this.aCopyrightTextArrayArray1[local67];
-				for (@Pc(79) int local79 = 0; local79 < local77.length; local79++) {
-					if (local77[local79].aCopyrightLink_1 != null) {
-						this.aCopyrightLinkArray1[local29++] = local77[local79].aCopyrightLink_1;
+
+			this.copyrightLinks = new CopyrightLink[linkCount];
+			linkCount = 0;
+			for (@Pc(67) int i = 0; i < this.copyrightLines.length; i++) {
+				@Pc(77) CopyrightText[] line = this.copyrightLines[i];
+				for (@Pc(79) int j = 0; j < line.length; j++) {
+					if (line[j].url != null) {
+						this.copyrightLinks[linkCount++] = line[j].url;
 					}
 				}
 			}
@@ -66,137 +68,156 @@ public final class CopyrightBar extends Component implements MouseListener, Mous
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseReleased", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseReleased(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseReleased(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseDragged", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseDragged(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseDragged(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "paint", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override
-	public void paint(@OriginalArg(0) Graphics arg0) {
-		@Pc(4) int local4 = this.getWidth();
-		@Pc(7) FontMetrics local7 = arg0.getFontMetrics();
-		@Pc(10) int local10 = local7.getHeight();
-		@Pc(12) int local12 = local10;
-		if (this.aCopyrightTextArrayArray1 == null) {
+	public void paint(@OriginalArg(0) Graphics g) {
+		@Pc(4) int width = this.getWidth();
+		@Pc(7) FontMetrics metrics = g.getFontMetrics();
+		@Pc(10) int height = metrics.getHeight();
+		@Pc(12) int offsetY = height;
+
+		if (this.copyrightLines == null) {
 			return;
 		}
-		for (@Pc(19) int local19 = 0; local19 < this.aCopyrightTextArrayArray1.length; local19++) {
-			@Pc(29) CopyrightText[] local29 = this.aCopyrightTextArrayArray1[local19];
-			@Pc(31) int local31 = 0;
-			@Pc(33) int local33;
-			for (local33 = 0; local33 < local29.length; local33++) {
-				local31 += local7.stringWidth(local29[local33].aString10);
+
+		for (@Pc(19) int i = 0; i < this.copyrightLines.length; i++) {
+			@Pc(29) CopyrightText[] line = this.copyrightLines[i];
+			@Pc(31) int offsetX = 0;
+
+			for (int j = 0; j < line.length; j++) {
+				offsetX += metrics.stringWidth(line[j].text);
 			}
-			local33 = (local4 - local31) / 2;
-			for (@Pc(62) int local62 = 0; local62 < local29.length; local62++) {
-				@Pc(74) CopyrightText local74 = local29[local62];
-				@Pc(79) int local79 = local7.stringWidth(local74.aString10);
-				@Pc(82) CopyrightLink local82 = local74.aCopyrightLink_1;
-				if (local82 == null) {
-					arg0.setColor(aColor3);
+
+			int center = (width - offsetX) / 2;
+			for (@Pc(62) int j = 0; j < line.length; j++) {
+				@Pc(74) CopyrightText text = line[j];
+				@Pc(79) int textWidth = metrics.stringWidth(text.text);
+
+				@Pc(82) CopyrightLink link = text.url;
+				if (link == null) {
+					g.setColor(TEXT_COLOR);
 				} else {
-					arg0.setColor(aColor4);
-					@Pc(91) Rectangle local91 = local82.aRectangle1;
-					local91.height = local10;
-					local91.y = local12 - local10;
-					local91.x = local33;
-					local91.width = local79;
+					g.setColor(LINK_COLOR);
+
+					@Pc(91) Rectangle rect = link.size;
+					rect.height = height;
+					rect.y = offsetY - height;
+					rect.x = center;
+					rect.width = textWidth;
 				}
-				arg0.drawString(local74.aString10, local33, local12);
-				local33 += local79;
+
+				g.drawString(text.text, center, offsetY);
+				center += textWidth;
 			}
-			local12 += local10;
+
+			offsetY += height;
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseClicked", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseClicked(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseClicked(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseEntered", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseEntered(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseEntered(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mousePressed", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mousePressed(@OriginalArg(0) MouseEvent arg0) {
-		@Pc(4) Point local4 = arg0.getPoint();
-		for (@Pc(6) int local6 = 0; local6 < this.aCopyrightLinkArray1.length; local6++) {
-			if (this.aCopyrightLinkArray1[local6].aRectangle1.contains(local4)) {
-				UrlThread.showurl(this.aCopyrightLinkArray1[local6].aString11, null);
+	public void mousePressed(@OriginalArg(0) MouseEvent e) {
+		@Pc(4) Point point = e.getPoint();
+		for (@Pc(6) int i = 0; i < this.copyrightLinks.length; i++) {
+			if (this.copyrightLinks[i].size.contains(point)) {
+				UrlThread.showurl(this.copyrightLinks[i].url, null);
 			}
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseExited", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseExited(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseExited(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "mouseMoved", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseMoved(@OriginalArg(0) MouseEvent arg0) {
-		@Pc(4) Point local4 = arg0.getPoint();
-		for (@Pc(6) int local6 = 0; local6 < this.aCopyrightLinkArray1.length; local6++) {
-			if (this.aCopyrightLinkArray1[local6].aRectangle1.contains(local4)) {
-				this.setCursor(Cursor.getPredefinedCursor(12));
+	public void mouseMoved(@OriginalArg(0) MouseEvent e) {
+		@Pc(4) Point point = e.getPoint();
+		for (@Pc(6) int i = 0; i < this.copyrightLinks.length; i++) {
+			if (this.copyrightLinks[i].size.contains(point)) {
+				this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				return;
 			}
 		}
-		this.setCursor(Cursor.getPredefinedCursor(0));
+
+		this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/j", name = "a", descriptor = "(BLjava/lang/String;)V")
-	private void method37(@OriginalArg(0) byte arg0, @OriginalArg(1) String arg1) {
-		if (arg1 == null) {
+	private void load(@OriginalArg(1) String text) {
+		if (text == null) {
 			return;
 		}
-		@Pc(18) StringTokenizer local18 = new StringTokenizer(arg1, "\\");
-		this.aCopyrightTextArrayArray1 = new CopyrightText[local18.countTokens()][];
-		@Pc(26) CopyrightText[] local26 = new CopyrightText[100];
-		@Pc(28) int local28 = 0;
-		while (local18.hasMoreTokens()) {
-			@Pc(33) int local33 = 0;
-			@Pc(36) String local36 = local18.nextToken();
+
+		@Pc(18) StringTokenizer tokenizer = new StringTokenizer(text, "\\");
+		this.copyrightLines = new CopyrightText[tokenizer.countTokens()][];
+		@Pc(26) CopyrightText[] line = new CopyrightText[100];
+		@Pc(28) int lineCount = 0;
+
+		while (tokenizer.hasMoreTokens()) {
+			@Pc(33) int count = 0;
+			@Pc(36) String token = tokenizer.nextToken();
+
 			while (true) {
-				@Pc(40) int local40 = local36.indexOf(91);
-				if (local40 < 0) {
-					local26[local33++] = new CopyrightText(local36);
+				@Pc(40) int linkStartIndex = token.indexOf('[');
+				if (linkStartIndex < 0) {
+					line[count++] = new CopyrightText(token);
 					break;
 				}
-				if (local40 > 0) {
-					local26[local33++] = new CopyrightText(local36.substring(0, local40));
-					local36 = local36.substring(local40);
+
+				if (linkStartIndex > 0) {
+					line[count++] = new CopyrightText(token.substring(0, linkStartIndex));
+					token = token.substring(linkStartIndex);
 				}
-				@Pc(74) int local74 = local36.indexOf(34);
-				if (local74 < 0) {
+
+				@Pc(74) int urlStartIndex = token.indexOf('"');
+				if (urlStartIndex < 0) {
 					break;
 				}
-				@Pc(84) int local84 = local36.indexOf(34, local74 + 1);
-				if (local84 < 0) {
+
+				@Pc(84) int urlEndIndex = token.indexOf('"', urlStartIndex + 1);
+				if (urlEndIndex < 0) {
 					break;
 				}
-				@Pc(95) int local95 = local36.indexOf(93);
-				if (local95 < 0) {
+
+				@Pc(95) int linkEndIndex = token.indexOf(']');
+				if (linkEndIndex < 0) {
 					break;
 				}
-				@Pc(107) String local107 = local36.substring(local74 + 1, local84);
-				@Pc(115) String local115 = local36.substring(local84 + 1, local95).trim();
-				local26[local33++] = new CopyrightText(local115, local107);
-				if (local36.length() <= local95 + 1) {
+
+				@Pc(107) String url = token.substring(urlStartIndex + 1, urlEndIndex);
+				@Pc(115) String urlText = token.substring(urlEndIndex + 1, linkEndIndex).trim();
+
+				line[count++] = new CopyrightText(urlText, url);
+				if (token.length() <= linkEndIndex + 1) {
 					break;
 				}
-				local36 = local36.substring(local95 + 1);
+
+				token = token.substring(linkEndIndex + 1);
 			}
-			this.aCopyrightTextArrayArray1[local28] = new CopyrightText[local33];
-			System.arraycopy(local26, 0, this.aCopyrightTextArrayArray1[local28], 0, local33);
-			local28++;
+
+			this.copyrightLines[lineCount] = new CopyrightText[count];
+			System.arraycopy(line, 0, this.copyrightLines[lineCount], 0, count);
+			lineCount++;
 		}
 	}
 }

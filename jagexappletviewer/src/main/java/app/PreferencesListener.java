@@ -82,45 +82,47 @@ public final class PreferencesListener implements Runnable, MouseListener, Mouse
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "mouseDragged", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseDragged(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseDragged(@OriginalArg(0) MouseEvent e) {
 		if (this.anInt18 >= 0) {
-			@Pc(7) int local7 = arg0.getY();
-			this.aDialogPreferences.setValue(this.anInt19 + (this.aDialogPreferences.anInt12 - this.aDialogPreferences.anInt9) * (local7 - this.anInt18) / this.aDialogPreferences.anInt14);
+			@Pc(7) int local7 = e.getY();
+			this.aDialogPreferences.setValue(this.anInt19 + (this.aDialogPreferences.maximum - this.aDialogPreferences.minimum) * (local7 - this.anInt18) / this.aDialogPreferences.anInt14);
 		}
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "mouseMoved", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mouseMoved(@OriginalArg(0) MouseEvent arg0) {
+	public void mouseMoved(@OriginalArg(0) MouseEvent e) {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "mousePressed", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
-	public void mousePressed(@OriginalArg(0) MouseEvent arg0) {
+	public void mousePressed(@OriginalArg(0) MouseEvent e) {
 		if (!this.aDialogPreferences.isEnabled()) {
 			return;
 		}
+
 		this.aDialogPreferences.aBoolean10 = true;
+
 		@Pc(13) int local13 = this.aDialogPreferences.getHeight();
-		@Pc(16) int local16 = arg0.getY();
+		@Pc(16) int local16 = e.getY();
 		if (local16 < 15) {
-			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.anInt13);
-			this.anInt20 = this.aDialogPreferences.anInt13;
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.unitIncrement);
+			this.anInt20 = this.aDialogPreferences.unitIncrement;
 			this.anInt17 = 1;
 			synchronized (this) {
 				this.notifyAll();
 			}
 		} else if (local13 - 15 < local16) {
-			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.anInt13);
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.unitIncrement);
 			this.anInt17 = 3;
-			this.anInt20 = this.aDialogPreferences.anInt13;
+			this.anInt20 = this.aDialogPreferences.unitIncrement;
 			synchronized (this) {
 				this.notifyAll();
 			}
 		} else if (local16 < this.aDialogPreferences.anInt16 + 15) {
-			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.anInt11);
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.blockIncrement);
 			this.anInt17 = 1;
-			this.anInt20 = this.aDialogPreferences.anInt11;
+			this.anInt20 = this.aDialogPreferences.blockIncrement;
 			synchronized (this) {
 				this.notifyAll();
 			}
@@ -128,8 +130,8 @@ public final class PreferencesListener implements Runnable, MouseListener, Mouse
 			this.anInt18 = local16;
 			this.anInt19 = this.aDialogPreferences.getValue();
 		} else {
-			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.anInt11);
-			this.anInt20 = this.aDialogPreferences.anInt11;
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.blockIncrement);
+			this.anInt20 = this.aDialogPreferences.blockIncrement;
 			this.anInt17 = 3;
 			synchronized (this) {
 				this.notifyAll();

@@ -17,36 +17,39 @@ import org.openrs2.deob.annotation.Pc;
 public final class DialogUrl extends WindowAdapter implements ActionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/w", name = "a", descriptor = "Ljava/awt/Dialog;")
-	private Dialog aDialog5 = new Dialog(AppletViewer.frame, AppletViewer.translate("information"), true);
+	private Dialog dialog = new Dialog(AppletViewer.frame, AppletViewer.translate("information"), true);
 
 	@OriginalMember(owner = "jagexappletviewer!app/w", name = "<init>", descriptor = "(Ljava/lang/String;)V")
 	public DialogUrl(@OriginalArg(0) String arg0) {
-		@Pc(17) TextArea local17 = new TextArea();
-		local17.setText(AppletViewer.translate("copy_paste_url") + ":\n" + arg0);
-		local17.setEditable(false);
-		this.aDialog5.add(local17);
-		@Pc(46) Button local46 = new Button(AppletViewer.translate("ok"));
-		local46.addActionListener(this);
-		@Pc(53) DialogPanel local53 = new DialogPanel();
-		local53.setLayout(new FlowLayout(1));
-		local53.add(local46);
-		this.aDialog5.addWindowListener(this);
-		this.aDialog5.add(local53, "South");
-		this.aDialog5.setResizable(false);
-		this.aDialog5.setSize(400, 150);
-		this.aDialog5.setLocationRelativeTo(AppletViewer.frame);
-		this.aDialog5.setVisible(true);
+		@Pc(17) TextArea textArea = new TextArea();
+		textArea.setText(AppletViewer.translate("copy_paste_url") + ":\n" + arg0);
+		textArea.setEditable(false);
+		this.dialog.add(textArea);
+
+		@Pc(46) Button button = new Button(AppletViewer.translate("ok"));
+		button.addActionListener(this);
+
+		@Pc(53) DialogPanel panel = new DialogPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panel.add(button);
+
+		this.dialog.addWindowListener(this);
+		this.dialog.add(panel, "South");
+		this.dialog.setResizable(false);
+		this.dialog.setSize(400, 150);
+		this.dialog.setLocationRelativeTo(AppletViewer.frame);
+		this.dialog.setVisible(true);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/w", name = "actionPerformed", descriptor = "(Ljava/awt/event/ActionEvent;)V")
 	@Override
-	public void actionPerformed(@OriginalArg(0) ActionEvent arg0) {
-		this.aDialog5.setVisible(false);
+	public void actionPerformed(@OriginalArg(0) ActionEvent e) {
+		this.dialog.setVisible(false);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/w", name = "windowClosing", descriptor = "(Ljava/awt/event/WindowEvent;)V")
 	@Override
-	public void windowClosing(@OriginalArg(0) WindowEvent arg0) {
-		this.aDialog5.setVisible(false);
+	public void windowClosing(@OriginalArg(0) WindowEvent e) {
+		this.dialog.setVisible(false);
 	}
 }
