@@ -314,7 +314,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 		@Pc(6) int offset = 0;
 
 		try {
-			@Pc(19) InputStream stream = new URL(host + file).openStream();
+			@Pc(19) InputStream stream = new URL(new URL(host), file).openStream();
 
 			while (dest.length > offset) {
 				@Pc(32) int read = stream.read(dest, offset, dest.length - offset);
@@ -743,7 +743,11 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					}
 				}
 
-				int modeWhat = Integer.parseInt(getParameter("modewhat")) + 32;
+				int modeWhat = 32;
+				try {
+					modeWhat = Integer.parseInt(getParameter("modewhat")) + 32;
+				} catch (Exception ignored) {
+				}
 
 				@Pc(321) String local321 = getProperty("cachesubdir");
 				@Pc(325) String local325 = getProperty("codebase");
@@ -771,10 +775,17 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 				try {
 					@Pc(405) byte[] local405;
 
+					String jar64Url = getProperty("browsercontrol_win_amd64_jar");
+					String jar32Url = getProperty("browsercontrol_win_x86_jar");
+					if ((WIN64 || WIN32) && jar64Url == null && jar32Url == null) {
+						WIN64 = false;
+						WIN32 = false;
+					}
+
 					if (WIN64) {
 						local390 = download(getProperty("browsercontrol_win_amd64_jar"), local325);
 						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol64.dll");
-						local405 = (new JarLoader(local390)).read("browsercontrol64.dll");
+						local405 = (new JarLoader(local390)).read("browsercontrol64.dll", false);
 
 						if (local405 == null) {
 							DialogMessage.showError(translate("err_verify_bc64"));
@@ -785,7 +796,7 @@ public final class AppletViewer implements ComponentListener, AdjustmentListener
 					} else if (WIN32) {
 						local390 = download(getProperty("browsercontrol_win_x86_jar"), local325);
 						local381 = method14(local353, local321, -28252, modeWhat, "browsercontrol.dll");
-						local405 = (new JarLoader(local390)).read("browsercontrol.dll");
+						local405 = (new JarLoader(local390)).read("browsercontrol.dll", false);
 
 						if (local405 == null) {
 							DialogMessage.showError(translate("err_verify_bc"));

@@ -43,7 +43,7 @@ public final class JarClassLoader extends ClassLoader {
 			return instance;
 		}
 
-		@Pc(23) byte[] src = this.loader.read(name + ".class");
+		@Pc(23) byte[] src = this.loader.read(name.replace('.', '/') + ".class", false);
 		if (src == null) {
 			return super.findSystemClass(name);
 		}
@@ -60,7 +60,7 @@ public final class JarClassLoader extends ClassLoader {
 	@OriginalMember(owner = "jagexappletviewer!app/l", name = "getResourceAsStream", descriptor = "(Ljava/lang/String;)Ljava/io/InputStream;")
 	@Override
 	public InputStream getResourceAsStream(@OriginalArg(0) String name) {
-		@Pc(5) byte[] src = this.loader.read(name);
+		@Pc(5) byte[] src = this.loader.read(name, false);
 		return src == null ? ClassLoader.getSystemResourceAsStream(name) : new ByteArrayInputStream(src);
 	}
 }

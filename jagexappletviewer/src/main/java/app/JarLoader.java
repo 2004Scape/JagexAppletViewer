@@ -112,11 +112,15 @@ public final class JarLoader {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "a", descriptor = "(ILjava/lang/String;)[B")
-	public byte[] read(@OriginalArg(1) String name) {
+	public byte[] read(@OriginalArg(1) String name, boolean verify) {
 		try {
 			@Pc(8) byte[] src = (byte[]) this.cache.remove(name);
 			if (src == null) {
 				return null;
+			}
+
+			if (!verify) {
+				return src;
 			}
 
 			@Pc(19) JarLoader_Class1 local19 = (JarLoader_Class1) this.aHashtable10.get(name);
