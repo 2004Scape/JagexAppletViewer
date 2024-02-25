@@ -4,7 +4,7 @@ import org.openrs2.deob.annotation.OriginalClass;
 import org.openrs2.deob.annotation.OriginalMember;
 
 @OriginalClass("jagexappletviewer!app/h")
-public final class Class6 {
+public final class JarLoader_Class1 {
 
 	@OriginalMember(owner = "jagexappletviewer!app/h", name = "a", descriptor = "Ljava/lang/String;")
 	public String aString4;

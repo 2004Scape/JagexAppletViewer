@@ -7,7 +7,7 @@ import org.openrs2.deob.annotation.OriginalClass;
 import org.openrs2.deob.annotation.OriginalMember;
 
 @OriginalClass("jagexappletviewer!app/a")
-public final class Panel_Sub1 extends Panel {
+public final class DialogPanel extends Panel {
 
 	@OriginalMember(owner = "jagexappletviewer!app/a", name = "paint", descriptor = "(Ljava/awt/Graphics;)V")
 	@Override

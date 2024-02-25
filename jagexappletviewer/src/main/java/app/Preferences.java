@@ -14,7 +14,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/ca")
-public final class Class2 {
+public final class Preferences {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ca", name = "a", descriptor = "Ljava/util/Hashtable;")
 	private static Hashtable aHashtable4 = new Hashtable();

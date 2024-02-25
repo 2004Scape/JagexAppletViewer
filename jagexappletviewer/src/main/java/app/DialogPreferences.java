@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import java.awt.image.ImageObserver;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.openrs2.deob.annotation.OriginalArg;
@@ -17,7 +16,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/n")
-public final class Canvas_Sub2 extends Canvas implements Adjustable {
+public final class DialogPreferences extends Canvas implements Adjustable {
 
 	@OriginalMember(owner = "jagexappletviewer!app/n", name = "j", descriptor = "I")
 	public int anInt14;
@@ -56,12 +55,12 @@ public final class Canvas_Sub2 extends Canvas implements Adjustable {
 	private Image anImage1 = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/n", name = "<init>", descriptor = "()V")
-	public Canvas_Sub2() {
+	public DialogPreferences() {
 		this.setMinimumSize(new Dimension(15, 40));
 		this.setPreferredSize(new Dimension(15, Integer.MAX_VALUE));
 		this.setMaximumSize(new Dimension(15, Integer.MAX_VALUE));
 		this.setBackground(Color.BLACK);
-		@Pc(59) Class10 local59 = new Class10(this);
+		@Pc(59) PreferencesListener local59 = new PreferencesListener(this);
 		this.addMouseListener(local59);
 		this.addMouseMotionListener(local59);
 	}

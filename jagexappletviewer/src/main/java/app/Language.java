@@ -7,11 +7,11 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/q")
-public final class Class11 {
+public final class Language {
 
 	@OriginalMember(owner = "jagexappletviewer!app/q", name = "a", descriptor = "(II)V")
 	public static void method41(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
-		@Pc(3) Hashtable local3 = appletviewer.aHashtable3;
+		@Pc(3) Hashtable local3 = AppletViewer.aHashtable3;
 		if (arg1 != -11712) {
 			return;
 		}

@@ -17,7 +17,7 @@ import sun.security.pkcs.PKCS7;
 import sun.security.pkcs.SignerInfo;
 
 @OriginalClass("jagexappletviewer!app/u")
-public final class Class15 {
+public final class JarLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "a", descriptor = "Ljava/util/Hashtable;")
 	private Hashtable aHashtable9 = new Hashtable();
@@ -35,7 +35,7 @@ public final class Class15 {
 	private byte[] aByteArray2;
 
 	@OriginalMember(owner = "jagexappletviewer!app/u", name = "<init>", descriptor = "([B)V")
-	public Class15(@OriginalArg(0) byte[] arg0) throws IOException {
+	public JarLoader(@OriginalArg(0) byte[] arg0) throws IOException {
 		@Pc(26) ZipInputStream local26 = new ZipInputStream(new ByteArrayInputStream(arg0));
 		@Pc(29) byte[] local29 = new byte[1000];
 		while (true) {
@@ -67,7 +67,7 @@ public final class Class15 {
 							}
 						}
 						for (local100 = 0; local100 < local95; local100++) {
-							@Pc(170) Class6 local170 = new Class6();
+							@Pc(170) JarLoader_Class1 local170 = new JarLoader_Class1();
 							@Pc(174) int local174 = local98[local100];
 							@Pc(187) int local187;
 							if (local100 + 1 < local95) {
@@ -118,11 +118,11 @@ public final class Class15 {
 			if (local8 == null) {
 				return null;
 			}
-			@Pc(19) Class6 local19 = (Class6) this.aHashtable10.get(arg1);
+			@Pc(19) JarLoader_Class1 local19 = (JarLoader_Class1) this.aHashtable10.get(arg1);
 			if (local19 == null) {
 				return null;
 			}
-			@Pc(30) Class6 local30 = (Class6) this.aHashtable11.get(arg1);
+			@Pc(30) JarLoader_Class1 local30 = (JarLoader_Class1) this.aHashtable11.get(arg1);
 			if (local30 == null) {
 				return null;
 			}
@@ -131,7 +131,7 @@ public final class Class15 {
 			local38.update(local8);
 			@Pc(46) byte[] local46 = local38.digest();
 			@Pc(54) int local54 = -39 % ((-arg0 - 25) / 42);
-			@Pc(58) String local58 = Class12.method43(local46, (byte) -49);
+			@Pc(58) String local58 = JarLoader_Class2.method43(local46, (byte) -49);
 			if (!local58.equals(local19.aString5)) {
 				return null;
 			}
@@ -139,21 +139,21 @@ public final class Class15 {
 			local68.reset();
 			local68.update(local8);
 			@Pc(76) byte[] local76 = local68.digest();
-			@Pc(80) String local80 = Class12.method43(local76, (byte) -49);
+			@Pc(80) String local80 = JarLoader_Class2.method43(local76, (byte) -49);
 			if (!local80.equals(local19.aString6)) {
 				return null;
 			}
 			local38.reset();
 			local38.update(local19.aByteArray1);
 			local46 = local38.digest();
-			local58 = Class12.method43(local46, (byte) -49);
+			local58 = JarLoader_Class2.method43(local46, (byte) -49);
 			if (!local58.equals(local30.aString5)) {
 				return null;
 			}
 			local68.reset();
 			local68.update(local19.aByteArray1);
 			local76 = local68.digest();
-			local80 = Class12.method43(local76, (byte) -49);
+			local80 = JarLoader_Class2.method43(local76, (byte) -49);
 			if (!local80.equals(local30.aString6)) {
 				return null;
 			}
@@ -171,7 +171,7 @@ public final class Class15 {
 				@Pc(176) String local176 = local172.getSubjectX500Principal().getName();
 				@Pc(180) String local180 = local172.getSerialNumber().toString();
 				@Pc(184) byte[] local184 = local172.getPublicKey().getEncoded();
-				@Pc(188) String local188 = Class12.method43(local184, (byte) -49);
+				@Pc(188) String local188 = JarLoader_Class2.method43(local184, (byte) -49);
 				if (local164 == 0) {
 					@Pc(198) int local198 = local176.indexOf("CN=");
 					if (local198 < 0) {
@@ -210,7 +210,7 @@ public final class Class15 {
 			return local8;
 		} catch (@Pc(307) Exception local307) {
 			local307.printStackTrace();
-			Class4.method29(500, appletviewer.method15(1555, "err_get_file") + ":" + arg1 + " [" + local307.toString() + "]");
+			DialogMessage.method29(500, AppletViewer.method15(1555, "err_get_file") + ":" + arg1 + " [" + local307.toString() + "]");
 			return null;
 		}
 	}

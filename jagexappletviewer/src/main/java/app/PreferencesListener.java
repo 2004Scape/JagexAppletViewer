@@ -9,7 +9,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/p")
-public final class Class10 implements Runnable, MouseListener, MouseMotionListener {
+public final class PreferencesListener implements Runnable, MouseListener, MouseMotionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "b", descriptor = "I")
 	private int anInt18 = -1;
@@ -24,14 +24,14 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 	private int anInt17 = 0;
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "e", descriptor = "Ljagexappletviewer!app/n;")
-	private Canvas_Sub2 aCanvas_Sub2_2;
+	private DialogPreferences aDialogPreferences;
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "<init>", descriptor = "(Ljagexappletviewer!app/n;)V")
-	public Class10(@OriginalArg(0) Canvas_Sub2 arg0) {
-		this.aCanvas_Sub2_2 = arg0;
-		@Pc(21) Thread local21 = new Thread(this);
-		local21.setDaemon(true);
-		local21.start();
+	public PreferencesListener(@OriginalArg(0) DialogPreferences arg0) {
+		this.aDialogPreferences = arg0;
+		@Pc(21) Thread thread = new Thread(this);
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "run", descriptor = "()V")
@@ -53,14 +53,14 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 				}
 				if (this.anInt17 == 1) {
 					this.anInt17 = 2;
-					this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() - this.anInt20);
+					this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.anInt20);
 				}
 			} else if (local4 == 2) {
 				try {
 					Thread.sleep(50L);
 				} catch (@Pc(75) InterruptedException local75) {
 				}
-				this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() - this.anInt20);
+				this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.anInt20);
 			} else if (local4 == 3) {
 				try {
 					Thread.sleep(550L);
@@ -68,14 +68,14 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 				}
 				if (this.anInt17 == 3) {
 					this.anInt17 = 4;
-					this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() + this.anInt20);
+					this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.anInt20);
 				}
 			} else if (local4 == 4) {
 				try {
 					Thread.sleep(50L);
 				} catch (@Pc(113) InterruptedException local113) {
 				}
-				this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() + this.anInt20);
+				this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.anInt20);
 			}
 		}
 	}
@@ -85,7 +85,7 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 	public void mouseDragged(@OriginalArg(0) MouseEvent arg0) {
 		if (this.anInt18 >= 0) {
 			@Pc(7) int local7 = arg0.getY();
-			this.aCanvas_Sub2_2.setValue(this.anInt19 + (this.aCanvas_Sub2_2.anInt12 - this.aCanvas_Sub2_2.anInt9) * (local7 - this.anInt18) / this.aCanvas_Sub2_2.anInt14);
+			this.aDialogPreferences.setValue(this.anInt19 + (this.aDialogPreferences.anInt12 - this.aDialogPreferences.anInt9) * (local7 - this.anInt18) / this.aDialogPreferences.anInt14);
 		}
 	}
 
@@ -97,39 +97,39 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "mousePressed", descriptor = "(Ljava/awt/event/MouseEvent;)V")
 	@Override
 	public void mousePressed(@OriginalArg(0) MouseEvent arg0) {
-		if (!this.aCanvas_Sub2_2.isEnabled()) {
+		if (!this.aDialogPreferences.isEnabled()) {
 			return;
 		}
-		this.aCanvas_Sub2_2.aBoolean10 = true;
-		@Pc(13) int local13 = this.aCanvas_Sub2_2.getHeight();
+		this.aDialogPreferences.aBoolean10 = true;
+		@Pc(13) int local13 = this.aDialogPreferences.getHeight();
 		@Pc(16) int local16 = arg0.getY();
 		if (local16 < 15) {
-			this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() - this.aCanvas_Sub2_2.anInt13);
-			this.anInt20 = this.aCanvas_Sub2_2.anInt13;
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.anInt13);
+			this.anInt20 = this.aDialogPreferences.anInt13;
 			this.anInt17 = 1;
 			synchronized (this) {
 				this.notifyAll();
 			}
 		} else if (local13 - 15 < local16) {
-			this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() + this.aCanvas_Sub2_2.anInt13);
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.anInt13);
 			this.anInt17 = 3;
-			this.anInt20 = this.aCanvas_Sub2_2.anInt13;
+			this.anInt20 = this.aDialogPreferences.anInt13;
 			synchronized (this) {
 				this.notifyAll();
 			}
-		} else if (local16 < this.aCanvas_Sub2_2.anInt16 + 15) {
-			this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() - this.aCanvas_Sub2_2.anInt11);
+		} else if (local16 < this.aDialogPreferences.anInt16 + 15) {
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() - this.aDialogPreferences.anInt11);
 			this.anInt17 = 1;
-			this.anInt20 = this.aCanvas_Sub2_2.anInt11;
+			this.anInt20 = this.aDialogPreferences.anInt11;
 			synchronized (this) {
 				this.notifyAll();
 			}
-		} else if (this.aCanvas_Sub2_2.anInt16 + this.aCanvas_Sub2_2.anInt15 + 15 > local16) {
+		} else if (this.aDialogPreferences.anInt16 + this.aDialogPreferences.anInt15 + 15 > local16) {
 			this.anInt18 = local16;
-			this.anInt19 = this.aCanvas_Sub2_2.getValue();
+			this.anInt19 = this.aDialogPreferences.getValue();
 		} else {
-			this.aCanvas_Sub2_2.setValue(this.aCanvas_Sub2_2.getValue() + this.aCanvas_Sub2_2.anInt11);
-			this.anInt20 = this.aCanvas_Sub2_2.anInt11;
+			this.aDialogPreferences.setValue(this.aDialogPreferences.getValue() + this.aDialogPreferences.anInt11);
+			this.anInt20 = this.aDialogPreferences.anInt11;
 			this.anInt17 = 3;
 			synchronized (this) {
 				this.notifyAll();
@@ -152,7 +152,7 @@ public final class Class10 implements Runnable, MouseListener, MouseMotionListen
 	public void mouseReleased(@OriginalArg(0) MouseEvent arg0) {
 		this.anInt18 = -1;
 		this.anInt17 = 0;
-		this.aCanvas_Sub2_2.aBoolean10 = false;
+		this.aDialogPreferences.aBoolean10 = false;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/p", name = "mouseEntered", descriptor = "(Ljava/awt/event/MouseEvent;)V")

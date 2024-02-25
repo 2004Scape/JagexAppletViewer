@@ -6,7 +6,7 @@ import org.openrs2.deob.annotation.OriginalClass;
 import org.openrs2.deob.annotation.OriginalMember;
 
 @OriginalClass("jagexappletviewer!app/m")
-public final class Class8 {
+public final class Config {
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "a", descriptor = "Ljava/util/Hashtable;")
 	public Hashtable aHashtable6 = new Hashtable();
@@ -21,7 +21,7 @@ public final class Class8 {
 	public String aString9;
 
 	@OriginalMember(owner = "jagexappletviewer!app/m", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	public Class8(@OriginalArg(0) String arg0) {
+	public Config(@OriginalArg(0) String arg0) {
 		this.aString9 = arg0;
 	}
 }

@@ -15,7 +15,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/g")
-public final class Canvas_Sub1 extends Canvas implements MouseListener, MouseMotionListener {
+public final class TopPanelBar extends Canvas implements MouseListener, MouseMotionListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "b", descriptor = "[I")
 	private int[] anIntArray2 = null;
@@ -36,7 +36,7 @@ public final class Canvas_Sub1 extends Canvas implements MouseListener, MouseMot
 	private ActionListener anActionListener1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/g", name = "<init>", descriptor = "(Ljava/awt/event/ActionListener;)V")
-	public Canvas_Sub1(@OriginalArg(0) ActionListener arg0) {
+	public TopPanelBar(@OriginalArg(0) ActionListener arg0) {
 		this.anActionListener1 = arg0;
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);

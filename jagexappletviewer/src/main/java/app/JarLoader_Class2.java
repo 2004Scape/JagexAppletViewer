@@ -6,7 +6,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/r")
-public final class Class12 {
+public final class JarLoader_Class2 {
 
 	@OriginalMember(owner = "jagexappletviewer!app/r", name = "a", descriptor = "[C")
 	private static char[] aCharArray1 = new char[64];

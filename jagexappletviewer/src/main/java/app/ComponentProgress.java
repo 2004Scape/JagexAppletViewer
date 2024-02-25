@@ -12,13 +12,13 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/b")
-public final class Component_Sub1 extends Component {
+public final class ComponentProgress extends Component {
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "b", descriptor = "Ljava/awt/Dialog;")
 	private static Dialog aDialog1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "e", descriptor = "Ljagexappletviewer!app/b;")
-	private static Component_Sub1 aComponent_Sub1_1;
+	private static ComponentProgress aComponent_Progress;
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "c", descriptor = "Ljava/awt/Font;")
 	private Font aFont1;
@@ -44,47 +44,47 @@ public final class Component_Sub1 extends Component {
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(II)V")
 	public static void method19(@OriginalArg(0) int arg0, @OriginalArg(1) int arg1) {
-		if (aComponent_Sub1_1 == null) {
+		if (aComponent_Progress == null) {
 			return;
 		}
 		if (arg0 > 100) {
 			arg0 = 100;
 		}
-		aComponent_Sub1_1.anInt3 = arg0;
-		aComponent_Sub1_1.repaint();
+		aComponent_Progress.anInt3 = arg0;
+		aComponent_Progress.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(B)V")
 	public static void method20(@OriginalArg(0) byte arg0) {
-		aComponent_Sub1_1.paint(aComponent_Sub1_1.getGraphics());
+		aComponent_Progress.paint(aComponent_Progress.getGraphics());
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "a", descriptor = "(Ljava/lang/String;B)V")
 	public static void method21(@OriginalArg(0) String arg0, @OriginalArg(1) byte arg1) {
-		aComponent_Sub1_1.aString2 = arg0;
-		aComponent_Sub1_1.repaint();
+		aComponent_Progress.aString2 = arg0;
+		aComponent_Progress.repaint();
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "b", descriptor = "(I)V")
 	public static void method22(@OriginalArg(0) int arg0) {
-		aComponent_Sub1_1 = new Component_Sub1(appletviewer.method15(arg0 + 1554, "loaderbox_initial"));
-		aComponent_Sub1_1.aFont1 = new Font("Helvetica", arg0, 13);
-		aComponent_Sub1_1.aFontMetrics1 = aComponent_Sub1_1.getFontMetrics(aComponent_Sub1_1.aFont1);
-		aDialog1 = new Dialog(appletviewer.aFrame1, "Jagex Ltd.", false);
-		aDialog1.add(aComponent_Sub1_1);
-		aDialog1.addWindowListener(WindowAdapter_Sub1.method38(-21945));
+		aComponent_Progress = new ComponentProgress(AppletViewer.method15(arg0 + 1554, "loaderbox_initial"));
+		aComponent_Progress.aFont1 = new Font("Helvetica", arg0, 13);
+		aComponent_Progress.aFontMetrics1 = aComponent_Progress.getFontMetrics(aComponent_Progress.aFont1);
+		aDialog1 = new Dialog(AppletViewer.aFrame1, "Jagex Ltd.", false);
+		aDialog1.add(aComponent_Progress);
+		aDialog1.addWindowListener(WindowListener.method38(-21945));
 		aDialog1.setResizable(false);
 		aDialog1.setSize(320, 100);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "c", descriptor = "(I)V")
 	public static void method23(@OriginalArg(0) int arg0) {
-		aDialog1.setLocationRelativeTo(appletviewer.aFrame1);
+		aDialog1.setLocationRelativeTo(AppletViewer.aFrame1);
 		aDialog1.setVisible(true);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/b", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	private Component_Sub1(@OriginalArg(0) String arg0) {
+	private ComponentProgress(@OriginalArg(0) String arg0) {
 		this.aString2 = arg0;
 	}
 

@@ -16,22 +16,22 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/v")
-public final class ClassLoader_Sub2 extends ClassLoader {
+public final class JarWinClassLoader extends ClassLoader {
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "a", descriptor = "Ljava/lang/ClassLoader;")
 	private static ClassLoader aClassLoader1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "b", descriptor = "Ljagexappletviewer!app/v;")
-	private static ClassLoader_Sub2 aClassLoader_Sub2_1;
+	private static JarWinClassLoader aJarWinClassLoader__1;
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "a", descriptor = "(B)V")
 	public static void method45(@OriginalArg(0) byte arg0) {
-		aClassLoader_Sub2_1 = new ClassLoader_Sub2();
-		aClassLoader_Sub2_1.method46((byte) -122);
+		aJarWinClassLoader__1 = new JarWinClassLoader();
+		aJarWinClassLoader__1.method46((byte) -122);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "<init>", descriptor = "()V")
-	private ClassLoader_Sub2() {
+	private JarWinClassLoader() {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/v", name = "loadClass", descriptor = "(Ljava/lang/String;)Ljava/lang/Class;")

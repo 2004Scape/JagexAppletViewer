@@ -18,7 +18,7 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/ba")
-public final class Class1 implements AppletStub, AppletContext {
+public final class GameAppletStub implements AppletStub, AppletContext {
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getImage", descriptor = "(Ljava/net/URL;)Ljava/awt/Image;")
 	@Override
@@ -36,7 +36,7 @@ public final class Class1 implements AppletStub, AppletContext {
 	@Override
 	public URL getCodeBase() {
 		try {
-			return new URL(appletviewer.method13("codebase", true));
+			return new URL(AppletViewer.method13("codebase", true));
 		} catch (@Pc(7) MalformedURLException local7) {
 			throw new InvalidParameterException();
 		}
@@ -45,10 +45,10 @@ public final class Class1 implements AppletStub, AppletContext {
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "showDocument", descriptor = "(Ljava/net/URL;)V")
 	@Override
 	public void showDocument(@OriginalArg(0) URL arg0) {
-		if (appletviewer.aBoolean2) {
+		if (AppletViewer.aBoolean2) {
 			System.out.println("showdocument url:" + arg0);
 		}
-		Class7.showurl(arg0.toString(), null);
+		UrlThread.showurl(arg0.toString(), null);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getApplets", descriptor = "()Ljava/util/Enumeration;")
@@ -72,10 +72,10 @@ public final class Class1 implements AppletStub, AppletContext {
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "showDocument", descriptor = "(Ljava/net/URL;Ljava/lang/String;)V")
 	@Override
 	public void showDocument(@OriginalArg(0) URL arg0, @OriginalArg(1) String arg1) {
-		if (appletviewer.aBoolean2) {
+		if (AppletViewer.aBoolean2) {
 			System.out.println("showdocument url:" + arg0 + " target:" + arg1);
 		}
-		Class7.showurl(arg0.toString(), arg1);
+		UrlThread.showurl(arg0.toString(), arg1);
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "appletResize", descriptor = "(II)V")
@@ -92,8 +92,8 @@ public final class Class1 implements AppletStub, AppletContext {
 	@OriginalMember(owner = "jagexappletviewer!app/ba", name = "getParameter", descriptor = "(Ljava/lang/String;)Ljava/lang/String;")
 	@Override
 	public String getParameter(@OriginalArg(0) String arg0) {
-		@Pc(3) String local3 = appletviewer.method7(arg0, 123);
-		if (appletviewer.aBoolean2 && local3 == null) {
+		@Pc(3) String local3 = AppletViewer.method7(arg0, 123);
+		if (AppletViewer.aBoolean2 && local3 == null) {
 			if ("force64mb".equals(arg0)) {
 				System.out.println("Returning false for force64mb");
 				return "false";
@@ -113,7 +113,7 @@ public final class Class1 implements AppletStub, AppletContext {
 	@Override
 	public URL getDocumentBase() {
 		try {
-			return new URL(appletviewer.method13("codebase", true));
+			return new URL(AppletViewer.method13("codebase", true));
 		} catch (@Pc(7) MalformedURLException local7) {
 			throw new InvalidParameterException();
 		}

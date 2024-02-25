@@ -11,10 +11,10 @@ import org.openrs2.deob.annotation.OriginalClass;
 import org.openrs2.deob.annotation.OriginalMember;
 
 @OriginalClass("jagexappletviewer!app/c")
-public final class OutputStream_Sub1 extends OutputStream implements WindowListener {
+public final class DialogDebug extends OutputStream implements WindowListener {
 
 	@OriginalMember(owner = "jagexappletviewer!app/c", name = "e", descriptor = "Ljagexappletviewer!app/c;")
-	private static OutputStream_Sub1 anOutputStream_Sub1_1;
+	private static DialogDebug aDialogDebug;
 
 	@OriginalMember(owner = "jagexappletviewer!app/c", name = "c", descriptor = "Ljava/awt/Frame;")
 	private Frame aFrame2;
@@ -36,17 +36,17 @@ public final class OutputStream_Sub1 extends OutputStream implements WindowListe
 
 	@OriginalMember(owner = "jagexappletviewer!app/c", name = "a", descriptor = "(ILjava/lang/String;)Ljava/io/PrintStream;")
 	public static PrintStream method24(@OriginalArg(0) int arg0, @OriginalArg(1) String arg1) {
-		if (anOutputStream_Sub1_1 == null) {
-			anOutputStream_Sub1_1 = new OutputStream_Sub1(arg1);
+		if (aDialogDebug == null) {
+			aDialogDebug = new DialogDebug(arg1);
 		}
 		if (arg0 <= 0) {
-			anOutputStream_Sub1_1 = null;
+			aDialogDebug = null;
 		}
-		return anOutputStream_Sub1_1.aPrintStream1;
+		return aDialogDebug.aPrintStream1;
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/c", name = "<init>", descriptor = "(Ljava/lang/String;)V")
-	private OutputStream_Sub1(@OriginalArg(0) String arg0) {
+	private DialogDebug(@OriginalArg(0) String arg0) {
 		this.aString3 = arg0;
 		this.aTextArea1 = new TextArea();
 		this.aTextArea1.setEditable(false);

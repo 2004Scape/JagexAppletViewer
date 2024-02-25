@@ -6,10 +6,10 @@ import org.openrs2.deob.annotation.OriginalMember;
 import org.openrs2.deob.annotation.Pc;
 
 @OriginalClass("jagexappletviewer!app/i")
-public final class Class7 implements Runnable {
+public final class UrlThread implements Runnable {
 
 	@OriginalMember(owner = "jagexappletviewer!app/i", name = "b", descriptor = "Ljagexappletviewer!app/i;")
-	private static Class7 aClass7_1 = null;
+	private static UrlThread aClass7_1 = null;
 
 	@OriginalMember(owner = "jagexappletviewer!app/i", name = "a", descriptor = "Ljava/lang/String;")
 	private String aString7 = null;
@@ -19,7 +19,7 @@ public final class Class7 implements Runnable {
 
 	@OriginalMember(owner = "jagexappletviewer!app/i", name = "showurl", descriptor = "(Ljava/lang/String;Ljava/lang/String;)V")
 	public static void showurl(@OriginalArg(0) String arg0, @OriginalArg(1) String arg1) {
-		@Pc(2) Class7 local2 = aClass7_1;
+		@Pc(2) UrlThread local2 = aClass7_1;
 		synchronized (aClass7_1) {
 			aClass7_1.aString8 = arg1;
 			aClass7_1.aString7 = arg0;
@@ -32,7 +32,7 @@ public final class Class7 implements Runnable {
 		if (aClass7_1 != null || arg0 != 42) {
 			return;
 		}
-		aClass7_1 = new Class7();
+		aClass7_1 = new UrlThread();
 		@Pc(16) Thread local16 = new Thread(aClass7_1);
 		local16.setPriority(10);
 		local16.setDaemon(true);
@@ -40,7 +40,7 @@ public final class Class7 implements Runnable {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/i", name = "<init>", descriptor = "()V")
-	private Class7() {
+	private UrlThread() {
 	}
 
 	@OriginalMember(owner = "jagexappletviewer!app/i", name = "run", descriptor = "()V")
@@ -63,9 +63,9 @@ public final class Class7 implements Runnable {
 			}
 			try {
 				if (local3 != null && local3.equals("_top") && (local5.endsWith("MAGICQUIT") || local5.indexOf("/quit.ws") != -1 || local5.indexOf(".ws") == -1 && local5.endsWith("/"))) {
-					appletviewer.method5(122);
+					AppletViewer.method5(122);
 				}
-				if (!appletviewer.aBoolean1) {
+				if (!AppletViewer.aBoolean1) {
 					throw new Exception("Not windows");
 				}
 				if (!local5.startsWith("http://") && !local5.startsWith("https://")) {
@@ -79,13 +79,13 @@ public final class Class7 implements Runnable {
 				}
 				Runtime.getRuntime().exec("cmd /c start \"j\" \"" + local5 + "\"");
 			} catch (@Pc(125) Exception local125) {
-				if (appletviewer.aBoolean2) {
+				if (AppletViewer.aBoolean2) {
 					local125.printStackTrace();
 				}
 				try {
-					new WindowAdapter_Sub2(local5);
+					new DialogUrl(local5);
 				} catch (@Pc(137) Exception local137) {
-					if (appletviewer.aBoolean2) {
+					if (AppletViewer.aBoolean2) {
 						local137.printStackTrace();
 					}
 				}
